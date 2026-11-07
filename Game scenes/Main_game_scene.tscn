@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://5re30mheve6q"]
+
+[ext_resource type="PackedScene" uid="uid://d1nvhx82wsm53" path="res://Assets/Prototypes/Plaque.glb" id="1_eiicu"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wltj5"]
+size = Vector3(19.999165, 0.19824219, 19.997648)
+
+[node name="Node" type="Node" unique_id=1927353018]
+
+[node name="Node3D" type="Node3D" parent="." unique_id=726992442]
+
+[node name="AnimatableBody3D" type="AnimatableBody3D" parent="Node3D" unique_id=1589867567]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Node3D/AnimatableBody3D" unique_id=1844738536]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00057029724, -0.00048828125, 0.00092983246)
+shape = SubResource("BoxShape3D_wltj5")
+
+[node name="Plaque" parent="Node3D/AnimatableBody3D" unique_id=325379494 instance=ExtResource("1_eiicu")]
