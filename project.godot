@@ -11,8 +11,13 @@ config_version=5
 [application]
 
 config/name="TankShift"
+run/main_scene="uid://5re30mheve6q"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
+
+[autoload]
+
+Global="*uid://da1itjvbca8ia"
 
 [display]
 
