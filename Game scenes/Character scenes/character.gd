@@ -1,8 +1,12 @@
 extends CharacterBody3D
 
 
-const SPEED = 5.0
+const SPEED:float = 5.0
+const SHIFT_SPEED:float = PI / 0.5
 @onready var is_up_or_down:int # to be used as a marker of whethere we are upside or downside (value down : -1 or up: 1)
+@onready var self_shift_triggered:bool = false
+@onready var rotation_z_target:float
+
 
 func _ready():
 	pass
@@ -16,11 +20,18 @@ func _physics_process(delta):
 		# Needs to be replaced by thecharacter sticking to the tile surface
 
 	# Upside-down shift
-	if Input.is_action_just_pressed("ui_accept"):
-		print(rotation.z)
-		rotation.z += PI
-		print(rotation.z)
-		# This could be reused to provoke the rotation of the currently occupied tile
+	if Input.is_action_just_pressed("ui_accept") and self_shift_triggered == false:
+		# Define the rotation post self shift
+		rotation_z_target = rotation.z + PI
+		self_shift_triggered = true
+	
+	# Operate self-shift
+	if abs(rotation.z - rotation_z_target) > 0.3 and self_shift_triggered:
+		rotation.z = move_toward(rotation.z, rotation_z_target, SHIFT_SPEED * delta)
+	elif abs(rotation.z - rotation_z_target) <= 0.3 and self_shift_triggered:
+		self_shift_triggered = false
+		rotation.z = rotation_z_target
+	
 	
 	######################################
 	# Check if we are upside down or not #
