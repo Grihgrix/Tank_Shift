@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://5re30mheve6q"]
 
 [ext_resource type="PackedScene" uid="uid://d1nvhx82wsm53" path="res://Assets/Prototypes/Plaque.glb" id="1_eiicu"]
-[ext_resource type="PackedScene" uid="uid://lwvs1bf13f2r" path="res://Game scenes/Character scenes/Tank.tscn" id="2_sqh5q"]
+[ext_resource type="PackedScene" uid="uid://bvwc4o8phj4ai" path="res://Game scenes/Character scenes/character.tscn" id="2_sqh5q"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_wltj5"]
 size = Vector3(19.999165, 0.19824219, 19.997648)
@@ -19,10 +19,6 @@ shape = SubResource("BoxShape3D_wltj5")
 [node name="Plaque" parent="Ground_Node3D/AnimatableBody3D" unique_id=325379494 instance=ExtResource("1_eiicu")]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1646275945]
-transform = Transform3D(1, 0, 0, 0, 0.6598504, 0.751397, 0, -0.751397, 0.6598504, -4.600258, 8.264026, 10.114742)
+transform = Transform3D(1, 0, 0, 0, 0.34202015, 0.9396926, 0, -0.9396926, 0.34202015, 0, 30, 0)
 
-[node name="VehicleBody3D" parent="." unique_id=982366303 instance=ExtResource("2_sqh5q")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.808823, 0)
-
-[node name="Camera3D" type="Camera3D" parent="VehicleBody3D" unique_id=707001620]
-transform = Transform3D(0.8249095, -0.24582548, 0.5090129, 0.0494741, 0.9284285, 0.36820233, -0.5630955, -0.27855065, 0.77803147, 2.5343232, 1.0421321, 3.2917168)
+[node name="Character" parent="." unique_id=1998404675 instance=ExtResource("2_sqh5q")]
