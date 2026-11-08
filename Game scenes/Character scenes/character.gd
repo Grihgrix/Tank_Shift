@@ -9,7 +9,7 @@ const SHIFT_SPEED:float = PI / 0.5
 
 
 func _ready():
-	pass
+	position.y = 0 # ensures we are on the tile levet
 
 func _physics_process(delta):
 	# Add the gravity.
@@ -18,19 +18,27 @@ func _physics_process(delta):
 		pass
 		# Gravity is not to be used in this project
 		# Needs to be replaced by thecharacter sticking to the tile surface
-
-	# Upside-down shift
+	
+	##############
+	# Self-shift #
+	##############
+	
+	# Upside-down shift command capture
 	if Input.is_action_just_pressed("ui_accept") and self_shift_triggered == false:
 		# Define the rotation post self shift
 		rotation_z_target = rotation.z + PI
 		self_shift_triggered = true
+		#rotation.z = rotation_z_target
+		#self_shift_triggered = false
 	
 	# Operate self-shift
 	if abs(rotation.z - rotation_z_target) > 0.3 and self_shift_triggered:
+		position.y = 0 # ensures we remain on the tile side we are supposed to be on
 		rotation.z = move_toward(rotation.z, rotation_z_target, SHIFT_SPEED * delta)
 	elif abs(rotation.z - rotation_z_target) <= 0.3 and self_shift_triggered:
 		self_shift_triggered = false
 		rotation.z = rotation_z_target
+		position.y = 0 # ensures we remain on the tile side we are supposed to be on
 	
 	
 	######################################

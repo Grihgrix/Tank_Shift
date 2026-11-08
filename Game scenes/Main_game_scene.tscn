@@ -19,6 +19,6 @@ shape = SubResource("BoxShape3D_wltj5")
 [node name="Plaque" parent="Ground_Node3D/AnimatableBody3D" unique_id=325379494 instance=ExtResource("1_eiicu")]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1646275945]
-transform = Transform3D(1, 0, 0, 0, 0.6598504, 0.751397, 0, -0.751397, 0.6598504, -4.600258, 8.264026, 10.114742)
+transform = Transform3D(1, 0, 0, 0, 0.34202015, 0.9396926, 0, -0.9396926, 0.34202015, 0, 30, 0)
 
 [node name="Character" parent="." unique_id=1998404675 instance=ExtResource("2_sqh5q")]
