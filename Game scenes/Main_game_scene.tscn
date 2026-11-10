@@ -22,3 +22,5 @@ shape = SubResource("BoxShape3D_wltj5")
 transform = Transform3D(1, 0, 0, 0, 0.34202015, 0.9396926, 0, -0.9396926, 0.34202015, 0, 30, 0)
 
 [node name="Character" parent="." unique_id=1998404675 instance=ExtResource("2_sqh5q")]
+
+[node name="Projectiles_parent_node" type="Node3D" parent="." unique_id=1350631440 groups=["projectile_parent"]]
