@@ -46,5 +46,5 @@ shape = SubResource("CapsuleShape3D_jg0fb")
 [node name="Proto_obus" type="Node3D" parent="." unique_id=2049321126]
 
 [node name="Mball_001" type="MeshInstance3D" parent="Proto_obus" unique_id=1736539462]
-transform = Transform3D(0, 0, 0.03, 0, 0.03, 0, -0.03406266, 0, 0, 0, 0, 0)
+transform = Transform3D(-1.3113416e-09, 0, 0.03, 0, 0.03, 0, -0.03, 0, -1.3113416e-09, 0, 0, 0)
 mesh = SubResource("ArrayMesh_it7jn")

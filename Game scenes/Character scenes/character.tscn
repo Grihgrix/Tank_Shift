@@ -380,7 +380,6 @@ transform = Transform3D(0.053920813, 0, 0, 0, 0.03408003, 0, 0, 0, 0.407366, 0, 
 mesh = SubResource("ArrayMesh_c8syd")
 
 [node name="Shooter" type="Node3D" parent="Proto_tank/Tourelle/Canon" unique_id=967923646]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.99999976, 0, 0, -1.8042537)
 script = ExtResource("3_y3tpf")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=931742010]

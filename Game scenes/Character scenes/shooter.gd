@@ -7,15 +7,27 @@ const PROJECTILE = preload("res://Game scenes/Character scenes/projectile.tscn")
 @export var projectiles_parent_group:String = "projectile_parent"
 var projectiles_node:Node
 
+
 # Variables needed for orientation
-@onready var tourelle = $"../.."
 @onready var character = $"../../../.."
-@onready var shift_shoot_modifier:int = 1
+@onready var tourelle = $"../../Tourelle"
+
+@onready var position_delta_x:float = tourelle.global_position.x - global_position.x
+@onready var position_delta_z:float = tourelle.global_position.z - global_position.z
+@onready var position_delta_xz:float
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	# Ensures the projectile node is part of a group separate from the character, so it is no longer affected by the character movements after being spawned
 	projectiles_node = get_tree().get_first_node_in_group(projectiles_parent_group)
+	
+	# Find the length between the 2 points we are comparing for linear velocity
+	position_delta_x = tourelle.global_position.x - global_position.x
+	position_delta_z = tourelle.global_position.z - global_position.z
+	
+	position_delta_xz = sqrt(position_delta_x * position_delta_x) + (position_delta_z * position_delta_z)
+	#print(position_delta_xz)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -33,17 +45,8 @@ func _shoot():
 	# Define initial position
 	projectile.global_position = global_position # Necessary if in a different node
 	
-	# Check if character is upside down # This is needed otherwise the X velocity goes in the wrong direction
-	if round(character.rotation.z) == 0:
-		shift_shoot_modifier = 1
-	else:
-		shift_shoot_modifier = -1
-	#print(round(character.rotation.z))
-	
-	# Give the projectile an initial speed shift_shoot_modifier * 
-	projectile.linear_velocity.x = - shift_shoot_modifier * Global.projectile_speed * sin(tourelle.rotation.y + character.rotation.y)
-	projectile.linear_velocity.y = 0
-	projectile.linear_velocity.z = - Global.projectile_speed * cos(tourelle.rotation.y + character.rotation.y)
-	print(projectile.linear_velocity)
-	
-	# TODO : Remember to make the Mball scale back to 0,3 after tests
+	position_delta_x = tourelle.global_position.x - global_position.x
+	position_delta_z = tourelle.global_position.z - global_position.z
+	#print("position_delta_x = " + str(position_delta_x) + " position_delta_z = " + str(position_delta_z))
+	projectile.linear_velocity.x = -Global.projectile_speed * position_delta_x / position_delta_xz
+	projectile.linear_velocity.z = -Global.projectile_speed * position_delta_z / position_delta_xz
