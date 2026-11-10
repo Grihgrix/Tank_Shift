@@ -10,7 +10,7 @@ var projectiles_node:Node
 # Variables needed for orientation
 @onready var tourelle = $"../.."
 @onready var character = $"../../../.."
-
+@onready var shift_shoot_modifier:int = 1
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -33,7 +33,13 @@ func _shoot():
 	# Define initial position
 	projectile.global_position = global_position # Necessary if in a different node
 	
+	# Check if character is upside down # This is needed otherwise the X velocity goes in the wrong direction
+	if character.rotation.z == 0:
+		shift_shoot_modifier = 1
+	else:
+		shift_shoot_modifier = -1
+	
 	# Give the projectile an initial speed
-	projectile.linear_velocity.x = - Global.projectile_speed * sin(tourelle.rotation.y + character.rotation.y)
+	projectile.linear_velocity.x = - shift_shoot_modifier * Global.projectile_speed * sin(tourelle.rotation.y + character.rotation.y)
 	projectile.linear_velocity.y = 0
 	projectile.linear_velocity.z = - Global.projectile_speed * cos(tourelle.rotation.y + character.rotation.y)
