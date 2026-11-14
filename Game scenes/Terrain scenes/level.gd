@@ -22,10 +22,10 @@ func _ready():
 	var Current_X:int = 0
 	var Current_Y:int = 0
 	
-	while Current_X <= Global.terrain_dimension.x:
+	while Current_X < Global.terrain_dimension.x:
 		# Reintialize Current_Y
 		Current_Y = 0
-		while Current_Y <= Global.terrain_dimension.y:
+		while Current_Y < Global.terrain_dimension.y:
 			# Spawn current tile
 			spawn_tile(Current_X,Current_Y)
 			# Increment Y

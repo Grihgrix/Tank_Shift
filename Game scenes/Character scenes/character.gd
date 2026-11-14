@@ -1,7 +1,7 @@
 extends CharacterBody3D
 
 
-const SPEED:float = 5.0
+const SPEED:float = 20.0
 const SHIFT_SPEED:float = PI / 0.5
 @onready var is_up_or_down:int # to be used as a marker of whethere we are upside or downside (value down : -1 or up: 1)
 @onready var self_shift_triggered:bool = false
