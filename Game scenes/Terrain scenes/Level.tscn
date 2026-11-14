@@ -9,6 +9,14 @@
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bewgv"]
 albedo_color = Color(0.32269204, 0.15368122, 2.4065375e-08, 1)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_f7ppj"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bewgv"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_g1mxi"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2wda1"]
+
 [node name="Level" type="Node3D" unique_id=2021217027]
 script = ExtResource("1_by8i1")
 
@@ -25,20 +33,41 @@ transform = Transform3D(20.2, 0, 0, 0, 1, 0, 0, 0, 0.2, 10, 0, 0)
 mesh = SubResource("BoxMesh_g1mxi")
 surface_material_override/0 = SubResource("StandardMaterial3D_bewgv")
 
+[node name="StaticBody3D" type="StaticBody3D" parent="Terrain_limits/Board_Limit_1" unique_id=194103888]
+transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Terrain_limits/Board_Limit_1/StaticBody3D" unique_id=329990512]
+shape = SubResource("BoxShape3D_f7ppj")
+
 [node name="Board_Limit_2" type="MeshInstance3D" parent="Terrain_limits" unique_id=1626619475]
 transform = Transform3D(20.2, 0, 0, 0, 1, 0, 0, 0, 0.2, 10, 0, -20)
 mesh = SubResource("BoxMesh_g1mxi")
 surface_material_override/0 = SubResource("StandardMaterial3D_bewgv")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Terrain_limits/Board_Limit_2" unique_id=1728307640]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Terrain_limits/Board_Limit_2/StaticBody3D" unique_id=1785056778]
+shape = SubResource("BoxShape3D_bewgv")
 
 [node name="Board_Limit_3" type="MeshInstance3D" parent="Terrain_limits" unique_id=1309516546]
 transform = Transform3D(0.2, 0, 0, 0, 1, 0, 0, 0, 20.2, 0, 0, -10)
 mesh = SubResource("BoxMesh_g1mxi")
 surface_material_override/0 = SubResource("StandardMaterial3D_bewgv")
 
+[node name="StaticBody3D" type="StaticBody3D" parent="Terrain_limits/Board_Limit_3" unique_id=1013994162]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Terrain_limits/Board_Limit_3/StaticBody3D" unique_id=1706401180]
+shape = SubResource("BoxShape3D_g1mxi")
+
 [node name="Board_Limit_4" type="MeshInstance3D" parent="Terrain_limits" unique_id=976183837]
 transform = Transform3D(0.2, 0, 0, 0, 1, 0, 0, 0, 20.2, 20, 0, -10)
 mesh = SubResource("BoxMesh_g1mxi")
 surface_material_override/0 = SubResource("StandardMaterial3D_bewgv")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Terrain_limits/Board_Limit_4" unique_id=1946278114]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Terrain_limits/Board_Limit_4/StaticBody3D" unique_id=1570484207]
+shape = SubResource("BoxShape3D_2wda1")
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=1092873005]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.475271, 3.3716755, 10.696658)
