@@ -42,6 +42,9 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_rsef0")
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kdnpl"]
+albedo_color = Color(0.61018026, 0.65743923, 0.96415955, 1)
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vol8w"]
 resource_name = "Material.001"
 cull_mode = 2
@@ -79,6 +82,9 @@ _surfaces = [{
 }]
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_yqgbg")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_eu7ni"]
+albedo_color = Color(0.19434929, 0.19434926, 0.19434926, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bfuk1"]
 resource_name = "Material.002"
@@ -330,6 +336,9 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_qgiy7")
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sto70"]
+albedo_color = Color(0.06695952, 0.6280224, 0.54221165, 1)
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_f7ppj"]
 size = Vector3(2.505188, 2.0440674, 1.9829102)
 
@@ -343,14 +352,17 @@ transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0, 1.15, 0)
 [node name="Cube" type="MeshInstance3D" parent="Proto_tank" unique_id=1411612659]
 transform = Transform3D(1, 0, 0, 0, 0.6620976, 0, 0, 0, 1, 0, -0.25772306, 0)
 mesh = SubResource("ArrayMesh_lafbk")
+surface_material_override/0 = SubResource("StandardMaterial3D_kdnpl")
 
 [node name="Track_R" type="MeshInstance3D" parent="Proto_tank" unique_id=2113444324]
 transform = Transform3D(0.26459408, 0, 0, 0, 0.21174227, 0, 0, 0, 1, 0.9864123, -0.9277455, 0)
 mesh = SubResource("ArrayMesh_djowm")
+surface_material_override/0 = SubResource("StandardMaterial3D_eu7ni")
 
 [node name="Track_L" type="MeshInstance3D" parent="Proto_tank" unique_id=1079385480]
 transform = Transform3D(0.26459408, 0, 0, 0, 0.21174227, 0, 0, 0, 1, -0.9981147, -0.9277455, 0)
 mesh = SubResource("ArrayMesh_enuvy")
+surface_material_override/0 = SubResource("StandardMaterial3D_eu7ni")
 
 [node name="Wheel_LF" type="MeshInstance3D" parent="Proto_tank" unique_id=918943261]
 transform = Transform3D(0, 0.02, 0, -0.2, 0, 0, 0, 0, 0.2, 1.0865036, -0.930658, -0.74349225)
@@ -374,10 +386,12 @@ script = ExtResource("2_aknvi")
 [node name="Tourelle" type="MeshInstance3D" parent="Proto_tank/Tourelle" unique_id=473600207]
 transform = Transform3D(0.38367498, 0, 0, 0, 0.25301138, 0, 0, 0, 0.40736604, 0, 0.64963233, 0)
 mesh = SubResource("ArrayMesh_ripky")
+surface_material_override/0 = SubResource("StandardMaterial3D_kdnpl")
 
 [node name="Canon" type="MeshInstance3D" parent="Proto_tank/Tourelle" unique_id=1555668659]
 transform = Transform3D(0.053920813, 0, 0, 0, 0.03408003, 0, 0, 0, 0.407366, 0, 0.64963233, -0.72985774)
 mesh = SubResource("ArrayMesh_c8syd")
+surface_material_override/0 = SubResource("StandardMaterial3D_sto70")
 
 [node name="Shooter" type="Node3D" parent="Proto_tank/Tourelle/Canon" unique_id=967923646]
 script = ExtResource("3_y3tpf")

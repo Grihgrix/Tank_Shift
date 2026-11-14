@@ -1,0 +1,14 @@
+Convert projhectile from rigif body to a simple mesh 
+move the projectile movement code from shooter node to projectile using a ray cast https://www.gdquest.com/library/raycast_introduction/
+
+Add some colors to prototypes
+
+Use mesh object in godot as prototypes instead at least for terrain
+
+scene  pourt  1 tuile
+script qui gere sa rotation
+pour generer le terrain, faire un script dans le niveau qui instancie les tuiles dans une grille (parametre X et Y)
+
+
+
+shift en partentant le tank avec la tuile sur laquelle il se trouve
