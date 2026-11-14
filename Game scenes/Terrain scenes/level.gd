@@ -48,11 +48,16 @@ func _process(delta):
 
 
 func spawn_tile(X:int,Y:int):
-	print("spwan")
+	
 	var terrain_tile = TILE.instantiate()
 	tiles_node.add_child(terrain_tile)
 	
 	terrain_tile.position.x = X * (Global.terrain_tile_size + Global.space_between_tiles)
 	terrain_tile.position.y = 0
 	terrain_tile.position.z = -Y * (Global.terrain_tile_size + Global.space_between_tiles)
+	
+	# Create a tile id
+	
+	terrain_tile.tile_id = (X * 10000) + Y
+	print(terrain_tile.tile_id)
 	
