@@ -12,8 +12,6 @@ var tiles_node:Node
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	print(Global.terrain_dimension)
-	print(Global.terrain_tile_size)
 	
 	tiles_node = get_tree().get_first_node_in_group(Tiles_parent_group)
 	
@@ -24,22 +22,17 @@ func _ready():
 	var Current_X:int = 0
 	var Current_Y:int = 0
 	
-	while Current_X <= Global.terrain_dimension.x:
+	while Current_X < Global.terrain_dimension.x:
 		# Reintialize Current_Y
 		Current_Y = 0
-		while Current_Y <= Global.terrain_dimension.y:
-			# Test if we do all tiles
-			print("X = " + str(Current_X) + " Y = " + str(Current_Y))
-			
+		while Current_Y < Global.terrain_dimension.y:
+			# Spawn current tile
 			spawn_tile(Current_X,Current_Y)
-			
 			# Increment Y
 			Current_Y += 1
-		
 		# Increment X
 		Current_X += 1
-			
-	spawn_tile(0,0)
+
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -59,5 +52,5 @@ func spawn_tile(X:int,Y:int):
 	# Create a tile id
 	
 	terrain_tile.tile_id = (X * 10000) + Y
-	print(terrain_tile.tile_id)
+	#print(terrain_tile.tile_id)
 	
