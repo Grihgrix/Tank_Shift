@@ -1,9 +1,5 @@
 [gd_scene format=4 uid="uid://dtuml6dg77f6r"]
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_jg0fb"]
-radius = 0.033203125
-height = 0.13806152
-
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lsdud"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_bexnh"]
@@ -39,12 +35,8 @@ shadow_mesh = SubResource("ArrayMesh_bexnh")
 
 [node name="Projectile_RigidBody3D" type="RigidBody3D" unique_id=848348561]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=290513767]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 7.203482e-11, -0.0016479492)
-shape = SubResource("CapsuleShape3D_jg0fb")
-
 [node name="Proto_obus" type="Node3D" parent="." unique_id=2049321126]
 
 [node name="Mball_001" type="MeshInstance3D" parent="Proto_obus" unique_id=1736539462]
-transform = Transform3D(-1.3113416e-09, 0, 0.03, 0, 0.03, 0, -0.03, 0, -1.3113416e-09, 0, 0, 0)
+transform = Transform3D(-1.3113417e-08, 0, 0.3, 0, 0.3, 0, -0.3, 0, -1.3113417e-08, 0, 0, 0)
 mesh = SubResource("ArrayMesh_it7jn")
