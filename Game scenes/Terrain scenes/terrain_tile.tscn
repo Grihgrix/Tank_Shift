@@ -18,33 +18,33 @@ albedo_color = Color(0.53710204, 0.16005546, 0, 1)
 [node name="Terrain_tile" type="Node3D" unique_id=1675819588]
 
 [node name="Upside_MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1673046398]
-transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0.05, 0)
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0.05, 0)
 mesh = SubResource("PlaneMesh_44mry")
 surface_material_override/0 = SubResource("StandardMaterial3D_i4gw7")
 
 [node name="Downside_MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=282016631]
-transform = Transform3D(-1.5, 2.2649371e-07, 0, -2.2649371e-07, -1.5, 0, 0, 0, 1.5, 0, -0.05, 0)
+transform = Transform3D(-2, 3.019916e-07, 0, -3.019916e-07, -2, 0, 0, 0, 2, 0, -0.05, 0)
 mesh = SubResource("PlaneMesh_f7ppj")
 surface_material_override/0 = SubResource("StandardMaterial3D_bewgv")
 
 [node name="Cadre_Node3D" type="Node3D" parent="." unique_id=884177635]
 
 [node name="Slice_Mesh_1" type="MeshInstance3D" parent="Cadre_Node3D" unique_id=272462008]
-transform = Transform3D(1.5, 0, 0, 0, -4.371139e-08, -0.05, 0, 1, -2.1855695e-09, 0, 0, 1.5)
+transform = Transform3D(2, 0, 0, 0, -4.371139e-08, -0.05, 0, 1, -2.1855695e-09, 0, 0, 2)
 mesh = SubResource("PlaneMesh_d0qtd")
 surface_material_override/0 = SubResource("StandardMaterial3D_y2phs")
 
 [node name="Slice_Mesh_2" type="MeshInstance3D" parent="Cadre_Node3D" unique_id=1580098283]
-transform = Transform3D(-6.556708e-08, 0.05, -2.1855695e-09, 0, -2.1855695e-09, -0.05, -1.5, -2.1855695e-09, 9.553427e-17, 1.5, 0, 0)
+transform = Transform3D(-8.742278e-08, 0.05, -2.1855695e-09, 0, -2.1855695e-09, -0.05, -2, -2.1855695e-09, 9.553427e-17, 2, 0, 0)
 mesh = SubResource("PlaneMesh_d0qtd")
 surface_material_override/0 = SubResource("StandardMaterial3D_y2phs")
 
 [node name="Slice_Mesh_3" type="MeshInstance3D" parent="Cadre_Node3D" unique_id=572058005]
-transform = Transform3D(-1.5, 8.742278e-08, 0, 5.7320566e-15, 4.371139e-08, -0.05, -1.3113416e-07, -1, -2.1855695e-09, 0, 0, -1.5)
+transform = Transform3D(-2, 1.509958e-07, -3.3001182e-16, 0, -4.371139e-08, -0.05, -3.019916e-07, -1, 2.1855695e-09, 0, 0, -2)
 mesh = SubResource("PlaneMesh_d0qtd")
 surface_material_override/0 = SubResource("StandardMaterial3D_y2phs")
 
 [node name="Slice_Mesh_4" type="MeshInstance3D" parent="Cadre_Node3D" unique_id=2131480648]
-transform = Transform3D(-6.556708e-08, -0.05, 2.1855695e-09, 0, -2.1855695e-09, -0.05, 1.5, -2.1855695e-09, 9.553427e-17, -1.5, 0, 0)
+transform = Transform3D(-8.742278e-08, -0.05, 2.1855695e-09, 0, -2.1855695e-09, -0.05, 2, -2.1855695e-09, 9.553427e-17, -2, 0, 0)
 mesh = SubResource("PlaneMesh_d0qtd")
 surface_material_override/0 = SubResource("StandardMaterial3D_y2phs")

@@ -1,9 +1,12 @@
 [gd_scene format=3 uid="uid://cwdqucy88hqqy"]
 
-[ext_resource type="Script" uid="uid://btq4viwji1a0r" path="res://Game scenes/level.gd" id="1_by8i1"]
+[ext_resource type="Script" uid="uid://btq4viwji1a0r" path="res://Game scenes/Terrain scenes/level.gd" id="1_by8i1"]
 [ext_resource type="PackedScene" uid="uid://cicovrxj1en1k" path="res://Game scenes/Terrain scenes/terrain_tile.tscn" id="1_lspa7"]
 
 [node name="Level" type="Node3D" unique_id=2021217027]
 script = ExtResource("1_by8i1")
 
 [node name="Terrain_tile" parent="." unique_id=1675819588 instance=ExtResource("1_lspa7")]
+visible = false
+
+[node name="Tiles_parent_group" type="Node3D" parent="." unique_id=988398369 groups=["tile_parent"]]
