@@ -1,12 +1,16 @@
 extends CharacterBody3D
 
 @onready var is_up_or_down:int # to be used as a marker of whethere we are upside or downside (value down : -1 or up: 1)
+@onready var tile_rotation_modifier:int
 @onready var self_shift_triggered:bool = false
 @onready var rotation_z_target:float
 
+@export var current_tile_id:int # to be used to assing tile as temp parent of the character
+@export var not_in_shift:int = 1
 
 func _ready():
-	position.y = 0 # ensures we are on the tile levet
+	position.y = 0 # ensures we are on the tile level
+	
 
 func _physics_process(delta):
 	# Add the gravity.
@@ -15,6 +19,20 @@ func _physics_process(delta):
 		pass
 		# Gravity is not to be used in this project
 		# Needs to be replaced by thecharacter sticking to the tile surface
+	
+	########################################
+	# Find the tile id the character is on #
+	########################################
+	var Current_Tile_X:int = round(global_position.x / (Global.terrain_tile_size + Global.space_between_tiles))
+	var Current_Tile_Y:int = -(round(global_position.z / (Global.terrain_tile_size + Global.space_between_tiles)))
+	current_tile_id = (Current_Tile_X * 10000) + Current_Tile_Y
+	#print(current_tile_id)
+	
+	#######################################################
+	# Reparent the character to the current tile it is on #
+	#######################################################
+	#reparent()
+	
 	
 	##############
 	# Self-shift #
@@ -42,10 +60,12 @@ func _physics_process(delta):
 	###########################
 	if Input.is_action_just_released("Distant_Shift"):
 		Global.shift_requested_on_mouse = true
+		# Actual shift is happening in the tiles code
 	
 	######################################
 	# Check if we are upside down or not #
 	######################################
+	# Tank modifier
 	if abs(round(rotation.z * 100)/100) == 3.14 and abs(round(rotation.x * 100)/100) == 3.14:
 		# If both X and Z axis are at 180 deg, we are upside
 		is_up_or_down = 1
@@ -56,6 +76,12 @@ func _physics_process(delta):
 		# Otherwise either X or Z or at 180 while the other is at 0, we are downside
 		is_up_or_down = -1
 	
+	# Tile rotation modifier
+	var tile_rotation = (round((round(get_parent().rotation.z * 100)/(3.14 * 2)) / 10)) / 10
+	if tile_rotation == round(tile_rotation):
+		tile_rotation_modifier = 1
+	else:
+		tile_rotation_modifier = -1
 	##########################
 	# Capture controls input #
 	##########################
@@ -70,8 +96,9 @@ func _physics_process(delta):
 	###################
 	
 	# Character moving forward or backward
-	velocity.z = move_direction * Global.SPEED * cos(rotation.y)
-	velocity.x = move_direction * Global.SPEED * sin(rotation.y)
+	velocity.z = move_direction * Global.SPEED * cos(rotation.y) * not_in_shift
+	velocity.x = move_direction * Global.SPEED * sin(rotation.y) * not_in_shift * tile_rotation_modifier
+	
 	
 	# Character rotating right or left
 	rotate_y(steer_direction * is_up_or_down * delta)

@@ -60,5 +60,6 @@ surface_material_override/0 = SubResource("StandardMaterial3D_y2phs")
 transform = Transform3D(6, 0, 0, 0, 0.15, 0, 0, 0, 6, 0, 0, 0)
 shape = SubResource("BoxShape3D_wltj5")
 
+[connection signal="input_event" from="Area3D" to="." method="_on_area_3d_input_event"]
 [connection signal="mouse_entered" from="Area3D" to="." method="_on_area_3d_mouse_entered"]
 [connection signal="mouse_exited" from="Area3D" to="." method="_on_area_3d_mouse_exited"]
