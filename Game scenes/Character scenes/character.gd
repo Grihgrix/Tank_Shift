@@ -1,6 +1,7 @@
 extends CharacterBody3D
 
 @onready var is_up_or_down:int # to be used as a marker of whethere we are upside or downside (value down : -1 or up: 1)
+@onready var tile_rotation_modifier:int
 @onready var self_shift_triggered:bool = false
 @onready var rotation_z_target:float
 
@@ -64,6 +65,7 @@ func _physics_process(delta):
 	######################################
 	# Check if we are upside down or not #
 	######################################
+	# Tank modifier
 	if abs(round(rotation.z * 100)/100) == 3.14 and abs(round(rotation.x * 100)/100) == 3.14:
 		# If both X and Z axis are at 180 deg, we are upside
 		is_up_or_down = 1
@@ -74,6 +76,12 @@ func _physics_process(delta):
 		# Otherwise either X or Z or at 180 while the other is at 0, we are downside
 		is_up_or_down = -1
 	
+	# Tile rotation modifier
+	var tile_rotation = (round((round(get_parent().rotation.z * 100)/(3.14 * 2)) / 10)) / 10
+	if tile_rotation == round(tile_rotation):
+		tile_rotation_modifier = 1
+	else:
+		tile_rotation_modifier = -1
 	##########################
 	# Capture controls input #
 	##########################
@@ -89,7 +97,7 @@ func _physics_process(delta):
 	
 	# Character moving forward or backward
 	velocity.z = move_direction * Global.SPEED * cos(rotation.y) * not_in_shift
-	velocity.x = move_direction * Global.SPEED * sin(rotation.y) * not_in_shift
+	velocity.x = move_direction * Global.SPEED * sin(rotation.y) * not_in_shift * tile_rotation_modifier
 	
 	
 	# Character rotating right or left
