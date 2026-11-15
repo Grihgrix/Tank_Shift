@@ -9,7 +9,6 @@ var tiles_node:Node
 
 
 
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	
@@ -53,4 +52,10 @@ func spawn_tile(X:int,Y:int):
 	
 	terrain_tile.tile_id = (X * 10000) + Y
 	#print(terrain_tile.tile_id)
+	
+
+
+
+	
+	
 	

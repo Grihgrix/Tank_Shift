@@ -1,8 +1,5 @@
 extends CharacterBody3D
 
-
-const SPEED:float = 20.0
-const SHIFT_SPEED:float = PI / 0.5
 @onready var is_up_or_down:int # to be used as a marker of whethere we are upside or downside (value down : -1 or up: 1)
 @onready var self_shift_triggered:bool = false
 @onready var rotation_z_target:float
@@ -34,12 +31,17 @@ func _physics_process(delta):
 	# Operate self-shift
 	if abs(rotation.z - rotation_z_target) > 0.3 and self_shift_triggered:
 		position.y = 0 # ensures we remain on the tile side we are supposed to be on
-		rotation.z = move_toward(rotation.z, rotation_z_target, SHIFT_SPEED * delta)
+		rotation.z = move_toward(rotation.z, rotation_z_target, Global.SHIFT_SPEED * delta)
 	elif abs(rotation.z - rotation_z_target) <= 0.3 and self_shift_triggered:
 		self_shift_triggered = false
 		rotation.z = rotation_z_target
 		position.y = 0 # ensures we remain on the tile side we are supposed to be on
 	
+	###########################
+	# Command a distant Shift #
+	###########################
+	if Input.is_action_just_released("Distant_Shift"):
+		Global.shift_requested_on_mouse = true
 	
 	######################################
 	# Check if we are upside down or not #
@@ -68,8 +70,8 @@ func _physics_process(delta):
 	###################
 	
 	# Character moving forward or backward
-	velocity.z = move_direction * SPEED * cos(rotation.y)
-	velocity.x = move_direction * SPEED * sin(rotation.y)
+	velocity.z = move_direction * Global.SPEED * cos(rotation.y)
+	velocity.x = move_direction * Global.SPEED * sin(rotation.y)
 	
 	# Character rotating right or left
 	rotate_y(steer_direction * is_up_or_down * delta)
