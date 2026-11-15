@@ -1,9 +1,11 @@
 [gd_scene format=3 uid="uid://5re30mheve6q"]
 
+[ext_resource type="Script" uid="uid://dvvfcaytjtq6e" path="res://Game scenes/main_game_scene.gd" id="1_ljjr8"]
 [ext_resource type="PackedScene" uid="uid://bvwc4o8phj4ai" path="res://Game scenes/Character scenes/character.tscn" id="2_sqh5q"]
 [ext_resource type="PackedScene" uid="uid://cwdqucy88hqqy" path="res://Game scenes/Terrain scenes/Level.tscn" id="3_ljjr8"]
 
 [node name="Node" type="Node" unique_id=1927353018]
+script = ExtResource("1_ljjr8")
 
 [node name="Topside_DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1646275945]
 transform = Transform3D(1, 0, 0, 0, 0.34202015, 0.9396926, 0, -0.9396926, 0.34202015, 0, 30, 0)

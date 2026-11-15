@@ -43,6 +43,11 @@ func tile_shift_target():
 	#print("rotation_z_target = " + str(rotation_z_target))
 	# Enable launch of the shift
 	tile_shift_triggered = true
+	
+	 # Immobilize the character currently on the tile
+	for child in get_children():
+		if child is CharacterBody3D:
+			child.not_in_shift = 0 # This disables movement forward and backward
 
 
 func tile_shift(delta):
@@ -56,3 +61,7 @@ func tile_shift(delta):
 		tile_shift_triggered = false
 		rotation.z = rotation_z_target
 		position.y = 0 # ensures we remain on the tile side we are supposed to be on
+		# Reenable character to move
+		for child in get_children():
+			if child is CharacterBody3D:
+				child.not_in_shift = 1 # This enables movement forward and backward
