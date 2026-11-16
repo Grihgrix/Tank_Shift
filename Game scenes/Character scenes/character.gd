@@ -32,40 +32,30 @@ func _physics_process(delta):
 	current_tile_id = (Current_Tile_X * 10000) + Current_Tile_Y
 	#print(current_tile_id)
 	
-	#######################################################
-	# Reparent the character to the current tile it is on #
-	#######################################################
-	#reparent()
-	
-	
 	##############
 	# Self-shift #
 	##############
 	
 	# Upside-down shift command capture
-	if Input.is_action_just_pressed("ui_accept") and self_shift_triggered == false:
-		# Define the rotation post self shift
-		rotation_z_target = rotation.z + PI
-		self_shift_triggered = true
-		#rotation.z = rotation_z_target
-		#self_shift_triggered = false
+	if Input.is_action_just_pressed("ui_accept"):
+		# Trigger reparenting (in the main script)
+		Global.self_shift_requested = true
+		# Trigger shift of current parent
+		var current_tile:Node = get_parent()
+		current_tile.self_shift_requested = true
+		# Consume a shift ammo
+		shift_ammo_count -= 1
+		
 	
-	# Operate self-shift
-	if abs(rotation.z - rotation_z_target) > 0.3 and self_shift_triggered:
-		position.y = 0 # ensures we remain on the tile side we are supposed to be on
-		rotation.z = move_toward(rotation.z, rotation_z_target, Global.SHIFT_SPEED * delta)
-	elif abs(rotation.z - rotation_z_target) <= 0.3 and self_shift_triggered:
-		self_shift_triggered = false
-		rotation.z = rotation_z_target
-		position.y = 0 # ensures we remain on the tile side we are supposed to be on
 	
 	###########################
 	# Command a distant Shift #
 	###########################
 	if Input.is_action_just_released("Distant_Shift") and shift_ammo_count > 0:
+		# Trigger reparenting (in the main script) and shift (in the tile script)
 		Global.shift_requested_on_mouse = true
 		# Actual shift is happening in the tiles code
-		# consume a shift ammo
+		# Consume a shift ammo
 		shift_ammo_count -= 1
 	
 	######################################

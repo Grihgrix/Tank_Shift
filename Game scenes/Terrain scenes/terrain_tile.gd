@@ -2,6 +2,7 @@ extends Node3D
 
 @export var tile_id:int
 @export var tile_shift_requested:bool = false
+@export var self_shift_requested:bool = false
 
 var rotation_z_target:float
 var tile_shift_triggered:bool = false
@@ -9,7 +10,7 @@ var tile_shift_triggered:bool = false
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if tile_shift_requested:
+	if tile_shift_requested or self_shift_requested:
 		tile_shift_target()
 	
 	if Global.shift_requested_on_mouse and tile_shift_triggered:
@@ -37,6 +38,7 @@ func _on_area_3d_mouse_exited():
 func tile_shift_target():
 	# Stops any attempts at relaunching the shift
 	tile_shift_requested = false
+	self_shift_requested = false
 	Global.shift_requested_on_mouse = false
 	# Set the next rotation (after shift end)
 	rotation_z_target = rotation.z + PI
