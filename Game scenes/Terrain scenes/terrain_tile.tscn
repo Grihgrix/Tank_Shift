@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cicovrxj1en1k"]
 
 [ext_resource type="Script" uid="uid://4fgx2ak4mlgo" path="res://Game scenes/Terrain scenes/terrain_tile.gd" id="1_xc5pr"]
+[ext_resource type="Script" uid="uid://b8mn33ju3hpyx" path="res://Game scenes/Terrain scenes/collectibles_area_3d_2.gd" id="2_n6dmr"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_44mry"]
 
@@ -18,6 +19,22 @@ albedo_color = Color(0.92968, 0.4146694, 0, 1)
 albedo_color = Color(0.53710204, 0.16005546, 0, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_wltj5"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_wltj5"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f7ppj"]
+emission_enabled = true
+emission = Color(0, 0.8053029, 0.88193184, 1)
+emission_energy_multiplier = 16.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_f7ppj"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g1mxi"]
+emission_enabled = true
+emission = Color(0.9477367, 0.442621, 3.85046e-07, 1)
+emission_energy_multiplier = 16.0
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_xc5pr"]
 
 [node name="Terrain_tile" type="Node3D" unique_id=1675819588]
 script = ExtResource("1_xc5pr")
@@ -60,6 +77,23 @@ surface_material_override/0 = SubResource("StandardMaterial3D_y2phs")
 transform = Transform3D(6, 0, 0, 0, 0.15, 0, 0, 0, 6, 0, 0, 0)
 shape = SubResource("BoxShape3D_wltj5")
 
+[node name="Collectibles_Area3D2" type="Area3D" parent="." unique_id=969484851]
+collision_layer = 2
+collision_mask = 3
+script = ExtResource("2_n6dmr")
+
+[node name="Shift_Mesh" type="MeshInstance3D" parent="Collectibles_Area3D2" unique_id=1184376444]
+mesh = SubResource("SphereMesh_wltj5")
+surface_material_override/0 = SubResource("StandardMaterial3D_f7ppj")
+
+[node name="Ammo_Mesh" type="MeshInstance3D" parent="Collectibles_Area3D2" unique_id=881026065]
+mesh = SubResource("SphereMesh_f7ppj")
+surface_material_override/0 = SubResource("StandardMaterial3D_g1mxi")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Collectibles_Area3D2" unique_id=270862889]
+shape = SubResource("SphereShape3D_xc5pr")
+
 [connection signal="input_event" from="Area3D" to="." method="_on_area_3d_input_event"]
 [connection signal="mouse_entered" from="Area3D" to="." method="_on_area_3d_mouse_entered"]
 [connection signal="mouse_exited" from="Area3D" to="." method="_on_area_3d_mouse_exited"]
+[connection signal="body_entered" from="Collectibles_Area3D2" to="Collectibles_Area3D2" method="_on_body_entered"]

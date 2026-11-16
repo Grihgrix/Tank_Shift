@@ -8,6 +8,10 @@ extends CharacterBody3D
 @export var current_tile_id:int # to be used to assing tile as temp parent of the character
 @export var not_in_shift:int = 1
 
+@export var canon_ammo_count:int = Global.start_canon_ammo_count
+@export var shift_ammo_count:int = Global.start_shift_ammo_count
+
+
 func _ready():
 	position.y = 0 # ensures we are on the tile level
 	
@@ -58,9 +62,11 @@ func _physics_process(delta):
 	###########################
 	# Command a distant Shift #
 	###########################
-	if Input.is_action_just_released("Distant_Shift"):
+	if Input.is_action_just_released("Distant_Shift") and shift_ammo_count > 0:
 		Global.shift_requested_on_mouse = true
 		# Actual shift is happening in the tiles code
+		# consume a shift ammo
+		shift_ammo_count -= 1
 	
 	######################################
 	# Check if we are upside down or not #
