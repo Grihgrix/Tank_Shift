@@ -7,6 +7,7 @@ To Do :
 - Add NPCs
 - Add NPC behaviours
 - Change the assets for Adrien's assets 
+- Move the camera closer to 90 degrees up
 
 
 Bugs to fix :
