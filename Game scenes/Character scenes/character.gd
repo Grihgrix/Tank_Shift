@@ -8,8 +8,8 @@ extends CharacterBody3D
 @export var current_tile_id:int # to be used to assing tile as temp parent of the character
 @export var not_in_shift:int = 1
 
-@export var canon_ammo_count:int = 5
-@export var shift_ammo_count:int = 2
+@export var canon_ammo_count:int = Global.start_canon_ammo_count
+@export var shift_ammo_count:int = Global.start_shift_ammo_count
 
 
 func _ready():

@@ -19,6 +19,10 @@ var terrain_dimension:Vector2i = Vector2i(10, 10)
 var terrain_tile_size:float = 2 * 3 #(2 * scale of tile)
 var space_between_tiles:float = 0.1 # if we want to make the tiles visible or if we want to keep a small space to see the other side
 
+# Wallets
+var start_canon_ammo_count:int = 5
+var start_shift_ammo_count:int = 2
+
 # Bonuses
 var cannon_bonus_amount = 5
 var shift_bonus_amount = 1
