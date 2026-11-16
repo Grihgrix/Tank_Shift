@@ -32,8 +32,9 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if Input.is_action_just_released("Shoot"):
+	if Input.is_action_just_released("Shoot") and character.canon_ammo_count > 0:
 		_shoot()
+		
 
 
 func _shoot():
@@ -50,3 +51,5 @@ func _shoot():
 	#print("position_delta_x = " + str(position_delta_x) + " position_delta_z = " + str(position_delta_z))
 	projectile.linear_velocity.x = -Global.projectile_speed * position_delta_x / position_delta_xz
 	projectile.linear_velocity.z = -Global.projectile_speed * position_delta_z / position_delta_xz
+	# Consume an ammunition form the character's wallet
+	character.canon_ammo_count -= 1

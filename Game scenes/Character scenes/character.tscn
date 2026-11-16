@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://cdx5is3f4lpts" path="res://Game scenes/Character scenes/character.gd" id="1_0wov1"]
 [ext_resource type="Script" uid="uid://b2hexpl5bkcx0" path="res://Game scenes/Character scenes/tourelle.gd" id="2_aknvi"]
 [ext_resource type="Script" uid="uid://dxnlhpjvxxsdm" path="res://Game scenes/Character scenes/shooter.gd" id="3_y3tpf"]
+[ext_resource type="Script" uid="uid://cepva24pdgjxl" path="res://Game scenes/Character scenes/ath_label.gd" id="4_0e2ju"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_n32ss"]
 resource_name = "Material"
@@ -402,3 +403,13 @@ shape = SubResource("BoxShape3D_f7ppj")
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=419559240]
 transform = Transform3D(1, 0, 0, 0, 0.7071067, 0.70710677, 0, -0.7071067, 0.70710677, 0, 10, 10)
+
+[node name="ATH_Label" type="RichTextLabel" parent="Camera3D" unique_id=1062185977]
+offset_left = 40.0
+offset_top = 26.0
+offset_right = 188.0
+offset_bottom = 136.0
+bbcode_enabled = true
+text = "Ammo : PH
+Shift :  PH"
+script = ExtResource("4_0e2ju")
