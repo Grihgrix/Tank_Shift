@@ -12,7 +12,7 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	#assign_character_to_tile(character)
-	if Global.shift_requested_on_mouse:
+	if Global.shift_requested_on_mouse or Global.self_shift_requested:
 		assign_character_to_tile(character)
 
 
@@ -20,4 +20,3 @@ func assign_character_to_tile(current_character):
 	for tile in Tiles_parent_group.get_children():
 		if tile.tile_id == current_character.current_tile_id:
 			current_character.reparent(tile, true)
-			#print(current_character.get_parent())

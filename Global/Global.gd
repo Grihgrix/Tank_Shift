@@ -13,6 +13,7 @@ const SHIFT_SPEED:float = PI / 0.5
 var current_tile_pointed_id:int # Used to detect which tile to distant shift (which tile has the mouse on it)
 var current_tile_pointed_is_valid:bool = false # If the mouse is on a character the pointer if may no longer be correct
 var shift_requested_on_mouse:bool = false
+var self_shift_requested:bool = false
 
 # Level instanciation
 var terrain_dimension:Vector2i = Vector2i(10, 10)
