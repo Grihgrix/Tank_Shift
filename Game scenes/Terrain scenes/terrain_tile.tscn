@@ -45,10 +45,14 @@ transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0.05, 0)
 mesh = SubResource("PlaneMesh_44mry")
 surface_material_override/0 = SubResource("StandardMaterial3D_i4gw7")
 
+[node name="Landscape_Node3D" type="Node3D" parent="Upside_MeshInstance3D" unique_id=1792919866]
+
 [node name="Downside_MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=282016631]
 transform = Transform3D(-3, 4.5298742e-07, 0, -4.5298742e-07, -3, 0, 0, 0, 3, 0, -0.05, 0)
 mesh = SubResource("PlaneMesh_f7ppj")
 surface_material_override/0 = SubResource("StandardMaterial3D_bewgv")
+
+[node name="Landscape_Node3D" type="Node3D" parent="Downside_MeshInstance3D2" unique_id=542764185]
 
 [node name="Cadre_Node3D" type="Node3D" parent="." unique_id=884177635]
 

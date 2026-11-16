@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://ckth1hvf2wl43"]
+
+[ext_resource type="PackedScene" uid="uid://bkb87vbn55kam" path="res://Game scenes/Terrain scenes/tile_size_hedge.tscn" id="1_j3ba7"]
+
+[node name="Unpassable_landscape_y" type="Node3D" unique_id=792482370]
+
+[node name="Tile_size_hedge" parent="." unique_id=1177526376 instance=ExtResource("1_j3ba7")]
+transform = Transform3D(-8.742278e-08, 0, 0.2, 0, 0.5, 0, -2, 0, -8.742278e-09, 0, 0.25, 0)

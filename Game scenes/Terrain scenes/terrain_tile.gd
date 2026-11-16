@@ -7,6 +7,42 @@ extends Node3D
 var rotation_z_target:float
 var tile_shift_triggered:bool = false
 
+# Preload landscapes
+const FOREST_LANDSCAPE = preload("uid://bfmrqnuo81m6j")
+const PLAIN_LANDSCAPE = preload("uid://dnfv7825pdb6m")
+const UNPASSABLE_LANDSCAPE_X = preload("uid://co6x1fbkfw42w")
+const UNPASSABLE_LANDSCAPE_Y = preload("uid://ckth1hvf2wl43")
+const BUSHY_PLAIN_LANDSCAPE = preload("uid://rpse8bbxdrl3")
+
+@onready var landscapes_dict:Dictionary = {
+	0: PLAIN_LANDSCAPE
+	, 1: FOREST_LANDSCAPE
+	, 2: UNPASSABLE_LANDSCAPE_X
+	, 3: UNPASSABLE_LANDSCAPE_Y
+	, 4: BUSHY_PLAIN_LANDSCAPE
+	}
+
+@onready var landscapes_array:Array = range(landscapes_dict.size())
+
+# Landscape nodes that will host one of the landscapes
+@onready var Upside_landscape = $Upside_MeshInstance3D/Landscape_Node3D
+@onready var Downside_landscape = $Downside_MeshInstance3D2/Landscape_Node3D
+
+
+func _ready():
+	# Pick a random upside landscape
+	var upside_landscape_key = landscapes_array.pick_random()
+	
+	# Ensure the landscape used previously is not reused for bottom
+	# Only expception for plains (0)
+	var landscape_filtered_array:Array 
+	for key in landscapes_array:
+		if key != upside_landscape_key or key == 0:
+			landscape_filtered_array.append(key)
+	
+	# Pick a downside landscape
+	var downside_landscape_key = landscape_filtered_array.pick_random()
+	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
