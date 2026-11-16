@@ -7,3 +7,7 @@ To Do :
 - Add NPCs
 - Add NPC behaviours
 - Change the assets for Adrien's assets 
+
+
+Bugs to fix :
+- 1st self shift does not trigger but consumes a shift ammo
