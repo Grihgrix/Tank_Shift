@@ -5,6 +5,8 @@ func _ready():
 	# Disable the collistion with characters upon spawn (so it does not collide with its own character)
 	set_collision_layer_value(1, false)
 	set_collision_mask_value(1, false)
+	set_collision_layer_value(2, true)
+	set_collision_mask_value(2, true)
 	# Layers and mask 2 remain active so it can collide with obstacles
 	
 	# Wait a short while for the projectile to be away from the shooter
