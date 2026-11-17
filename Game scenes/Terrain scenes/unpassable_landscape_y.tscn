@@ -5,4 +5,4 @@
 [node name="Unpassable_landscape_y" type="Node3D" unique_id=792482370]
 
 [node name="Tile_size_hedge" parent="." unique_id=1177526376 instance=ExtResource("1_j3ba7")]
-transform = Transform3D(-8.742278e-08, 0, 0.2, 0, 1, 0, -2, 0, -8.742278e-09, 0, 0.5, 0)
+transform = Transform3D(-8.742278e-08, 0, 0.4, 0, 1, 0, -2, 0, -1.7484556e-08, 0, 0.5, 0)
