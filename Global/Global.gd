@@ -27,8 +27,8 @@ var plain_proba:float = 1.0 / 3.0
 
 
 # Wallets
-var start_canon_ammo_count:int = 5
-var start_shift_ammo_count:int = 2
+var start_canon_ammo_count:int = 100
+var start_shift_ammo_count:int = 100
 
 # Bonuses
 var cannon_bonus_amount = 5
