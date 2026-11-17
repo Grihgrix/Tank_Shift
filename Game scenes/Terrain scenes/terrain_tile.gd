@@ -57,6 +57,14 @@ func _ready():
 	# Pick a downside landscape
 	var downside_landscape_key = landscape_filtered_array.pick_random()
 	
+	# chance of overwriting with plains # to decrease risk of players being stuck
+	if randf() <= Global.plain_proba:
+		upside_landscape_key = 0
+	
+	# chance of overwriting with plains
+	if randf() <= Global.plain_proba:
+		downside_landscape_key = 0
+	
 	# Overwrite with plain if it is a spawn zone (corner)
 	if is_spawn_tile:
 		upside_landscape_key = 0

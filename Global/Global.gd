@@ -23,6 +23,7 @@ var corner_tile_id_1 = (0 * 10000) + 0
 var corner_tile_id_2 = (0 * 10000) + terrain_dimension.y - 1
 var corner_tile_id_3 = ((terrain_dimension.x - 1) * 10000) + 0
 var corner_tile_id_4 = ((terrain_dimension.x - 1) * 10000) + terrain_dimension.y - 1
+var plain_proba:float = 1.0 / 3.0
 
 
 # Wallets
