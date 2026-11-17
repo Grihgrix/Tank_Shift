@@ -6,7 +6,7 @@ extends Node
 # Gameplay
 var character_count:int = 2
 var projectile_speed:int = 50
-const SPEED:float = 20.0
+const SPEED:float = 10.0
 const SHIFT_SPEED:float = PI / 0.5
 
 # Detect tile on which the mouse is
