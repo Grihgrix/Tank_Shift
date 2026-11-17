@@ -51,7 +51,7 @@ func _ready():
 	# Only expception for plains (0)
 	var landscape_filtered_array:Array 
 	for key in landscapes_array:
-		if key != upside_landscape_key or key == 0:
+		if key != upside_landscape_key:
 			landscape_filtered_array.append(key)
 	
 	# Pick a downside landscape
