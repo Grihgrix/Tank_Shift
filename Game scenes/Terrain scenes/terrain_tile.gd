@@ -43,6 +43,20 @@ func _ready():
 	# Pick a downside landscape
 	var downside_landscape_key = landscape_filtered_array.pick_random()
 	
+	
+	##########################
+	# Instantiate landscapes #
+	##########################
+	
+	instantiate_landscape(Upside_landscape, upside_landscape_key)
+	instantiate_landscape(Downside_landscape, downside_landscape_key)
+
+
+func instantiate_landscape(parent_node, selected_landscape):
+	var SELECTED_LANDSCAPE = landscapes_dict[selected_landscape]
+	var landscape:Node = SELECTED_LANDSCAPE.instantiate()
+	parent_node.add_child(landscape)
+
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
