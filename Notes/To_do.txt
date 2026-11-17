@@ -2,13 +2,13 @@ To Do :
 
 - Convert projhectile from rigid body to a simple mesh 
     move the projectile movement code from shooter node to projectile using a ray cast https://www.gdquest.com/library/raycast_introduction/
-- Add obsacles and object to the tiles
-- Add new tile face types randomly selected upon tile instanciations
 - Add NPCs
 - Add NPC behaviours
 - Change the assets for Adrien's assets 
 - Move the camera closer to 90 degrees up
+- Replace wallets by cooldown system for both shift and ammo
 
 
 Bugs to fix :
 - 1st self shift does not trigger but consumes a shift ammo
+    Not relevant after replacement of wallet to cooldown
