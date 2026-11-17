@@ -5,15 +5,14 @@
 [sub_resource type="SphereMesh" id="SphereMesh_wltj5"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f7ppj"]
-albedo_color = Color(0.95612663, 0.51317996, 7.70092e-07, 1)
-emission_enabled = true
-emission = Color(0.9563152, 0.51302093, 5.7756904e-07, 1)
+albedo_color = Color(0.14762416, 0.19509098, 0.1468671, 1)
+emission = Color(0.2600731, 0.4162472, 1, 1)
 emission_energy_multiplier = 16.0
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_wltj5"]
 
 [node name="Projectile_RigidBody3D" type="RigidBody3D" unique_id=848348561]
-collision_layer = 3
+collision_layer = 0
 collision_mask = 3
 gravity_scale = 0.0
 script = ExtResource("1_sto70")
