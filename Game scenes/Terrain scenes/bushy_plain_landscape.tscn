@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://rpse8bbxdrl3"]
+
+[ext_resource type="PackedScene" uid="uid://bpsp568epha1m" path="res://Game scenes/Terrain scenes/bush.tscn" id="1_s24m5"]
+
+[node name="Bushy_plain" type="Node3D" unique_id=868323327]
+
+[node name="Bush1" parent="." unique_id=1150401529 instance=ExtResource("1_s24m5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.09393525, 0, 0.37772855)
+
+[node name="Bush2" parent="." unique_id=1259999220 instance=ExtResource("1_s24m5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7241079, 0, -0.825161)
+
+[node name="Bush3" parent="." unique_id=946893104 instance=ExtResource("1_s24m5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.38420057, 0, -0.5396745)
