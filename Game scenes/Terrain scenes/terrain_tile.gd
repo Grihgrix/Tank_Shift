@@ -29,7 +29,21 @@ const BUSHY_PLAIN_LANDSCAPE = preload("uid://rpse8bbxdrl3")
 @onready var Downside_landscape = $Downside_MeshInstance3D2/Landscape_Node3D
 
 
+@onready var is_spawn_tile:bool = false
+
+
 func _ready():
+	# Wait is necessary so the tile_idis assigned before we check if we are a corner tile
+	await get_tree().create_timer(0.1).timeout
+	############################################
+	# Identify if current tile is a spawn zone #
+	############################################
+	is_spawn_tile = am_i_spawn_zone()
+	
+	#############################
+	# Choose a random landscape #
+	#############################
+	
 	# Pick a random upside landscape
 	var upside_landscape_key = landscapes_array.pick_random()
 	
@@ -42,6 +56,12 @@ func _ready():
 	
 	# Pick a downside landscape
 	var downside_landscape_key = landscape_filtered_array.pick_random()
+	
+	# Overwrite with plain if it is a spawn zone (corner)
+	if is_spawn_tile:
+		upside_landscape_key = 0
+		downside_landscape_key = 0
+		
 	
 	
 	##########################
@@ -56,6 +76,15 @@ func instantiate_landscape(parent_node, selected_landscape):
 	var SELECTED_LANDSCAPE = landscapes_dict[selected_landscape]
 	var landscape:Node = SELECTED_LANDSCAPE.instantiate()
 	parent_node.add_child(landscape)
+
+
+func am_i_spawn_zone():
+	# Check if the tile id corresponds to the id of any of the 4corners (calculated in Global)
+	if tile_id == Global.corner_tile_id_1 or tile_id == Global.corner_tile_id_2 or tile_id == Global.corner_tile_id_3 or tile_id == Global.corner_tile_id_4:
+		# This is a corner and therefore a possible spawn zone, it should be a plain
+		return true
+	else:
+		return false
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
