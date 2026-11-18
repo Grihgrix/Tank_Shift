@@ -4,6 +4,25 @@
 [ext_resource type="PackedScene" uid="uid://bvwc4o8phj4ai" path="res://Game scenes/Character scenes/character.tscn" id="2_sqh5q"]
 [ext_resource type="PackedScene" uid="uid://cwdqucy88hqqy" path="res://Game scenes/Terrain scenes/Level.tscn" id="3_ljjr8"]
 
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_1ua0y"]
+sky_top_color = Color(0.24303111, 0.5143662, 0.861148, 1)
+sky_horizon_color = Color(0.71105695, 0.66550606, 0.9647961, 1)
+sky_curve = 0.10245305
+
+[sub_resource type="Sky" id="Sky_vqmwc"]
+sky_material = SubResource("ProceduralSkyMaterial_1ua0y")
+
+[sub_resource type="Environment" id="Environment_nr5eq"]
+background_mode = 2
+sky = SubResource("Sky_vqmwc")
+ambient_light_source = 2
+ambient_light_color = Color(1, 0.9, 0.8, 1)
+ssao_enabled = true
+ssao_intensity = 10.0
+glow_enabled = true
+glow_bloom = 0.25
+fog_height_density = 0.1355
+
 [node name="Node" type="Node" unique_id=1927353018]
 script = ExtResource("1_ljjr8")
 
@@ -18,3 +37,6 @@ transform = Transform3D(-0.33073276, 0.6066145, 0.72293484, -0.858795, 0.1241394
 [node name="Projectiles_parent_node" type="Node3D" parent="." unique_id=1350631440 groups=["projectile_parent"]]
 
 [node name="Level" parent="." unique_id=2021217027 instance=ExtResource("3_ljjr8")]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1282892840]
+environment = SubResource("Environment_nr5eq")
