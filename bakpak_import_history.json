@@ -1,0 +1,28 @@
+{
+	"res://Assets/Art/props.glb": {
+		"entities": {
+			"Body_nocol": {
+				"files": [
+					"res://assets/Art/body.res",
+					"res://assets/Art/body.tscn"
+				],
+				"fingerprint": "zFiWxGSf86eBEB0NwkW/eA==",
+				"path": "Art"
+			},
+			"Head_nocol": {
+				"files": [
+					"res://assets/Art/head.res",
+					"res://assets/Art/head.tscn"
+				],
+				"fingerprint": "G48Zu8s7eadWQ2itysPz1w==",
+				"path": "Art"
+			}
+		},
+		"files": [
+			"res://assets/Art/body.res",
+			"res://assets/Art/body.tscn",
+			"res://assets/Art/head.res",
+			"res://assets/Art/head.tscn"
+		]
+	}
+}

@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://dod04a7ea1c8k"]
+
+[ext_resource type="ArrayMesh" uid="uid://dtpopnqg3oyad" path="res://assets/Art/body.res" id="1_0ii33"]
+
+[node name="Body" type="MeshInstance3D" unique_id=1597050894]
+mesh = ExtResource("1_0ii33")
+metadata/bakpak_generated = true
+metadata/bakpak_lod_group = "default"
