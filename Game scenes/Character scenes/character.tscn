@@ -39,7 +39,7 @@ shader_parameter/uv2_scale = Vector3(1, 1, 1)
 shader_parameter/uv2_offset = Vector3(0, 0, 0)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_f7ppj"]
-size = Vector3(2.505188, 2.0440674, 1.9829102)
+size = Vector3(2.505188, 1.5316772, 2.6224976)
 
 [node name="Character" type="CharacterBody3D" unique_id=1998404675]
 transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0, 0, 0)
@@ -69,7 +69,7 @@ transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, -
 surface_material_override/0 = SubResource("ShaderMaterial_ufa4k")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=931742010]
-transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0, 1.15, 0)
+transform = Transform3D(0.9999831, 0, 0, 0, 0.9999831, 0, 0, 0, 1, 0, 0.8938044, -0.04360962)
 shape = SubResource("BoxShape3D_f7ppj")
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=419559240]
