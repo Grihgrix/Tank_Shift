@@ -60,6 +60,10 @@ surface_material_override/0 = SubResource("ShaderMaterial_yk8nn")
 transform = Transform3D(0.053920813, 0, 0, 0, 0.03408003, 0, 0, 0, 0.407366, 1.1233786, 0.31509995, -0.0060013533)
 script = ExtResource("3_y3tpf")
 
+[node name="Timer" type="Timer" parent="Proto_tank/Tourelle/Canon/Shooter" unique_id=623596999]
+wait_time = 3.0
+one_shot = true
+
 [node name="Body" parent="Proto_tank" unique_id=1597050894 instance=ExtResource("5_yk8nn")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, -1.0939587, 0)
 surface_material_override/0 = SubResource("ShaderMaterial_ufa4k")
@@ -69,7 +73,7 @@ transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0, 1.15, 0)
 shape = SubResource("BoxShape3D_f7ppj")
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=419559240]
-transform = Transform3D(1, 0, 0, 0, 0.7071067, 0.70710677, 0, -0.7071067, 0.70710677, 0, 10, 10)
+transform = Transform3D(1, 0, 0, 0, 0.34202012, 0.93969256, 0, -0.9396925, 0.34202012, 0, 20, 3)
 
 [node name="ATH_Label" type="RichTextLabel" parent="Camera3D" unique_id=1062185977]
 offset_left = 40.0

@@ -2,6 +2,9 @@ extends Node3D
 
 # Define in variable the scene we will instantiate (the projectile scene)
 const PROJECTILE = preload("res://Game scenes/Character scenes/projectile.tscn")
+const PROJECTILE_RC = preload("uid://suu8idgxtenm")
+
+
 
 # Variables necessary to properly spawn the projectile
 @export var projectiles_parent_group:String = "projectile_parent"
@@ -10,7 +13,8 @@ var projectiles_node:Node
 
 # Variables needed for orientation
 @onready var character = $"../../../.."
-@onready var tourelle = $"../.."
+@onready var tourelle = $"../../Tourelle"
+@onready var timer = $Timer
 
 @onready var position_delta_x:float = tourelle.global_position.x - global_position.x
 @onready var position_delta_z:float = tourelle.global_position.z - global_position.z
@@ -32,9 +36,10 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if Input.is_action_just_released("Shoot") and character.canon_ammo_count > 0:
-		_shoot()
-
+	pass
+	#if Input.is_action_just_released("Shoot") and character.canon_ammo_count > 0:
+	#	_shoot()
+		
 
 
 func _shoot():
@@ -53,3 +58,18 @@ func _shoot():
 	projectile.linear_velocity.z = -Global.projectile_speed * position_delta_z / position_delta_xz
 	# Consume an ammunition form the character's wallet
 	character.canon_ammo_count -= 1
+
+
+
+func _physics_process(delta):
+	if Input.is_action_just_released("Shoot") and timer.is_stopped():
+		timer.start(1)
+		print("Shoot")
+		shoot_rc()
+
+func shoot_rc():
+	print("Function starts")
+	var projectile_rc:Node = PROJECTILE_RC.instantiate() # Intantiate new projectile
+	projectiles_node.add_child(projectile_rc)
+	projectile_rc.global_transform = global_transform
+	print("Function stops")
