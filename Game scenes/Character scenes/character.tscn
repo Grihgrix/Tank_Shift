@@ -57,7 +57,7 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0
 surface_material_override/0 = SubResource("ShaderMaterial_yk8nn")
 
 [node name="Shooter" type="Node3D" parent="Proto_tank/Tourelle/Head" unique_id=967923646]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.123, 0.315, 0)
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 1.4, 0.36, 0)
 script = ExtResource("3_y3tpf")
 
 [node name="Shooter_Timer" type="Timer" parent="Proto_tank/Tourelle/Head/Shooter" unique_id=623596999]
