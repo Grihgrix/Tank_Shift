@@ -2,10 +2,10 @@
 
 [ext_resource type="Script" uid="uid://cdx5is3f4lpts" path="res://Game scenes/Character scenes/character.gd" id="1_0wov1"]
 [ext_resource type="Script" uid="uid://b2hexpl5bkcx0" path="res://Game scenes/Character scenes/tourelle.gd" id="2_aknvi"]
-[ext_resource type="PackedScene" uid="uid://chlxgvf51pads" path="res://assets/Art/Tank/head.tscn" id="3_wpo4s"]
+[ext_resource type="PackedScene" uid="uid://chlxgvf51pads" path="res://Assets/Art/Tank/head.tscn" id="3_wpo4s"]
 [ext_resource type="Script" uid="uid://dxnlhpjvxxsdm" path="res://Game scenes/Character scenes/shooter.gd" id="3_y3tpf"]
 [ext_resource type="Script" uid="uid://cepva24pdgjxl" path="res://Game scenes/Character scenes/ath_label.gd" id="4_0e2ju"]
-[ext_resource type="PackedScene" uid="uid://dod04a7ea1c8k" path="res://assets/Art/Tank/body.tscn" id="5_yk8nn"]
+[ext_resource type="PackedScene" uid="uid://dod04a7ea1c8k" path="res://Assets/Art/Tank/body.tscn" id="5_yk8nn"]
 [ext_resource type="Shader" uid="uid://cxq17nbxebj1c" path="res://Assets/Art/shader_vertcol.gdshader" id="6_yk8nn"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_yk8nn"]
@@ -60,7 +60,7 @@ surface_material_override/0 = SubResource("ShaderMaterial_yk8nn")
 transform = Transform3D(0.053920813, 0, 0, 0, 0.03408003, 0, 0, 0, 0.407366, 1.1233786, 0.31509995, -0.0060013533)
 script = ExtResource("3_y3tpf")
 
-[node name="Timer" type="Timer" parent="Proto_tank/Tourelle/Canon/Shooter" unique_id=623596999]
+[node name="Shooter_Timer" type="Timer" parent="Proto_tank/Tourelle/Head/Shooter" unique_id=623596999]
 wait_time = 3.0
 one_shot = true
 

@@ -14,7 +14,8 @@ var projectiles_node:Node
 # Variables needed for orientation
 @onready var character = $"../../../.."
 @onready var tourelle = $"../../Tourelle"
-@onready var timer = $Timer
+@onready var shooter_timer = $Shooter_Timer
+
 
 
 # Called when the node enters the scene tree for the first time.
@@ -24,8 +25,8 @@ func _ready():
 
 
 func _physics_process(delta):
-	if Input.is_action_just_released("Shoot") and timer.is_stopped():
-		timer.start(1)
+	if Input.is_action_just_released("Shoot") and shooter_timer.is_stopped():
+		shooter_timer.start(1)
 		print("Shoot")
 		shoot_rc()
 
