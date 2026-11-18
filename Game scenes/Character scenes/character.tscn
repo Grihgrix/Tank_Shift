@@ -2,10 +2,41 @@
 
 [ext_resource type="Script" uid="uid://cdx5is3f4lpts" path="res://Game scenes/Character scenes/character.gd" id="1_0wov1"]
 [ext_resource type="Script" uid="uid://b2hexpl5bkcx0" path="res://Game scenes/Character scenes/tourelle.gd" id="2_aknvi"]
-[ext_resource type="PackedScene" uid="uid://chlxgvf51pads" path="res://Assets/Art/head.tscn" id="3_wpo4s"]
+[ext_resource type="PackedScene" uid="uid://chlxgvf51pads" path="res://assets/Art/Tank/head.tscn" id="3_wpo4s"]
 [ext_resource type="Script" uid="uid://dxnlhpjvxxsdm" path="res://Game scenes/Character scenes/shooter.gd" id="3_y3tpf"]
 [ext_resource type="Script" uid="uid://cepva24pdgjxl" path="res://Game scenes/Character scenes/ath_label.gd" id="4_0e2ju"]
-[ext_resource type="PackedScene" uid="uid://dod04a7ea1c8k" path="res://Assets/Art/body.tscn" id="5_yk8nn"]
+[ext_resource type="PackedScene" uid="uid://dod04a7ea1c8k" path="res://assets/Art/Tank/body.tscn" id="5_yk8nn"]
+[ext_resource type="Shader" uid="uid://cxq17nbxebj1c" path="res://Assets/Art/shader_vertcol.gdshader" id="6_yk8nn"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yk8nn"]
+render_priority = 0
+shader = ExtResource("6_yk8nn")
+shader_parameter/albedo = Color(0.55408335, 0.61, 0.2745, 1)
+shader_parameter/albedo_texture_size = Vector2i(0, 0)
+shader_parameter/point_size = 1.0
+shader_parameter/roughness = 1.0
+shader_parameter/metallic_texture_channel = Vector4(1, 0, 0, 0)
+shader_parameter/specular = 0.5
+shader_parameter/metallic = 0.0
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ufa4k"]
+render_priority = 0
+shader = ExtResource("6_yk8nn")
+shader_parameter/albedo = Color(0.6044083, 0.61, 0.2745, 1)
+shader_parameter/albedo_texture_size = Vector2i(0, 0)
+shader_parameter/point_size = 1.0
+shader_parameter/roughness = 1.0
+shader_parameter/metallic_texture_channel = Vector4(1, 0, 0, 0)
+shader_parameter/specular = 0.5
+shader_parameter/metallic = 0.0
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_f7ppj"]
 size = Vector3(2.505188, 2.0440674, 1.9829102)
@@ -23,6 +54,7 @@ script = ExtResource("2_aknvi")
 
 [node name="Head" parent="Proto_tank/Tourelle" unique_id=897098856 instance=ExtResource("3_wpo4s")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+surface_material_override/0 = SubResource("ShaderMaterial_yk8nn")
 
 [node name="Shooter" type="Node3D" parent="Proto_tank/Tourelle/Head" unique_id=967923646]
 transform = Transform3D(0.053920813, 0, 0, 0, 0.03408003, 0, 0, 0, 0.407366, 1.1233786, 0.31509995, -0.0060013533)
@@ -30,6 +62,7 @@ script = ExtResource("3_y3tpf")
 
 [node name="Body" parent="Proto_tank" unique_id=1597050894 instance=ExtResource("5_yk8nn")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, -1.0939587, 0)
+surface_material_override/0 = SubResource("ShaderMaterial_ufa4k")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=931742010]
 transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0, 1.15, 0)
