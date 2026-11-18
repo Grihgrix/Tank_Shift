@@ -38,7 +38,7 @@ func _physics_process(delta):
 	# Upside-down shift command capture
 	if Input.is_action_just_pressed("ui_accept") and shift_timer.is_stopped():
 		# Start the cooldown
-		shift_timer.start(5)
+		shift_timer.start(Global.shift_cooldown)
 		# Trigger reparenting (in the main script)
 		Global.self_shift_requested = true
 		# Trigger shift of current parent
@@ -52,7 +52,7 @@ func _physics_process(delta):
 	###########################
 	if Input.is_action_just_released("Distant_Shift") and shift_timer.is_stopped():
 		# Start the cooldown
-		shift_timer.start(5)
+		shift_timer.start(Global.shift_cooldown)
 		# Trigger reparenting (in the main script) and shift (in the tile script)
 		Global.shift_requested_on_mouse = true
 		# Actual shift is happening in the tiles code

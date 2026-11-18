@@ -27,5 +27,5 @@ var plain_proba:float = 1.0 / 3.0
 
 
 # Bonuses
-var cannon_bonus_amount = 5
-var shift_bonus_amount = 1
+var shoot_cooldown:int = 1
+var shift_cooldown:int = 5
