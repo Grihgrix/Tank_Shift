@@ -14,11 +14,8 @@ var projectiles_node:Node
 # Variables needed for orientation
 @onready var character = $"../../../.."
 @onready var tourelle = $"../../Tourelle"
-@onready var timer = $Timer
+@onready var shooter_timer = $Shooter_Timer
 
-@onready var position_delta_x:float = tourelle.global_position.x - global_position.x
-@onready var position_delta_z:float = tourelle.global_position.z - global_position.z
-@onready var position_delta_xz:float
 
 
 # Called when the node enters the scene tree for the first time.
@@ -26,44 +23,10 @@ func _ready():
 	# Ensures the projectile node is part of a group separate from the character, so it is no longer affected by the character movements after being spawned
 	projectiles_node = get_tree().get_first_node_in_group(projectiles_parent_group)
 
-	# Find the length between the 2 points we are comparing for linear velocity
-	position_delta_x = tourelle.global_position.x - global_position.x
-	position_delta_z = tourelle.global_position.z - global_position.z
-
-	position_delta_xz = sqrt(position_delta_x * position_delta_x) + (position_delta_z * position_delta_z)
-	#print(position_delta_xz)
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-	#if Input.is_action_just_released("Shoot") and character.canon_ammo_count > 0:
-	#	_shoot()
-		
-
-
-func _shoot():
-
-	# Spawn the projectile
-	var projectile:Node = PROJECTILE.instantiate() # Intantiate new projectile
-	projectiles_node.add_child(projectile)
-
-	# Define initial position
-	projectile.global_position = global_position # Necessary if in a different node
-
-	position_delta_x = tourelle.global_position.x - global_position.x
-	position_delta_z = tourelle.global_position.z - global_position.z
-	#print("position_delta_x = " + str(position_delta_x) + " position_delta_z = " + str(position_delta_z))
-	projectile.linear_velocity.x = -Global.projectile_speed * position_delta_x / position_delta_xz
-	projectile.linear_velocity.z = -Global.projectile_speed * position_delta_z / position_delta_xz
-	# Consume an ammunition form the character's wallet
-	character.canon_ammo_count -= 1
-
-
 
 func _physics_process(delta):
-	if Input.is_action_just_released("Shoot") and timer.is_stopped():
-		timer.start(1)
+	if Input.is_action_just_released("Shoot") and shooter_timer.is_stopped():
+		shooter_timer.start(1)
 		print("Shoot")
 		shoot_rc()
 
