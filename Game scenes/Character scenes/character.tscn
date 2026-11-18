@@ -84,3 +84,7 @@ bbcode_enabled = true
 text = "Ammo : PH
 Shift :  PH"
 script = ExtResource("4_0e2ju")
+
+[node name="Shift_Timer" type="Timer" parent="." unique_id=983244169]
+wait_time = 5.0
+one_shot = true
