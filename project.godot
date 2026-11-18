@@ -24,6 +24,10 @@ Global="*uid://da1itjvbca8ia"
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/bakpak_import_tool/plugin.cfg")
+
 [global_group]
 
 projectile_parent=""
