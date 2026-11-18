@@ -12,6 +12,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	line_1 =  "[b][color=orange]Ammo: " + str(character.canon_ammo_count) + "[/color]\n"
-	line_2 = "[color=light_blue]Shift: " + str(character.shift_ammo_count)
-	text = line_1 + line_2
+	#line_1 =  "[b][color=orange]Ammo: " + str(character.canon_ammo_count) + "[/color]\n"
+	#line_2 = "[color=light_blue]Shift: " + str(character.shift_ammo_count)
+	#text = line_1 + line_2
+	text = ""
