@@ -1,6 +1,5 @@
 To Do : 
 
-- Replace wallets by cooldown system for shift
 - Add NPCs
 - Spawn characters in the spawn zones (4 corners * upside and downside)
 - Projectile should despawn upon impact without waiting for the timer
