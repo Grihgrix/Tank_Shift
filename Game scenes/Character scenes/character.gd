@@ -11,7 +11,6 @@ extends CharacterBody3D
 @export var canon_ammo_count:int = Global.start_canon_ammo_count
 @export var shift_ammo_count:int = Global.start_shift_ammo_count
 
-@onready var current_tile:Node
 
 func _ready():
 	position.y = 0 # ensures we are on the tile level
@@ -42,9 +41,7 @@ func _physics_process(delta):
 		# Trigger reparenting (in the main script)
 		Global.self_shift_requested = true
 		# Trigger shift of current parent
-		print(current_tile)
-		current_tile = await get_parent()
-		print(current_tile)
+		var current_tile:Node = get_parent()
 		current_tile.self_shift_requested = true
 		
 	
