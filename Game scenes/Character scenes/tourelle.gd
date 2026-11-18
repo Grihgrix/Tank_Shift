@@ -1,7 +1,7 @@
 extends Node3D
 
 @onready var group_tourelle = $"."
-@onready var tourelle = $Tourelle
+@onready var tourelle = $Head
 
 
 # Variable for mouse angle measurements and calculations
@@ -36,10 +36,10 @@ func _input(event):
 		current_tourelle_viewport_position = get_viewport().get_camera_3d().unproject_position(tourelle.global_position)
 		# Calculate mouse postion relative to tourele in the viewport
 		tourelle_mouse_positon = current_mouse_postion - current_tourelle_viewport_position
-		
+
 		# Calculate angular position of the mouse with the tourelle being (0,0)
 		mouse_viewport_angular_position = atan2(-tourelle_mouse_positon.y, tourelle_mouse_positon.x)
-		
+
 		if cos(mouse_viewport_angular_position) >=0:
 			cosinus_cam = "+"
 		else:
@@ -48,7 +48,7 @@ func _input(event):
 			sinus_cam = "+"
 		else:
 			sinus_cam = "-"
-		
+
 		# Convert viewport angle to tourelle angle
 		if  cosinus_cam == "-" and sinus_cam == "-":
 			mouse_viewport_angular_position_Ref_tour = (1.5 * PI) + mouse_viewport_angular_position
@@ -58,6 +58,6 @@ func _input(event):
 			mouse_viewport_angular_position_Ref_tour = (- 0.5 * PI) + mouse_viewport_angular_position
 		elif cosinus_cam == "-"  and sinus_cam == "+":
 			mouse_viewport_angular_position_Ref_tour = (1.5 * PI) + mouse_viewport_angular_position
-		
+
 		# Assign new angle to the tourelle
 		group_tourelle.rotation.y = mouse_viewport_angular_position_Ref_tour
