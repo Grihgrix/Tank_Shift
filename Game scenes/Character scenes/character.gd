@@ -43,8 +43,6 @@ func _physics_process(delta):
 		# Trigger shift of current parent
 		var current_tile:Node = get_parent()
 		current_tile.self_shift_requested = true
-		# Consume a shift ammo
-		shift_ammo_count -= 1
 		
 	
 	
@@ -55,8 +53,6 @@ func _physics_process(delta):
 		# Trigger reparenting (in the main script) and shift (in the tile script)
 		Global.shift_requested_on_mouse = true
 		# Actual shift is happening in the tiles code
-		# Consume a shift ammo
-		shift_ammo_count -= 1
 	
 	######################################
 	# Check if we are upside down or not #

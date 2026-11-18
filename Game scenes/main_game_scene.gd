@@ -7,13 +7,14 @@ extends Node
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	assign_character_to_tile(character)
+	
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	#assign_character_to_tile(character)
-	if Global.shift_requested_on_mouse or Global.self_shift_requested:
-		assign_character_to_tile(character)
+	assign_character_to_tile(character)
+	#if Global.shift_requested_on_mouse or Global.self_shift_requested:
+	#	assign_character_to_tile(character)
 
 
 func assign_character_to_tile(current_character):
