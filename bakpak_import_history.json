@@ -1,0 +1,28 @@
+{
+	"res://Assets/Art/props.glb": {
+		"entities": {
+			"Body_nocol": {
+				"files": [
+					"res://assets/Art/Tank/body.res",
+					"res://assets/Art/Tank/body.tscn"
+				],
+				"fingerprint": "zFiWxGSf86eBEB0NwkW/eA==",
+				"path": "Art/Tank"
+			},
+			"Head_nocol": {
+				"files": [
+					"res://assets/Art/Tank/head.res",
+					"res://assets/Art/Tank/head.tscn"
+				],
+				"fingerprint": "G48Zu8s7eadWQ2itysPz1w==",
+				"path": "Art/Tank"
+			}
+		},
+		"files": [
+			"res://assets/Art/Tank/body.res",
+			"res://assets/Art/Tank/body.tscn",
+			"res://assets/Art/Tank/head.res",
+			"res://assets/Art/Tank/head.tscn"
+		]
+	}
+}
