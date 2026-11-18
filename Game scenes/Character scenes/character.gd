@@ -8,8 +8,7 @@ extends CharacterBody3D
 @export var current_tile_id:int # to be used to assing tile as temp parent of the character
 @export var not_in_shift:int = 1
 
-@export var canon_ammo_count:int = Global.start_canon_ammo_count
-@export var shift_ammo_count:int = Global.start_shift_ammo_count
+@onready var shift_timer = $Shift_Timer
 
 
 func _ready():
@@ -37,7 +36,9 @@ func _physics_process(delta):
 	##############
 	
 	# Upside-down shift command capture
-	if Input.is_action_just_pressed("ui_accept"):
+	if Input.is_action_just_pressed("ui_accept") and shift_timer.is_stopped():
+		# Start the cooldown
+		shift_timer.start(5)
 		# Trigger reparenting (in the main script)
 		Global.self_shift_requested = true
 		# Trigger shift of current parent
@@ -49,7 +50,9 @@ func _physics_process(delta):
 	###########################
 	# Command a distant Shift #
 	###########################
-	if Input.is_action_just_released("Distant_Shift") and shift_ammo_count > 0:
+	if Input.is_action_just_released("Distant_Shift") and shift_timer.is_stopped():
+		# Start the cooldown
+		shift_timer.start(5)
 		# Trigger reparenting (in the main script) and shift (in the tile script)
 		Global.shift_requested_on_mouse = true
 		# Actual shift is happening in the tiles code
