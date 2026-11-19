@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dvvfcaytjtq6e" path="res://Game scenes/main_game_scene.gd" id="1_ljjr8"]
 [ext_resource type="PackedScene" uid="uid://bvwc4o8phj4ai" path="res://Game scenes/Character scenes/character.tscn" id="2_sqh5q"]
+[ext_resource type="Script" uid="uid://cepva24pdgjxl" path="res://Game scenes/Character scenes/ath_label.gd" id="3_gk8pv"]
 [ext_resource type="PackedScene" uid="uid://cwdqucy88hqqy" path="res://Game scenes/Terrain scenes/Level.tscn" id="3_ljjr8"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_1ua0y"]
@@ -33,6 +34,20 @@ transform = Transform3D(1, 0, 0, 0, 0.34202015, 0.9396926, 0, -0.9396926, 0.3420
 transform = Transform3D(-0.33073276, 0.6066145, 0.72293484, -0.858795, 0.1241394, -0.4970523, -0.39126372, -0.7852442, 0.47990042, 42.01996, -62.795364, 73.72279)
 
 [node name="Character" parent="." unique_id=1998404675 instance=ExtResource("2_sqh5q")]
+
+[node name="Camera3D2" type="Camera3D" parent="Character" unique_id=988657058]
+transform = Transform3D(1, 0, 0, 0, 0.34202012, 0.93969256, 0, -0.9396925, 0.34202012, 0, 20, 3)
+
+[node name="ATH_Label" type="RichTextLabel" parent="Character/Camera3D2" unique_id=1409370478]
+offset_left = 40.0
+offset_top = 26.0
+offset_right = 188.0
+offset_bottom = 136.0
+bbcode_enabled = true
+text = "Ammo : PH
+Shift :  PH"
+script = ExtResource("3_gk8pv")
+metadata/_edit_use_anchors_ = true
 
 [node name="Projectiles_parent_node" type="Node3D" parent="." unique_id=1350631440 groups=["projectile_parent"]]
 
