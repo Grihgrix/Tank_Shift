@@ -25,6 +25,71 @@ var corner_tile_id_3 = ((terrain_dimension.x - 1) * 10000) + 0
 var corner_tile_id_4 = ((terrain_dimension.x - 1) * 10000) + terrain_dimension.y - 1
 var plain_proba:float = 1.0 / 3.0
 
+# Spawn locations and conditions for each character (upt to 8)
+# location X,Y,Z, Rotation Z
+var characters_spawn_locations:Dictionary = {
+	1:{
+		"x": 0   # Loc X
+		, "y": 0 # Loc Y
+		, "z": 0 # Loc Z
+		, "Ry": - PI/4 # Rot Y
+		, "Rz": 0 # Rot Z
+		}
+	, 2:{
+		"x": (terrain_dimension.x - 1) * (terrain_tile_size + space_between_tiles)
+		, "y": 0 
+		, "z": 0 
+		, "Ry": PI/4
+		, "Rz": 0
+		}
+	, 3:{
+		"x": (terrain_dimension.x - 1) * (terrain_tile_size + space_between_tiles)
+		, "y": 0 
+		, "z": - (terrain_dimension.y - 1) * (terrain_tile_size + space_between_tiles)
+		, "Ry": 3 * PI / 4
+		, "Rz": 0
+		}
+	, 4:{
+		"x": 0
+		, "y": 0 
+		, "z": - (terrain_dimension.y - 1) * (terrain_tile_size + space_between_tiles)
+		, "Ry": - 3 * PI / 4
+		, "Rz": 0
+		}
+	, 5:{
+		"x": 0
+		, "y": 0 
+		, "z": 0
+		, "Ry": - PI / 4
+		, "Rz": PI
+		}
+	, 6:{
+		"x": (terrain_dimension.x - 1) * (terrain_tile_size + space_between_tiles)
+		, "y": 0 
+		, "z": 0 
+		, "Ry": PI/4
+		, "Rz": PI
+		}
+	, 7:{
+		"x": (terrain_dimension.x - 1) * (terrain_tile_size + space_between_tiles)
+		, "y": 0 
+		, "z": - (terrain_dimension.y - 1) * (terrain_tile_size + space_between_tiles)
+		, "Ry": 3 * PI / 4
+		, "Rz": PI
+		}
+	, 8:{
+		"x": 0
+		, "y": 0 
+		, "z": - (terrain_dimension.y - 1) * (terrain_tile_size + space_between_tiles)
+		, "Ry": - 3 * PI / 4
+		, "Rz": PI
+		}
+	}
+
+# terrain_tile.position.x = terrain_dimension.x * (terrain_tile_size + space_between_tiles)
+# terrain_tile.position.y = 0
+# terrain_tile.position.z = -terrain_dimension.y * (terrain_tile_size + space_between_tiles)
+
 
 # Bonuses
 var shoot_cooldown:int = 1

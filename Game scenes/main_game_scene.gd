@@ -2,7 +2,14 @@ extends Node
 
 @onready var player = $Player
 @onready var npc_2 = $NPC_2
-@onready var character_list:Array = [player, npc_2]
+@onready var npc_3 = $NPC_3
+@onready var npc_4 = $NPC_4
+@onready var npc_5 = $NPC_5
+@onready var npc_6 = $NPC_6
+@onready var npc_7 = $NPC_7
+@onready var npc_8 = $NPC_8
+
+@onready var character_list:Array = [player, npc_2, npc_3, npc_4, npc_5, npc_6, npc_7, npc_8]
 
 @onready var level = $Level
 @onready var Tiles_parent_group = level.get_node("Tiles_parent_group")

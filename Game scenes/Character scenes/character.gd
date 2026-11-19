@@ -20,9 +20,15 @@ var move_direction:int
 
 
 
-
 func _ready():
-	position.y = 0 # ensures we are on the tile level
+	
+	# Intialize character spawn position
+	position.x = Global.characters_spawn_locations[character_id]["x"]
+	position.y = Global.characters_spawn_locations[character_id]["y"]
+	position.z = Global.characters_spawn_locations[character_id]["z"]
+	
+	rotation.z = Global.characters_spawn_locations[character_id]["Rz"]
+	rotation.y = Global.characters_spawn_locations[character_id]["Ry"]
 	
 
 func _physics_process(delta):
