@@ -33,12 +33,21 @@ transform = Transform3D(1, 0, 0, 0, 0.34202015, 0.9396926, 0, -0.9396926, 0.3420
 [node name="Downside_DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1049685885]
 transform = Transform3D(-0.33073276, 0.6066145, 0.72293484, -0.858795, 0.1241394, -0.4970523, -0.39126372, -0.7852442, 0.47990042, 42.01996, -62.795364, 73.72279)
 
-[node name="Character" parent="." unique_id=1998404675 instance=ExtResource("2_sqh5q")]
+[node name="Projectiles_parent_node" type="Node3D" parent="." unique_id=1350631440 groups=["projectile_parent"]]
 
-[node name="Camera3D2" type="Camera3D" parent="Character" unique_id=988657058]
+[node name="Level" parent="." unique_id=2021217027 instance=ExtResource("3_ljjr8")]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1282892840]
+environment = SubResource("Environment_nr5eq")
+
+[node name="Player" parent="." unique_id=1998404675 instance=ExtResource("2_sqh5q")]
+is_player = true
+character_id = 1
+
+[node name="Camera3D2" type="Camera3D" parent="Player" unique_id=988657058]
 transform = Transform3D(1, 0, 0, 0, 0.34202012, 0.93969256, 0, -0.9396925, 0.34202012, 0, 20, 3)
 
-[node name="ATH_Label" type="RichTextLabel" parent="Character/Camera3D2" unique_id=1409370478]
+[node name="ATH_Label" type="RichTextLabel" parent="Player/Camera3D2" unique_id=1409370478]
 offset_left = 40.0
 offset_top = 26.0
 offset_right = 188.0
@@ -49,9 +58,6 @@ Shift :  PH"
 script = ExtResource("3_gk8pv")
 metadata/_edit_use_anchors_ = true
 
-[node name="Projectiles_parent_node" type="Node3D" parent="." unique_id=1350631440 groups=["projectile_parent"]]
-
-[node name="Level" parent="." unique_id=2021217027 instance=ExtResource("3_ljjr8")]
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1282892840]
-environment = SubResource("Environment_nr5eq")
+[node name="NPC_2" parent="." unique_id=465305077 instance=ExtResource("2_sqh5q")]
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 3.1761627, 0, -7.3063965)
+character_id = 2

@@ -25,14 +25,12 @@ func _ready():
 
 
 func _physics_process(delta):
-	if Input.is_action_just_released("Shoot") and shooter_timer.is_stopped():
+	if character.is_player and Input.is_action_just_released("Shoot") and shooter_timer.is_stopped():
 		shooter_timer.start(Global.shoot_cooldown)
 		print("Shoot")
 		shoot_rc()
 
 func shoot_rc():
-	print("Function starts")
 	var projectile_rc:Node = PROJECTILE_RC.instantiate() # Intantiate new projectile
 	projectiles_node.add_child(projectile_rc)
 	projectile_rc.global_transform = global_transform
-	print("Function stops")
