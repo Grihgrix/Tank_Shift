@@ -1,18 +1,34 @@
 extends CharacterBody3D
 
+# Variables to help the basic controls to work in both up and down side
 @onready var is_up_or_down:int # to be used as a marker of whethere we are upside or downside (value down : -1 or up: 1)
 @onready var tile_rotation_modifier:int
 @onready var self_shift_triggered:bool = false
 @onready var rotation_z_target:float
+# Character movements 
+var steer_direction:int
+var move_direction:int 
 
+# Shift related variables
 @export var current_tile_id:int # to be used to assing tile as temp parent of the character
 @export var not_in_shift:int = 1
-
 @onready var shift_timer = $Shift_Timer
+
+# characters deifferentiation variables
+@export var is_player:bool
+@export var character_id:int
+
 
 
 func _ready():
-	position.y = 0 # ensures we are on the tile level
+	
+	# Intialize character spawn position
+	position.x = Global.characters_spawn_locations[character_id]["x"]
+	position.y = Global.characters_spawn_locations[character_id]["y"]
+	position.z = Global.characters_spawn_locations[character_id]["z"]
+	
+	rotation.z = Global.characters_spawn_locations[character_id]["Rz"]
+	rotation.y = Global.characters_spawn_locations[character_id]["Ry"]
 	
 
 func _physics_process(delta):
@@ -36,7 +52,7 @@ func _physics_process(delta):
 	##############
 	
 	# Upside-down shift command capture
-	if Input.is_action_just_pressed("ui_accept") and shift_timer.is_stopped():
+	if is_player and Input.is_action_just_pressed("ui_accept") and shift_timer.is_stopped():
 		# Start the cooldown
 		shift_timer.start(Global.shift_cooldown)
 		# Trigger reparenting (in the main script)
@@ -50,7 +66,7 @@ func _physics_process(delta):
 	###########################
 	# Command a distant Shift #
 	###########################
-	if Input.is_action_just_released("Distant_Shift") and shift_timer.is_stopped():
+	if is_player and Input.is_action_just_released("Distant_Shift") and shift_timer.is_stopped():
 		# Start the cooldown
 		shift_timer.start(Global.shift_cooldown)
 		# Trigger reparenting (in the main script) and shift (in the tile script)
@@ -81,10 +97,11 @@ func _physics_process(delta):
 	# Capture controls input #
 	##########################
 	
-	# Capture rotation controls
-	var steer_direction = Input.get_axis("ui_right", "ui_left") # Left = 1 # Right = -1
-	# Capture translation controls
-	var move_direction = Input.get_axis("ui_up", "ui_down") # Up = -1 # Down = 1 
+	if is_player:
+		# Capture rotation controls
+		steer_direction = Input.get_axis("ui_right", "ui_left") # Left = 1 # Right = -1
+		# Capture translation controls
+		move_direction = Input.get_axis("ui_up", "ui_down") # Up = -1 # Down = 1 
 	
 	###################
 	# Apply movements #

@@ -1,7 +1,5 @@
 To Do : 
 
-- Add NPCs
-- Spawn characters in the spawn zones (4 corners * upside and downside)
 - Projectile should despawn upon impact without waiting for the timer
 - Projectile should destroy charcters if colliding with them
 - Projectile could despawn trees if colliding with their trunk

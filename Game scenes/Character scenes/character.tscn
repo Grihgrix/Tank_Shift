@@ -4,7 +4,6 @@
 [ext_resource type="Script" uid="uid://b2hexpl5bkcx0" path="res://Game scenes/Character scenes/tourelle.gd" id="2_aknvi"]
 [ext_resource type="PackedScene" uid="uid://chlxgvf51pads" path="res://Assets/Art/Tank/head.tscn" id="3_wpo4s"]
 [ext_resource type="Script" uid="uid://dxnlhpjvxxsdm" path="res://Game scenes/Character scenes/shooter.gd" id="3_y3tpf"]
-[ext_resource type="Script" uid="uid://cepva24pdgjxl" path="res://Game scenes/Character scenes/ath_label.gd" id="4_0e2ju"]
 [ext_resource type="PackedScene" uid="uid://dod04a7ea1c8k" path="res://Assets/Art/Tank/body.tscn" id="5_yk8nn"]
 [ext_resource type="Shader" uid="uid://cxq17nbxebj1c" path="res://Assets/Art/shader_vertcol.gdshader" id="6_yk8nn"]
 
@@ -71,19 +70,6 @@ surface_material_override/0 = SubResource("ShaderMaterial_ufa4k")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=931742010]
 transform = Transform3D(0.9999831, 0, 0, 0, 0.9999831, 0, 0, 0, 1, 0, 0.8938044, -0.04360962)
 shape = SubResource("BoxShape3D_f7ppj")
-
-[node name="Camera3D" type="Camera3D" parent="." unique_id=419559240]
-transform = Transform3D(1, 0, 0, 0, 0.34202012, 0.93969256, 0, -0.9396925, 0.34202012, 0, 20, 3)
-
-[node name="ATH_Label" type="RichTextLabel" parent="Camera3D" unique_id=1062185977]
-offset_left = 40.0
-offset_top = 26.0
-offset_right = 188.0
-offset_bottom = 136.0
-bbcode_enabled = true
-text = "Ammo : PH
-Shift :  PH"
-script = ExtResource("4_0e2ju")
 
 [node name="Shift_Timer" type="Timer" parent="." unique_id=983244169]
 wait_time = 5.0

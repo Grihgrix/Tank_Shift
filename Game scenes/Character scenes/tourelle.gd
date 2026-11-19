@@ -2,6 +2,7 @@ extends Node3D
 
 @onready var group_tourelle = $"."
 @onready var tourelle = $Head
+@onready var character = $"../.."
 
 
 # Variable for mouse angle measurements and calculations
@@ -29,7 +30,7 @@ func _input(event):
 	# Mouse in viewport coordinates.
 	#if event is InputEventMouseButton:
 	#	pass
-	if event is InputEventMouseMotion:
+	if character.is_player and event is InputEventMouseMotion:
 		# Find mouse position
 		current_mouse_postion = event.position
 		# Find tourelle position
