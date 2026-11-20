@@ -1,7 +1,6 @@
 extends Node3D
 
 # Define in variable the scene we will instantiate (the projectile scene)
-const PROJECTILE = preload("res://Game scenes/Character scenes/projectile.tscn")
 const PROJECTILE_RC = preload("uid://suu8idgxtenm")
 
 
@@ -25,10 +24,13 @@ func _ready():
 
 
 func _physics_process(delta):
-	if character.is_player and Input.is_action_just_released("Shoot") and shooter_timer.is_stopped():
+	if character.is_player and character.is_alive and Input.is_action_just_released("Shoot") and shooter_timer.is_stopped():
 		shooter_timer.start(Global.shoot_cooldown)
-		print("Shoot")
 		shoot_rc()
+	# Test to ensure that NPC and player death works
+	#elif not character.is_player and character.is_alive and shooter_timer.is_stopped():
+	#	shooter_timer.start(Global.shoot_cooldown)
+	#	shoot_rc()
 
 func shoot_rc():
 	var projectile_rc:Node = PROJECTILE_RC.instantiate() # Intantiate new projectile

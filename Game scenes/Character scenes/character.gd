@@ -18,6 +18,8 @@ var move_direction:int
 @export var is_player:bool
 @export var character_id:int
 
+@onready var is_alive:bool = true
+
 
 
 func _ready():
@@ -52,7 +54,7 @@ func _physics_process(delta):
 	##############
 	
 	# Upside-down shift command capture
-	if is_player and Input.is_action_just_pressed("ui_accept") and shift_timer.is_stopped():
+	if is_player and is_alive and Input.is_action_just_pressed("ui_accept") and shift_timer.is_stopped():
 		# Start the cooldown
 		shift_timer.start(Global.shift_cooldown)
 		# Trigger reparenting (in the main script)
@@ -66,7 +68,7 @@ func _physics_process(delta):
 	###########################
 	# Command a distant Shift #
 	###########################
-	if is_player and Input.is_action_just_released("Distant_Shift") and shift_timer.is_stopped():
+	if is_player and is_alive and Input.is_action_just_released("Distant_Shift") and shift_timer.is_stopped():
 		# Start the cooldown
 		shift_timer.start(Global.shift_cooldown)
 		# Trigger reparenting (in the main script) and shift (in the tile script)
@@ -97,7 +99,7 @@ func _physics_process(delta):
 	# Capture controls input #
 	##########################
 	
-	if is_player:
+	if is_player and is_alive:
 		# Capture rotation controls
 		steer_direction = Input.get_axis("ui_right", "ui_left") # Left = 1 # Right = -1
 		# Capture translation controls

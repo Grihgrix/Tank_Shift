@@ -29,6 +29,15 @@ func _physics_process(delta):
 		global_position = get_collision_point()
 		# Stop the projectile from moving
 		set_physics_process(false)
+		
+		# Detecti if we hit a character
+		collider = get_collider()
+		if collider is CharacterBody3D:
+			# Implement character death
+			collider.is_alive = false
+	
+		# Depsawn projectile if we had a collision
+		despawn_projectile()
 
 
 func despawn_projectile():
@@ -36,5 +45,5 @@ func despawn_projectile():
 
 
 func _on_timer_timeout():
-	# At the end of the time, despawn the projectile
+	# At the end of the time, despawn the projectile, thus limiting the range
 	despawn_projectile()
