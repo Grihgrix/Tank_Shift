@@ -24,7 +24,7 @@ func _ready():
 
 
 func _physics_process(delta):
-	if character.is_player and Input.is_action_just_released("Shoot") and shooter_timer.is_stopped():
+	if character.is_player and character.is_alive and Input.is_action_just_released("Shoot") and shooter_timer.is_stopped():
 		shooter_timer.start(Global.shoot_cooldown)
 		print("Shoot")
 		shoot_rc()

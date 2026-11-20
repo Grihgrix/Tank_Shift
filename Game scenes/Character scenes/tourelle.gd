@@ -30,7 +30,7 @@ func _input(event):
 	# Mouse in viewport coordinates.
 	#if event is InputEventMouseButton:
 	#	pass
-	if character.is_player and event is InputEventMouseMotion:
+	if character.is_player and character.is_alive and event is InputEventMouseMotion:
 		# Find mouse position
 		current_mouse_postion = event.position
 		# Find tourelle position
