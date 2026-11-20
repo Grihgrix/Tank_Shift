@@ -26,7 +26,7 @@ window/stretch/aspect="expand"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/bakpak_import_tool/plugin.cfg")
+enabled=PackedStringArray("res://addons/bakpak_import_tool/plugin.cfg", "res://addons/imjp94.yafsm/plugin.cfg")
 
 [global_group]
 

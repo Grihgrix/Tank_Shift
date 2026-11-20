@@ -6,6 +6,8 @@
 [ext_resource type="Script" uid="uid://dxnlhpjvxxsdm" path="res://Game scenes/Character scenes/shooter.gd" id="3_y3tpf"]
 [ext_resource type="PackedScene" uid="uid://dod04a7ea1c8k" path="res://Assets/Art/Tank/body.tscn" id="5_yk8nn"]
 [ext_resource type="Shader" uid="uid://cxq17nbxebj1c" path="res://Assets/Art/shader_vertcol.gdshader" id="6_yk8nn"]
+[ext_resource type="Script" uid="uid://b3nr0oxlomtmq" path="res://addons/imjp94.yafsm/src/StateMachinePlayer.gd" id="7_cv6ge"]
+[ext_resource type="Resource" uid="uid://4enqsgp2vgxl" path="res://Game scenes/Character scenes/States/Character_State_Machine.tres" id="8_ufa4k"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_yk8nn"]
 render_priority = 0
@@ -39,6 +41,9 @@ shader_parameter/uv2_offset = Vector3(0, 0, 0)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_f7ppj"]
 size = Vector3(2.505188, 1.212616, 2.6224976)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_wltj5"]
+radius = 15.0
 
 [node name="Character" type="CharacterBody3D" unique_id=1998404675]
 transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0, 0, 0)
@@ -75,3 +80,23 @@ shape = SubResource("BoxShape3D_f7ppj")
 [node name="Shift_Timer" type="Timer" parent="." unique_id=983244169]
 wait_time = 5.0
 one_shot = true
+
+[node name="StateMachinePlayer" type="Node" parent="." unique_id=1033437065]
+script = ExtResource("7_cv6ge")
+state_machine = ExtResource("8_ufa4k")
+metadata/_custom_type_script = "uid://b3nr0oxlomtmq"
+
+[node name="Enemy_Detection" type="Area3D" parent="." unique_id=462094498]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Enemy_Detection" unique_id=276988103]
+shape = SubResource("SphereShape3D_wltj5")
+
+[node name="Label3D" type="Label3D" parent="." unique_id=1630385336]
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0, 4.876709, 0)
+billboard = 1
+text = "0"
+font_size = 200
+
+[connection signal="transited" from="StateMachinePlayer" to="." method="_on_state_machine_player_transited"]
+[connection signal="body_entered" from="Enemy_Detection" to="." method="_on_enemy_detection_body_entered"]
+[connection signal="body_exited" from="Enemy_Detection" to="." method="_on_enemy_detection_body_exited"]
