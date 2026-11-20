@@ -42,6 +42,7 @@ size = Vector3(2.505188, 1.212616, 2.6224976)
 
 [node name="Character" type="CharacterBody3D" unique_id=1998404675]
 transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0, 0, 0)
+axis_lock_linear_y = true
 script = ExtResource("1_0wov1")
 
 [node name="Proto_tank" type="Node3D" parent="." unique_id=1523143693]
