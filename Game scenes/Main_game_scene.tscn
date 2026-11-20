@@ -43,7 +43,6 @@ environment = SubResource("Environment_nr5eq")
 [node name="Player" parent="." unique_id=1998404675 instance=ExtResource("2_sqh5q")]
 is_player = true
 character_id = 1
-is_alive = false
 
 [node name="Camera3D2" type="Camera3D" parent="Player" unique_id=988657058]
 transform = Transform3D(1, 0, 0, 0, 0.34202, 0.9396927, 0, -0.9396927, 0.34202, 0, 20, 3)

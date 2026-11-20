@@ -22,7 +22,7 @@ var move_direction:int
 
 # NPC behaviour
 @onready var state_machine_player:StateMachinePlayer = $StateMachinePlayer
-@onready var enemy_detection = $Enemy_Detection
+@onready var enemy_detection:Area3D = $Enemy_Detection
 @onready var enemies_detected:int = 0
 @onready var enemies_shift_req_detected:int = 0
 @onready var allies_detected:int = 0
@@ -31,6 +31,7 @@ var move_direction:int
 signal on_shift(shifter_id:int, shifter_is_up_or_down:int)
 
 @onready var label_3d = $Label3D
+
 
 
 func _ready():
@@ -44,6 +45,7 @@ func _ready():
 	rotation.y = Global.characters_spawn_locations[character_id]["Ry"]
 	
 	label_3d.text = str(character_id)
+	
 	
 
 func _physics_process(delta):
