@@ -18,7 +18,7 @@ var self_shift_requested:bool = false
 # Level instanciation
 var terrain_dimension:Vector2i = Vector2i(10, 10)
 var terrain_tile_size:float = 2 * 3 #(2 * scale of tile)
-var space_between_tiles:float = 0.1 # if we want to make the tiles visible or if we want to keep a small space to see the other side
+var space_between_tiles:float = 0.2 # if we want to make the tiles visible or if we want to keep a small space to see the other side
 var corner_tile_id_1 = (0 * 10000) + 0
 var corner_tile_id_2 = (0 * 10000) + terrain_dimension.y - 1
 var corner_tile_id_3 = ((terrain_dimension.x - 1) * 10000) + 0
