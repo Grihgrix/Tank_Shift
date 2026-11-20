@@ -8,7 +8,7 @@ To Do :
 - Add a tableau de chasse listing all characters destroyed by each character
 - Add some menus
 - Add an explosion animation upon projectile despawn
-
+- Fix or disable the distant shift ? (If fix, check ray cast solution with mouse pointer)
 
 
 ray cast https://www.gdquest.com/library/raycast_introduction/
