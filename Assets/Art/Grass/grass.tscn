@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://1udyvh4ckd2f"]
+
+[ext_resource type="Texture2D" uid="uid://darfgxo8uhfop" path="res://Assets/Art/Grass/weed-test.png" id="1_756gg"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_nr5eq"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vqmwc"]
+transparency = 1
+albedo_texture = ExtResource("1_756gg")
+billboard_mode = 2
+
+[node name="Weed" type="MeshInstance3D" unique_id=51049938]
+mesh = SubResource("QuadMesh_nr5eq")
+surface_material_override/0 = SubResource("StandardMaterial3D_vqmwc")

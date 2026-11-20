@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://darfgxo8uhfop"
-path.s3tc="res://.godot/imported/weed-test.png-d828befaaf60bf78d67400068d3394e2.s3tc.ctex"
+uid="uid://dyquigf356rj"
+path.s3tc="res://.godot/imported/noiseTexture.png-920b4adc08ecbabc8d3e6147fad2af40.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://Assets/Art/weed-test.png"
-dest_files=["res://.godot/imported/weed-test.png-d828befaaf60bf78d67400068d3394e2.s3tc.ctex"]
+source_file="res://Assets/Art/Grass/noiseTexture.png"
+dest_files=["res://.godot/imported/noiseTexture.png-920b4adc08ecbabc8d3e6147fad2af40.s3tc.ctex"]
 
 [params]
 

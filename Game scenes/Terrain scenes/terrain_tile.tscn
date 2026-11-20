@@ -1,11 +1,14 @@
 [gd_scene format=3 uid="uid://cicovrxj1en1k"]
 
 [ext_resource type="Script" uid="uid://4fgx2ak4mlgo" path="res://Game scenes/Terrain scenes/terrain_tile.gd" id="1_xc5pr"]
+[ext_resource type="Script" uid="uid://bi8gq2wkijt2" path="res://Assets/Art/Grass/grass_spawner.gd" id="2_n6dmr"]
+[ext_resource type="PackedScene" uid="uid://1udyvh4ckd2f" path="res://Assets/Art/Grass/grass.tscn" id="3_nvgtd"]
+[ext_resource type="Material" uid="uid://8xp4j3d3bkrf" path="res://Assets/Art/Grass/grass_shader_material.tres" id="4_cnt1e"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_44mry"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i4gw7"]
-albedo_color = Color(0.20918345, 0.39790806, 9.62615e-08, 1)
+albedo_color = Color(0.58431375, 0.59607846, 0, 1)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_f7ppj"]
 
@@ -18,6 +21,17 @@ albedo_color = Color(0.92968, 0.4146694, 0, 1)
 albedo_color = Color(0.53710204, 0.16005546, 0, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_wltj5"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nr5eq"]
+size = Vector3(5.2, 0.305, 5.2)
+
+[sub_resource type="QuadMesh" id="QuadMesh_vqmwc"]
+material = ExtResource("4_cnt1e")
+size = Vector2(1.5, 1)
+
+[sub_resource type="MultiMesh" id="MultiMesh_nr5eq"]
+transform_format = 1
+mesh = SubResource("QuadMesh_vqmwc")
 
 [node name="Terrain_tile" type="Node3D" unique_id=1675819588]
 script = ExtResource("1_xc5pr")
@@ -63,6 +77,21 @@ surface_material_override/0 = SubResource("StandardMaterial3D_y2phs")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=1764932031]
 transform = Transform3D(6, 0, 0, 0, 0.15, 0, 0, 0, 6, 0, 0, 0)
 shape = SubResource("BoxShape3D_wltj5")
+
+[node name="GrassSpawner" type="CollisionShape3D" parent="." unique_id=1600961617]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15112114, 0)
+shape = SubResource("BoxShape3D_nr5eq")
+debug_color = Color(0, 0.6, 0.19607843, 0.41960785)
+script = ExtResource("2_n6dmr")
+grass_scene = ExtResource("3_nvgtd")
+grass_count = 400
+metadata/_custom_type_script = "uid://bi8gq2wkijt2"
+
+[node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="GrassSpawner" unique_id=490987717]
+multimesh = SubResource("MultiMesh_nr5eq")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1460842084]
+transform = Transform3D(-0.6108549, 0, -0.79174256, 0, 1, 0, 0.79174256, 0, -0.6108549, -5.2521114, 1.6110768, -2.737284)
 
 [connection signal="input_event" from="Area3D" to="." method="_on_area_3d_input_event"]
 [connection signal="mouse_entered" from="Area3D" to="." method="_on_area_3d_mouse_entered"]
