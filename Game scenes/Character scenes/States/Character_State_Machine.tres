@@ -5,6 +5,11 @@
 [ext_resource type="Script" uid="uid://c4k4wlp8h6bfk" path="res://addons/imjp94.yafsm/src/transitions/Transition.gd" id="3_bw8vo"]
 [ext_resource type="Script" uid="uid://1xwfiodpish1" path="res://addons/imjp94.yafsm/src/conditions/IntegerCondition.gd" id="4_yry0i"]
 
+[sub_resource type="Resource" id="Resource_msid3"]
+script = ExtResource("2_jct8u")
+name = "Attack F2F"
+metadata/graph_offset = Vector2(600.5, 142.5)
+
 [sub_resource type="Resource" id="Resource_8x8i8"]
 script = ExtResource("2_jct8u")
 name = "Entry"
@@ -19,77 +24,6 @@ metadata/graph_offset = Vector2(291, 282.5)
 script = ExtResource("2_jct8u")
 name = "Shift attack"
 metadata/graph_offset = Vector2(596.5, 442.5)
-
-[sub_resource type="Resource" id="Resource_msid3"]
-script = ExtResource("2_jct8u")
-name = "Attack F2F"
-metadata/graph_offset = Vector2(600.5, 142.5)
-
-[sub_resource type="Resource" id="Resource_p2cyq"]
-script = ExtResource("3_bw8vo")
-from = "Entry"
-to = "Exploration"
-
-[sub_resource type="Resource" id="Resource_gra5t"]
-script = ExtResource("4_yry0i")
-value = 1
-name = "Ennemies Detected"
-
-[sub_resource type="Resource" id="Resource_bw8vo"]
-script = ExtResource("4_yry0i")
-name = "Ennemies Shift Required"
-
-[sub_resource type="Resource" id="Resource_fbnvg"]
-script = ExtResource("3_bw8vo")
-from = "Exploration"
-to = "Attack F2F"
-conditions = {
-"Ennemies Detected": SubResource("Resource_gra5t"),
-"Ennemies Shift Required": SubResource("Resource_bw8vo")
-}
-
-[sub_resource type="Resource" id="Resource_jct8u"]
-script = ExtResource("4_yry0i")
-value = 1
-name = "Ennemies Shift Required"
-
-[sub_resource type="Resource" id="Resource_rnbln"]
-script = ExtResource("3_bw8vo")
-from = "Exploration"
-to = "Shift attack"
-conditions = {
-"Ennemies Shift Required": SubResource("Resource_jct8u")
-}
-
-[sub_resource type="Resource" id="Resource_8girb"]
-script = ExtResource("4_yry0i")
-value = 1
-name = "Ennemies Detected"
-
-[sub_resource type="Resource" id="Resource_j8ev7"]
-script = ExtResource("4_yry0i")
-name = "Ennemies Shift Required"
-
-[sub_resource type="Resource" id="Resource_w00cs"]
-script = ExtResource("3_bw8vo")
-from = "Shift attack"
-to = "Attack F2F"
-conditions = {
-"Ennemies Detected": SubResource("Resource_8girb"),
-"Ennemies Shift Required": SubResource("Resource_j8ev7")
-}
-
-[sub_resource type="Resource" id="Resource_sws4m"]
-script = ExtResource("4_yry0i")
-name = "Ennemies Detected"
-
-[sub_resource type="Resource" id="Resource_d578a"]
-script = ExtResource("3_bw8vo")
-from = "Shift attack"
-to = "Exploration"
-conditions = {
-"Ennemies Detected": SubResource("Resource_sws4m")
-}
 
 [sub_resource type="Resource" id="Resource_7fk43"]
 script = ExtResource("4_yry0i")
@@ -116,6 +50,36 @@ conditions = {
 "Ennemies Shift Required": SubResource("Resource_yry0i")
 }
 
+[sub_resource type="Resource" id="Resource_p2cyq"]
+script = ExtResource("3_bw8vo")
+from = "Entry"
+to = "Exploration"
+
+[sub_resource type="Resource" id="Resource_jct8u"]
+script = ExtResource("4_yry0i")
+value = 1
+name = "Ennemies Shift Required"
+
+[sub_resource type="Resource" id="Resource_rnbln"]
+script = ExtResource("3_bw8vo")
+from = "Exploration"
+to = "Shift attack"
+conditions = {
+"Ennemies Shift Required": SubResource("Resource_jct8u")
+}
+
+[sub_resource type="Resource" id="Resource_sws4m"]
+script = ExtResource("4_yry0i")
+name = "Ennemies Detected"
+
+[sub_resource type="Resource" id="Resource_d578a"]
+script = ExtResource("3_bw8vo")
+from = "Shift attack"
+to = "Exploration"
+conditions = {
+"Ennemies Detected": SubResource("Resource_sws4m")
+}
+
 [resource]
 script = ExtResource("1_sws4m")
 states = {
@@ -133,11 +97,9 @@ transitions = {
 "Exploration": SubResource("Resource_p2cyq")
 },
 "Exploration": {
-"Attaque": SubResource("Resource_fbnvg"),
 "Shift attack": SubResource("Resource_rnbln")
 },
 "Shift attack": {
-"Attaque": SubResource("Resource_w00cs"),
 "Exploration": SubResource("Resource_d578a")
 }
 }
