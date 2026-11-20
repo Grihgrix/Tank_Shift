@@ -5,6 +5,8 @@ To Do :
 - Add NPC behaviours
 - Change the assets for Adrien's assets 
 - Add a sign of which tiles have a character on the other side of it (shadow or periscope ?)
+- Add a tableau de chasse listing all characters destroyed by each character
+- Add some menus
 
 
 
