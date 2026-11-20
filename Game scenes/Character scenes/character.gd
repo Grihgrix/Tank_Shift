@@ -12,7 +12,7 @@ var move_direction:int
 # Shift related variables
 @export var current_tile_id:int # to be used to assing tile as temp parent of the character
 @export var not_in_shift:int = 1
-@onready var shift_timer = $Shift_Timer
+@onready var shift_timer:Timer = $Shift_Timer
 
 # characters deifferentiation variables
 @export var is_player:bool
@@ -20,6 +20,17 @@ var move_direction:int
 
 @onready var is_alive:bool = true
 
+# NPC behaviour
+@onready var state_machine_player:StateMachinePlayer = $StateMachinePlayer
+@onready var enemy_detection = $Enemy_Detection
+@onready var enemies_detected:int = 0
+@onready var enemies_shift_req_detected:int = 0
+@onready var allies_detected:int = 0
+
+# Signal to detect if ennemy just shifted
+signal on_shift(shifter_id:int, shifter_is_up_or_down:int)
+
+@onready var label_3d = $Label3D
 
 
 func _ready():
@@ -32,14 +43,17 @@ func _ready():
 	rotation.z = Global.characters_spawn_locations[character_id]["Rz"]
 	rotation.y = Global.characters_spawn_locations[character_id]["Ry"]
 	
+	label_3d.text = str(character_id)
+	
 
 func _physics_process(delta):
-	# Add the gravity.
-	if not is_on_floor():
-		#velocity += get_gravity() * delta
-		pass
-		# Gravity is not to be used in this project
-		# Needs to be replaced by thecharacter sticking to the tile surface
+	# Get the current state of the state machine for this character
+	var current_state = state_machine_player.get_current()
+	label_3d.text = str(character_id) + " state = " + current_state
+	
+	#if character_id == 2:
+		#print("Character : " + str(character_id) + " Current State :  " + str(current_state))
+		#print("enemies_detected = " + str(enemies_detected) + " shift_req_detected = " + str(enemies_shift_req_detected))
 	
 	########################################
 	# Find the tile id the character is on #
@@ -79,15 +93,21 @@ func _physics_process(delta):
 	# Check if we are upside down or not #
 	######################################
 	# Tank modifier
-	if abs(round(rotation.z * 100)/100) == 3.14 and abs(round(rotation.x * 100)/100) == 3.14:
+	var prev_is_up_or_down = is_up_or_down
+	if abs(round(global_rotation.z * 100)/100) == 3.14 and abs(round(global_rotation.x * 100)/100) == 3.14:
 		# If both X and Z axis are at 180 deg, we are upside
 		is_up_or_down = 1
-	elif round(rotation.z) == 0 and round(rotation.x) == 0:
+	elif round(global_rotation.z) == 0 and round(global_rotation.x) == 0:
 		# If both X and Z axis are at 0 deg, we are upside
 		is_up_or_down = 1
 	else:
 		# Otherwise either X or Z or at 180 while the other is at 0, we are downside
 		is_up_or_down = -1
+	
+	# When shift just happened, emit the signal
+	if prev_is_up_or_down !=is_up_or_down:
+		print("Emit on_shift")
+		on_shift.emit(character_id, is_up_or_down)
 	
 	# Tile rotation modifier
 	var tile_rotation = (round((round(get_parent().rotation.z * 100)/(3.14 * 2)) / 10)) / 10
@@ -115,6 +135,61 @@ func _physics_process(delta):
 	
 	
 	# Character rotating right or left
-	rotate_y(steer_direction * is_up_or_down * delta)
+	global_rotation.y += (steer_direction * is_up_or_down *  delta)
 
 	move_and_slide()
+
+
+func _on_state_machine_player_transited(from, to):
+	pass # Replace with function body.
+
+
+func _on_enemy_detection_body_entered(body):
+	if not is_player and body is CharacterBody3D:
+		if body.character_id == 1:
+			enemies_detected +=1
+			if character_id == 2:
+				print(str(body) + " enemies_detected = " + str(enemies_detected) + " shift_req_detected = " + str(enemies_shift_req_detected))
+			state_machine_player.set_param("Ennemies Detected", enemies_detected)
+			
+			# Check if the enemy is on the other side
+			if body.is_up_or_down != is_up_or_down:
+				enemies_shift_req_detected += 1
+			state_machine_player.set_param("Ennemies Shift Required", enemies_shift_req_detected)
+			
+			# Start checking the on shift signal for this character
+			body.on_shift.connect(_nearby_ennemy_shifted)
+		else:
+			allies_detected +=1
+			state_machine_player.set_param("Allies Detected", enemies_detected)
+
+
+func _on_enemy_detection_body_exited(body):
+	if not is_player and body is CharacterBody3D:
+		if body.character_id == 1:
+			enemies_detected -=1
+			state_machine_player.set_param("Ennemies Detected", enemies_detected)
+			# Check if the enemy is on the other side
+			if body.is_up_or_down != is_up_or_down:
+				enemies_shift_req_detected -= 1
+				state_machine_player.set_param("Ennemies Shift Required", enemies_shift_req_detected)
+			
+			# Start checking the on shift signal for this character
+			body.on_shift.disconnect(_nearby_ennemy_shifted)
+		else:
+			allies_detected -=1
+			state_machine_player.set_param("Allies Detected", enemies_detected)
+
+# Runs when on_shift signal is emitted
+func _nearby_ennemy_shifted(shifter_id, shifter_is_up_or_down):
+	print("Shifter detected : " + str(shifter_id))
+	if shifter_id == 1:
+		#print("Ennemy shifter nearby : " + str(shifter_id) + " " + str(shifter_is_up_or_down))
+		
+		if shifter_is_up_or_down == is_up_or_down:
+			# If we are on the same side now : 
+			enemies_shift_req_detected -= 1
+		else :
+			# If we are now shifted away
+			enemies_shift_req_detected += 1
+		state_machine_player.set_param("Ennemies Shift Required", enemies_shift_req_detected)

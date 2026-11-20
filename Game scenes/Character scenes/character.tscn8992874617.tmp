@@ -1,0 +1,189 @@
+[gd_scene format=3 uid="uid://bvwc4o8phj4ai"]
+
+[ext_resource type="Script" uid="uid://cdx5is3f4lpts" path="res://Game scenes/Character scenes/character.gd" id="1_0wov1"]
+[ext_resource type="Script" uid="uid://b2hexpl5bkcx0" path="res://Game scenes/Character scenes/tourelle.gd" id="2_aknvi"]
+[ext_resource type="PackedScene" uid="uid://chlxgvf51pads" path="res://Assets/Art/Tank/head.tscn" id="3_wpo4s"]
+[ext_resource type="Script" uid="uid://dxnlhpjvxxsdm" path="res://Game scenes/Character scenes/shooter.gd" id="3_y3tpf"]
+[ext_resource type="PackedScene" uid="uid://dod04a7ea1c8k" path="res://Assets/Art/Tank/body.tscn" id="5_yk8nn"]
+[ext_resource type="Shader" uid="uid://cxq17nbxebj1c" path="res://Assets/Art/shader_vertcol.gdshader" id="6_yk8nn"]
+[ext_resource type="Script" uid="uid://b3nr0oxlomtmq" path="res://addons/imjp94.yafsm/src/StateMachinePlayer.gd" id="7_cv6ge"]
+[ext_resource type="Script" uid="uid://b53fokdospept" path="res://addons/imjp94.yafsm/src/states/StateMachine.gd" id="8_msid3"]
+[ext_resource type="Script" uid="uid://ltg1abt67kp8" path="res://addons/imjp94.yafsm/src/states/State.gd" id="9_php0s"]
+[ext_resource type="Script" uid="uid://c4k4wlp8h6bfk" path="res://addons/imjp94.yafsm/src/transitions/Transition.gd" id="11_lbtpe"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yk8nn"]
+render_priority = 0
+shader = ExtResource("6_yk8nn")
+shader_parameter/albedo = Color(0.55408335, 0.61, 0.2745, 1)
+shader_parameter/albedo_texture_size = Vector2i(0, 0)
+shader_parameter/point_size = 1.0
+shader_parameter/roughness = 1.0
+shader_parameter/metallic_texture_channel = Vector4(1, 0, 0, 0)
+shader_parameter/specular = 0.5
+shader_parameter/metallic = 0.0
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ufa4k"]
+render_priority = 0
+shader = ExtResource("6_yk8nn")
+shader_parameter/albedo = Color(0.6044083, 0.61, 0.2745, 1)
+shader_parameter/albedo_texture_size = Vector2i(0, 0)
+shader_parameter/point_size = 1.0
+shader_parameter/roughness = 1.0
+shader_parameter/metallic_texture_channel = Vector4(1, 0, 0, 0)
+shader_parameter/specular = 0.5
+shader_parameter/metallic = 0.0
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_f7ppj"]
+size = Vector3(2.505188, 1.212616, 2.6224976)
+
+[sub_resource type="Resource" id="Resource_8x8i8"]
+script = ExtResource("9_php0s")
+name = "Entry"
+metadata/graph_offset = Vector2(120.5, 282.5)
+
+[sub_resource type="Resource" id="Resource_lbtpe"]
+script = ExtResource("9_php0s")
+name = "Exploration"
+metadata/graph_offset = Vector2(291, 282.5)
+
+[sub_resource type="Resource" id="Resource_msid3"]
+script = ExtResource("9_php0s")
+name = "Attaque"
+metadata/graph_offset = Vector2(500.5, 202.5)
+
+[sub_resource type="Resource" id="Resource_php0s"]
+script = ExtResource("9_php0s")
+name = "In danger"
+metadata/graph_offset = Vector2(496.5, 402.5)
+
+[sub_resource type="Resource" id="Resource_gra5t"]
+script = ExtResource("9_php0s")
+name = "Path blocked"
+metadata/graph_offset = Vector2(286, 142.5)
+
+[sub_resource type="Resource" id="Resource_p2cyq"]
+script = ExtResource("11_lbtpe")
+from = "Entry"
+to = "State"
+
+[sub_resource type="Resource" id="Resource_fbnvg"]
+script = ExtResource("11_lbtpe")
+from = "State"
+to = "Attaque"
+
+[sub_resource type="Resource" id="Resource_rnbln"]
+script = ExtResource("11_lbtpe")
+from = "State"
+to = "In danger"
+
+[sub_resource type="Resource" id="Resource_7fk43"]
+script = ExtResource("11_lbtpe")
+from = "State"
+to = "Path blocked"
+
+[sub_resource type="Resource" id="Resource_sun7h"]
+script = ExtResource("11_lbtpe")
+from = "Attaque"
+to = "In danger"
+
+[sub_resource type="Resource" id="Resource_1xrgu"]
+script = ExtResource("11_lbtpe")
+from = "Attaque"
+to = "State"
+
+[sub_resource type="Resource" id="Resource_w00cs"]
+script = ExtResource("11_lbtpe")
+from = "In danger"
+to = "Attaque"
+
+[sub_resource type="Resource" id="Resource_d578a"]
+script = ExtResource("11_lbtpe")
+from = "In danger"
+to = "State"
+
+[sub_resource type="Resource" id="Resource_yqm80"]
+script = ExtResource("11_lbtpe")
+from = "Path blocked"
+to = "State"
+
+[sub_resource type="Resource" id="Resource_0cpcb"]
+script = ExtResource("8_msid3")
+states = {
+"Attaque": SubResource("Resource_msid3"),
+"Entry": SubResource("Resource_8x8i8"),
+"In danger": SubResource("Resource_php0s"),
+"Path blocked": SubResource("Resource_gra5t"),
+"State": SubResource("Resource_lbtpe")
+}
+transitions = {
+"Attaque": {
+"In danger": SubResource("Resource_sun7h"),
+"State": SubResource("Resource_1xrgu")
+},
+"Entry": {
+"State": SubResource("Resource_p2cyq")
+},
+"In danger": {
+"Attaque": SubResource("Resource_w00cs"),
+"State": SubResource("Resource_d578a")
+},
+"Path blocked": {
+"State": SubResource("Resource_yqm80")
+},
+"State": {
+"Attaque": SubResource("Resource_fbnvg"),
+"In danger": SubResource("Resource_rnbln"),
+"Path blocked": SubResource("Resource_7fk43")
+}
+}
+
+[node name="Character" type="CharacterBody3D" unique_id=1998404675]
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0, 0, 0)
+axis_lock_linear_y = true
+script = ExtResource("1_0wov1")
+
+[node name="Proto_tank" type="Node3D" parent="." unique_id=1523143693]
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0, 1.15, 0)
+
+[node name="Tourelle" type="Node3D" parent="Proto_tank" unique_id=827514542]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.2926066, 0)
+script = ExtResource("2_aknvi")
+
+[node name="Head" parent="Proto_tank/Tourelle" unique_id=897098856 instance=ExtResource("3_wpo4s")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+surface_material_override/0 = SubResource("ShaderMaterial_yk8nn")
+
+[node name="Shooter" type="Node3D" parent="Proto_tank/Tourelle/Head" unique_id=967923646]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 1.4, 0.36, 0)
+script = ExtResource("3_y3tpf")
+
+[node name="Shooter_Timer" type="Timer" parent="Proto_tank/Tourelle/Head/Shooter" unique_id=623596999]
+wait_time = 3.0
+one_shot = true
+
+[node name="Body" parent="Proto_tank" unique_id=1597050894 instance=ExtResource("5_yk8nn")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, -1.0939587, 0)
+surface_material_override/0 = SubResource("ShaderMaterial_ufa4k")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=931742010]
+transform = Transform3D(0.99997777, 0, 0, 0, 0.99997777, 0, 0, 0, 1, 0, 1.053332, -0.04360962)
+shape = SubResource("BoxShape3D_f7ppj")
+
+[node name="Shift_Timer" type="Timer" parent="." unique_id=983244169]
+wait_time = 5.0
+one_shot = true
+
+[node name="StateMachinePlayer" type="Node" parent="." unique_id=1033437065]
+script = ExtResource("7_cv6ge")
+state_machine = SubResource("Resource_0cpcb")
+metadata/_custom_type_script = "uid://b3nr0oxlomtmq"
+
+[connection signal="transited" from="StateMachinePlayer" to="." method="_on_state_machine_player_transited"]
