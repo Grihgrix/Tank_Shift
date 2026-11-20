@@ -1,7 +1,6 @@
 extends Node3D
 
 # Define in variable the scene we will instantiate (the projectile scene)
-const PROJECTILE = preload("res://Game scenes/Character scenes/projectile.tscn")
 const PROJECTILE_RC = preload("uid://suu8idgxtenm")
 
 
