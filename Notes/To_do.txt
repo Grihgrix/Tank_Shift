@@ -1,6 +1,6 @@
 To Do : 
 
-- CHaracter should either be despawned or chage skin to a burnt wrech upon death
+- Character should either be despawned or chage skin to a burnt wrech upon death
 - Projectile could despawn trees if colliding with their trunk
 - Add NPC behaviours
 - Change the assets for Adrien's assets 
