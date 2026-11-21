@@ -34,6 +34,8 @@ signal on_shift(shifter_id:int, shifter_is_up_or_down:int)
 
 # Navigation NPC
 @onready var navigation_agent_3d:NavigationAgent3D = $NavigationAgent3D
+@onready var up_navigation_region_3d = $"../Up_NavigationRegion3D"
+
 
 
 func _ready():
@@ -132,35 +134,47 @@ func _physics_process(delta):
 	# Capture NPC Destination #
 	###########################
 	
-	if Input.is_action_just_released("Debug Path"):
-		_debug_npc_path_assignment()
+	#if navigation_agent_3d.is_navigation_finished():
+	#	#print("PATH FINISHED")
+	#	pass
 	
-	var nav_destination = navigation_agent_3d.get_next_path_position()
-	var nav_local_destination = nav_destination - global_position
-	var nav_direction = nav_local_destination.normalized()
+	if not is_player:
+		if Input.is_action_just_released("Debug Path"):
+			_debug_npc_path_assignment()
 	
+		var nav_destination = navigation_agent_3d.get_next_path_position()
+		var nav_local_destination = nav_destination - global_position
+		var nav_direction = nav_local_destination.normalized()
+		
+		velocity = nav_direction * Global.SPEED
 	
 	
 	###################
 	# Apply movements #
 	###################
 	
-	# Character moving forward or backward
-	velocity.z = move_direction * Global.SPEED * cos(rotation.y) * not_in_shift
-	velocity.x = move_direction * Global.SPEED * sin(rotation.y) * not_in_shift * tile_rotation_modifier
+	if is_player:
+		# Character moving forward or backward
+		velocity.z = move_direction * Global.SPEED * cos(rotation.y) * not_in_shift
+		velocity.x = move_direction * Global.SPEED * sin(rotation.y) * not_in_shift * tile_rotation_modifier
+		
+		# Character rotating right or left
+		global_rotation.y += (steer_direction * is_up_or_down *  delta)
 	
-	# Character rotating right or left
-	global_rotation.y += (steer_direction * is_up_or_down *  delta)
-	
-	velocity = nav_direction * Global.SPEED
 	move_and_slide()
 
 func _debug_npc_path_assignment():
+	#up_navigation_region_3d.bake_navigation_mesh()
+	#await up_navigation_region_3d.bake_finished
+	#await get_tree().create_timer(1).timeout
 	print("Debug Path")
 	# This is when prtessing CTRL
 	var random_position:Vector3 = Vector3.ZERO
 	random_position.x = randf_range(1.0, Global.board_total_length.x - 1.0)
-	random_position.z = randf_range(1.0, Global.board_total_length.y - 1.0)
+	random_position.z = randf_range(1.0, - (Global.board_total_length.y - 1.0))
+	#random_position.x = 20
+	random_position.y = 1
+	#random_position.z = -20
 	print(str(character_id) + str(random_position))
 	navigation_agent_3d.set_target_position(random_position)
 
