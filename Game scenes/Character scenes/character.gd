@@ -159,8 +159,8 @@ func _physics_process(delta):
 				global_rotation.y = rotate_toward(global_rotation.y, nav_npc_steer_angle, delta)
 				
 				# Move forward # BUG HERE
-				velocity.x = - Global.SPEED * cos(rotation.y) * not_in_shift
-				velocity.z = 0#- Global.SPEED * sin(rotation.y) * not_in_shift * tile_rotation_modifier
+				velocity.x = Global.SPEED * cos(rotation.y + PI/2) * not_in_shift
+				velocity.z = Global.SPEED * sin(rotation.y - PI/2) * not_in_shift * tile_rotation_modifier
 			else:
 				velocity.x = 0
 				velocity.z = 0
