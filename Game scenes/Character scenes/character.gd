@@ -155,12 +155,16 @@ func _physics_process(delta):
 				# Calculate if there is need for steer
 				var nav_npc_steer_angle = atan2(nav_next_destination.x, nav_next_destination.z) + PI
 				
-				# NPC Steers
-				global_rotation.y = rotate_toward(global_rotation.y, nav_npc_steer_angle, delta)
-				
-				# Move forward # BUG HERE
-				velocity.x = Global.SPEED * cos(rotation.y + PI/2) * not_in_shift
-				velocity.z = Global.SPEED * sin(rotation.y - PI/2) * not_in_shift * tile_rotation_modifier
+				if nav_npc_steer_angle != 0:
+					print(nav_npc_steer_angle / PI) # BUG Must figure out that angle
+					# NPC Steers
+					global_rotation.y = rotate_toward(global_rotation.y, nav_npc_steer_angle, delta)
+					velocity.x = 0
+					velocity.z = 0
+				else:
+					# Move forward # BUG HERE
+					velocity.x = Global.SPEED * cos(rotation.y + PI/2) * not_in_shift
+					velocity.z = Global.SPEED * sin(rotation.y - PI/2) * not_in_shift * tile_rotation_modifier
 			else:
 				velocity.x = 0
 				velocity.z = 0
@@ -193,9 +197,9 @@ func _debug_npc_path_assignment():
 	var random_position:Vector3 = Vector3.ZERO
 	random_position.x = randf_range(1.0, Global.board_total_length.x - 1.0)
 	random_position.z = randf_range(1.0, - (Global.board_total_length.y - 1.0))
-	random_position.x = 1
+	#random_position.x = 1
 	random_position.y = 1
-	random_position.z = -20
+	#random_position.z = -20
 	print(str(character_id) + str(random_position))
 	navigation_agent_3d.set_target_position(random_position)
 
