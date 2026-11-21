@@ -14,9 +14,11 @@ transform = Transform3D(2, 0, 0, 0, 0.5, 0, 0, 0, 0.2, 0, 0, 0)
 mesh = SubResource("BoxMesh_f7ppj")
 surface_material_override/0 = SubResource("StandardMaterial3D_qq35n")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D" unique_id=1125394913]
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D" unique_id=1125394913 groups=["Obstacle_Group"]]
 collision_layer = 3
 collision_mask = 3
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D" unique_id=1802937919]
 shape = SubResource("BoxShape3D_wltj5")
+
+[node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="MeshInstance3D/StaticBody3D" unique_id=504893878]

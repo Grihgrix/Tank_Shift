@@ -18,6 +18,7 @@ albedo_color = Color(0.32269204, 0.15368122, 2.4065375e-08, 1)
 
 [node name="Level" type="Node3D" unique_id=2021217027]
 script = ExtResource("1_by8i1")
+Tiles_parent_group = null
 
 [node name="Tiles_parent_group" type="Node3D" parent="." unique_id=988398369 groups=["tile_parent"]]
 

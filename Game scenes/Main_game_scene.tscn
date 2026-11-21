@@ -24,6 +24,13 @@ glow_enabled = true
 glow_bloom = 0.25
 fog_height_density = 0.1355
 
+[sub_resource type="NavigationMesh" id="NavigationMesh_wltj5"]
+vertices = PackedVector3Array(-4.5, 0.4, -4.5, -4.5, 0.4, 4.5, 4.5, 0.4, 4.5, 4.5, 0.4, -4.5)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
+geometry_source_geometry_mode = 2
+cell_height = 1.0
+agent_radius = 1.0
+
 [node name="Node" type="Node" unique_id=1927353018]
 script = ExtResource("1_ljjr8")
 
@@ -36,19 +43,29 @@ transform = Transform3D(-0.33073276, 0.6066145, 0.72293484, -0.858795, 0.1241394
 [node name="Projectiles_parent_node" type="Node3D" parent="." unique_id=1350631440 groups=["projectile_parent"]]
 
 [node name="Level" parent="." unique_id=2021217027 instance=ExtResource("3_ljjr8")]
+Tiles_parent_group = "tile_parent"
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1282892840]
 environment = SubResource("Environment_nr5eq")
 
-[node name="Player" parent="." unique_id=1998404675 instance=ExtResource("2_sqh5q")]
+[node name="Up_NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=1586066145]
+navigation_mesh = SubResource("NavigationMesh_wltj5")
+
+[node name="Nav_CSGBox3D" type="CSGBox3D" parent="Up_NavigationRegion3D" unique_id=1823912907 groups=["navigation_mesh_source_group"]]
+visible = false
+use_collision = true
+collision_layer = 8
+collision_mask = 8
+size = Vector3(10, 0.2, 10)
+
+[node name="Player" parent="Up_NavigationRegion3D" unique_id=1998404675 instance=ExtResource("2_sqh5q")]
 is_player = true
 character_id = 1
-is_alive = false
 
-[node name="Camera3D2" type="Camera3D" parent="Player" unique_id=988657058]
+[node name="Camera3D2" type="Camera3D" parent="Up_NavigationRegion3D/Player" unique_id=988657058]
 transform = Transform3D(1, 0, 0, 0, 0.34202, 0.9396927, 0, -0.9396927, 0.34202, 0, 20, 3)
 
-[node name="ATH_Label" type="RichTextLabel" parent="Player/Camera3D2" unique_id=1409370478]
+[node name="ATH_Label" type="RichTextLabel" parent="Up_NavigationRegion3D/Player/Camera3D2" unique_id=1409370478]
 offset_left = 40.0
 offset_top = 26.0
 offset_right = 188.0
@@ -59,30 +76,30 @@ Shift :  PH"
 script = ExtResource("3_gk8pv")
 metadata/_edit_use_anchors_ = true
 
-[node name="NPC_2" parent="." unique_id=465305077 instance=ExtResource("2_sqh5q")]
+[node name="NPC_2" parent="Up_NavigationRegion3D" unique_id=465305077 instance=ExtResource("2_sqh5q")]
 transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 18.881073, 0, -2.8225098)
 character_id = 2
 
-[node name="NPC_3" parent="." unique_id=1275291371 instance=ExtResource("2_sqh5q")]
+[node name="NPC_3" parent="Up_NavigationRegion3D" unique_id=1275291371 instance=ExtResource("2_sqh5q")]
 transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 18.446655, 0, -16.891724)
 character_id = 3
 
-[node name="NPC_4" parent="." unique_id=812337567 instance=ExtResource("2_sqh5q")]
+[node name="NPC_4" parent="Up_NavigationRegion3D" unique_id=812337567 instance=ExtResource("2_sqh5q")]
 transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 1.8408813, 0, -16.891724)
 character_id = 4
 
-[node name="NPC_5" parent="." unique_id=795801486 instance=ExtResource("2_sqh5q")]
+[node name="NPC_5" parent="Up_NavigationRegion3D" unique_id=795801486 instance=ExtResource("2_sqh5q")]
 transform = Transform3D(-0.99435914, 0.10606533, 0, -0.10606533, -0.99435914, 0, 0, 0, 1, 2.250122, 0, -1.0195313)
 character_id = 5
 
-[node name="NPC_6" parent="." unique_id=657848110 instance=ExtResource("2_sqh5q")]
+[node name="NPC_6" parent="Up_NavigationRegion3D" unique_id=657848110 instance=ExtResource("2_sqh5q")]
 transform = Transform3D(-0.99435914, 0.10606533, 0, -0.10606533, -0.99435914, 0, 0, 0, 1, 16.053589, 0, -1.0195313)
 character_id = 6
 
-[node name="NPC_7" parent="." unique_id=257597899 instance=ExtResource("2_sqh5q")]
+[node name="NPC_7" parent="Up_NavigationRegion3D" unique_id=257597899 instance=ExtResource("2_sqh5q")]
 transform = Transform3D(-0.99435914, 0.10606533, 0, -0.10606533, -0.99435914, 0, 0, 0, 1, 16.053589, 0, -1.0195313)
 character_id = 7
 
-[node name="NPC_8" parent="." unique_id=945942901 instance=ExtResource("2_sqh5q")]
+[node name="NPC_8" parent="Up_NavigationRegion3D" unique_id=945942901 instance=ExtResource("2_sqh5q")]
 transform = Transform3D(-0.99435914, 0.10606533, 0, -0.10606533, -0.99435914, 0, 0, 0, 1, 16.053589, 0, -1.0195313)
 character_id = 8
