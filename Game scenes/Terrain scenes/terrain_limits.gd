@@ -6,24 +6,18 @@ extends Node3D
 @onready var board_limit_4 = $Board_Limit_4
 
 
-@onready var board_total_length:Vector2 = Vector2(0,0)
-
 @onready var board_limit_thickness:float = 0.2
 
+# Navigation box resizing
+@onready var nav_csg_box_3d = $"../Nav_CSGBox3D"
+
+
 # Called when the node enters the scene tree for the first time.
-func _ready():
-	print(Global.terrain_tile_size)
-	print(Global.terrain_dimension)
-	
-	# Calculate length of the board
-	board_total_length.x = (Global.terrain_dimension.x + (2 * Global.space_between_tiles)) * Global.terrain_tile_size
-	board_total_length.y = (Global.terrain_dimension.y + (2 * Global.space_between_tiles)) * Global.terrain_tile_size
-	print(board_total_length)
-	
+func _ready():	
 	
 	# Apply to limit 1
 	# Resize
-	board_limit_1.scale.x = board_total_length.x + board_limit_thickness
+	board_limit_1.scale.x = Global.board_total_length.x + board_limit_thickness
 	board_limit_1.scale.y = 1
 	board_limit_1.scale.z =  board_limit_thickness
 	# Reposition
@@ -39,13 +33,13 @@ func _ready():
 	# Reposition
 	board_limit_2.global_position.x = board_limit_1.global_position.x
 	board_limit_2.global_position.y = 0
-	board_limit_2.global_position.z = - (board_total_length.y - Global.terrain_tile_size / 2)
+	board_limit_2.global_position.z = - (Global.board_total_length.y - Global.terrain_tile_size / 2)
 	
 	# Apply to limit 3
 	# Resize
 	board_limit_3.scale.x =  board_limit_thickness
 	board_limit_3.scale.y = 1
-	board_limit_3.scale.z = board_total_length.y + board_limit_thickness
+	board_limit_3.scale.z = Global.board_total_length.y + board_limit_thickness
 	# Reposition
 	board_limit_3.global_position.x = 0 - Global.terrain_tile_size / 2
 	board_limit_3.global_position.y = 0
@@ -57,6 +51,8 @@ func _ready():
 	board_limit_4.scale.y = board_limit_3.scale.y
 	board_limit_4.scale.z = board_limit_3.scale.z
 	# Reposition
-	board_limit_4.global_position.x = (board_total_length.x - Global.terrain_tile_size / 2) + board_limit_thickness / 2
+	board_limit_4.global_position.x = (Global.board_total_length.x - Global.terrain_tile_size / 2) + board_limit_thickness / 2
 	board_limit_4.global_position.y = 0
 	board_limit_4.global_position.z = board_limit_3.global_position.z
+	
+	

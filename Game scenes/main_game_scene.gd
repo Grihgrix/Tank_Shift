@@ -14,10 +14,15 @@ extends Node
 @onready var level = $Level
 @onready var Tiles_parent_group = level.get_node("Tiles_parent_group")
 
+@onready var up_navigation_region_3d = $Up_NavigationRegion3D
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	for character in character_list:
 		assign_character_to_tile(character)
+	
+	_refresh_navigation_region()
 	
 
 
@@ -33,3 +38,7 @@ func assign_character_to_tile(current_character):
 	for tile in Tiles_parent_group.get_children():
 		if tile.tile_id == current_character.current_tile_id:
 			current_character.reparent(tile, true)
+
+func _refresh_navigation_region():
+	await get_tree().create_timer(1).timeout
+	up_navigation_region_3d.bake_navigation_mesh()

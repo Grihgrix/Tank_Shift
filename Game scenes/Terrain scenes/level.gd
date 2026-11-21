@@ -7,6 +7,7 @@ const TILE = preload("res://Game scenes/Terrain scenes/terrain_tile.tscn")
 @export var Tiles_parent_group:String = "tile_parent"
 var tiles_node:Node
 
+@onready var nav_csg_box_3d = $"../Up_NavigationRegion3D/Nav_CSGBox3D"
 
 
 # Called when the node enters the scene tree for the first time.
@@ -31,6 +32,15 @@ func _ready():
 			Current_Y += 1
 		# Increment X
 		Current_X += 1
+	
+	# Resize the navigation_box
+	nav_csg_box_3d.size.x = Global.board_total_length.x
+	#nav_csg_box_3d.size.y = 1
+	nav_csg_box_3d.size.z = Global.board_total_length.y
+	# Reposition the nav box
+	nav_csg_box_3d.position.x = (nav_csg_box_3d.size.x - Global.terrain_tile_size) / 2
+	#nav_csg_box_3d.position.y = nav_csg_box_3d.size.y / 2
+	nav_csg_box_3d.position.z = - (nav_csg_box_3d.size.z - Global.terrain_tile_size) / 2
 
 
 

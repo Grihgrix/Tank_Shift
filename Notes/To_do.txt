@@ -3,6 +3,15 @@ To Do :
 - Character should either be despawned or chage skin to a burnt wrech upon death
 - Projectile could despawn trees if colliding with their trunk
 - Add NPC behaviours
+    -> Exploration
+    Currently working on the navigation. NPCs can move towards arandom point of the map when I press CTRL 
+    Need for the path to go around obstacles
+    Need for a different nav mesh to be used in the down side
+    Need to rebake at each shift
+    Need for NPC to use the steer controls when navigating (not just slide)
+    Identify when NPC has no path to either recalculate or use the shift
+    -> Attack
+    -> Shift attack
 - Change the assets for Adrien's assets 
 - Add a sign of which tiles have a character on the other side of it (shadow or periscope ?)
 - Add a tableau de chasse listing all characters destroyed by each character
