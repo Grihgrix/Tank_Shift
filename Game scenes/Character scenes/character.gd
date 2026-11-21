@@ -111,7 +111,6 @@ func _physics_process(delta):
 	
 	# When shift just happened, emit the signal
 	if prev_is_up_or_down !=is_up_or_down:
-		print("Emit on_shift")
 		on_shift.emit(character_id, is_up_or_down)
 	
 	# Tile rotation modifier
@@ -139,14 +138,36 @@ func _physics_process(delta):
 	#	pass
 	
 	if not is_player:
+		
 		if Input.is_action_just_released("Debug Path"):
 			_debug_npc_path_assignment()
-	
-		var nav_destination = navigation_agent_3d.get_next_path_position()
-		var nav_local_destination = nav_destination - global_position
-		var nav_direction = nav_local_destination.normalized()
 		
-		velocity = nav_direction * Global.SPEED
+		if navigation_agent_3d.is_navigation_finished():
+			velocity.x = 0
+			velocity.z = 0
+		else:
+			#var nav_destination = navigation_agent_3d.get_next_path_position()
+			var nav_next_destination = navigation_agent_3d.get_next_path_position() - global_position
+			nav_next_destination.y = 0 # ensure we won't try to move up or down
+			
+			#Check if we are still away from destination
+			if nav_next_destination.length() > 0.1:
+				# Calculate if there is need for steer
+				var nav_npc_steer_angle = atan2(nav_next_destination.x, nav_next_destination.z) + PI
+				
+				# NPC Steers
+				global_rotation.y = rotate_toward(global_rotation.y, nav_npc_steer_angle, delta)
+				
+				# Move forward # BUG HERE
+				velocity.x = - Global.SPEED * cos(rotation.y) * not_in_shift
+				velocity.z = 0#- Global.SPEED * sin(rotation.y) * not_in_shift * tile_rotation_modifier
+			else:
+				velocity.x = 0
+				velocity.z = 0
+			
+			#var nav_direction = nav_next_destination.normalized()
+		
+			#velocity = nav_direction * Global.SPEED
 	
 	
 	###################
@@ -172,9 +193,9 @@ func _debug_npc_path_assignment():
 	var random_position:Vector3 = Vector3.ZERO
 	random_position.x = randf_range(1.0, Global.board_total_length.x - 1.0)
 	random_position.z = randf_range(1.0, - (Global.board_total_length.y - 1.0))
-	#random_position.x = 20
+	random_position.x = 1
 	random_position.y = 1
-	#random_position.z = -20
+	random_position.z = -20
 	print(str(character_id) + str(random_position))
 	navigation_agent_3d.set_target_position(random_position)
 
@@ -187,8 +208,6 @@ func _on_enemy_detection_body_entered(body):
 	if not is_player and body is CharacterBody3D:
 		if body.character_id == 1:
 			enemies_detected +=1
-			if character_id == 2:
-				print(str(body) + " enemies_detected = " + str(enemies_detected) + " shift_req_detected = " + str(enemies_shift_req_detected))
 			state_machine_player.set_param("Ennemies Detected", enemies_detected)
 			
 			# Check if the enemy is on the other side
