@@ -173,6 +173,9 @@ func _physics_process(delta):
 			#var nav_direction = nav_next_destination.normalized()
 		
 			#velocity = nav_direction * Global.SPEED
+	else:
+		velocity.x = 0
+		velocity.z = 0
 	
 	
 	###################
