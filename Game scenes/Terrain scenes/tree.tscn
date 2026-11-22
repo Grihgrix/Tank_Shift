@@ -36,3 +36,4 @@ transform = Transform3D(0.10000001, 0, 0, 0, 0.5, 0, 0, 0, 0.10000001, 0, 0.4999
 shape = SubResource("CylinderShape3D_wltj5")
 
 [node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="Trunk/Tree_trunk_Mesh/StaticBody3D" unique_id=908720362 groups=["navigation_mesh_source_group"]]
+vertices = PackedVector3Array(-0.00046794116, 0, -0.050224654, 0.025736243, 0, -0.045233384, 0.04414156, 0, -0.026516125, 0.051316485, 0, -0.0040554106, 0.048820853, 0, 0.02090094, 0.029791653, 0, 0.04304971, 0.0032755136, 0, 0.052096386, -0.019497156, 0, 0.04710511, -0.043205686, 0, 0.032131296, -0.051628448, 0, 0.0046793153, -0.04726109, 0, -0.019965079, -0.031663373, 0, -0.04055407, -0.014193922, 0, -0.048976835)

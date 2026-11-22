@@ -10,15 +10,18 @@ albedo_color = Color(0.122547455, 0.2514293, 2.4065375e-08, 1)
 [node name="Tile_size_hedge" type="Node3D" unique_id=709043425]
 transform = Transform3D(2, 0, 0, 0, 0.5, 0, 0, 0, 0.2, 0, 0, 0)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1544587050]
-mesh = SubResource("BoxMesh_f7ppj")
-surface_material_override/0 = SubResource("StandardMaterial3D_qq35n")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D" unique_id=1125394913 groups=["Obstacle_Group"]]
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=1125394913 groups=["Obstacle_Group"]]
 collision_layer = 3
 collision_mask = 3
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D" unique_id=1802937919]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D" unique_id=1544587050]
+mesh = SubResource("BoxMesh_f7ppj")
+surface_material_override/0 = SubResource("StandardMaterial3D_qq35n")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=1802937919]
 shape = SubResource("BoxShape3D_wltj5")
 
-[node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="MeshInstance3D/StaticBody3D" unique_id=504893878]
+[node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="StaticBody3D" unique_id=504893878 groups=["navigation_mesh_source_group"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.49795437, 0)
+vertices = PackedVector3Array(-0.5002276, 0, 0.5084654, 0.5007957, 0, 0.51414645, 0.5002276, 0, -0.5141464, -0.5002276, 0, -0.49142167)
+affect_navigation_mesh = true
