@@ -45,11 +45,5 @@ func assign_character_to_tile(current_character):
 func _refresh_navigation_region():
 	Global.navigation_mesh_bale_requested = false
 	await get_tree().create_timer(1).timeout
-	
-	print("obstacles in UP source group: ", get_tree().get_nodes_in_group("UP_navigation_mesh_source_group"))
-	print("obstacles in DOWN source group: ", get_tree().get_nodes_in_group("DOWN_navigation_mesh_source_group"))
-	print("region group name: '", up_navigation_region_3d.navigation_mesh.geometry_source_group_name, "'")
-	print("source mode: ", up_navigation_region_3d.navigation_mesh.geometry_source_geometry_mode)
-	
 	up_navigation_region_3d.bake_navigation_mesh(false)
-	print("Nav mesh rebaked")
+	

@@ -7,6 +7,8 @@ extends Node3D
 var rotation_z_target:float
 var tile_shift_triggered:bool = false
 
+var tile_rotated:bool = false
+
 # Preload landscapes
 const FOREST_LANDSCAPE = preload("uid://bfmrqnuo81m6j")
 const PLAIN_LANDSCAPE = preload("uid://dnfv7825pdb6m")
@@ -85,23 +87,12 @@ func _ready():
 	# Affect starting obstacle group #
 	##################################
 	
-	# Ensure all upside obstacles are affected
-	for obstacle in Upside_landscape.find_children("*", "NavigationObstacle3D", true, false):
-		obstacle.add_to_group("UP_navigation_mesh_source_group")
-		obstacle.remove_from_group("DOWN_navigation_mesh_source_group")
-		obstacle.affect_navigation_mesh = true
-	
-	# Ensure all downside obstacles are affected
-	for obstacle in Downside_landscape.find_children("*", "NavigationObstacle3D", true, false):
-		obstacle.add_to_group("DOWN_navigation_mesh_source_group")
-		obstacle.remove_from_group("UP_navigation_mesh_source_group")
-		obstacle.affect_navigation_mesh = true
+	_affect_obstacles_to_nav_groups()
 	
 	##############################
 	# Rebake the navigation mesh #
 	##############################
 	await get_tree().create_timer(1).timeout
-	print("Ready to rebake")
 	Global.navigation_mesh_bale_requested = true # this triggers the rebake in the main script process
 	
 
@@ -166,7 +157,7 @@ func tile_shift_target():
 
 
 func tile_shift(delta):
-	# Operate rile shift
+	# Operate tile shift
 	if abs(rotation.z - rotation_z_target) > 0.3 and tile_shift_triggered:
 		# Make the shift happen at the set speed
 		position.y = 0 # ensures we remain on the tile side we are supposed to be on
@@ -180,3 +171,39 @@ func tile_shift(delta):
 		for child in get_children():
 			if child is CharacterBody3D:
 				child.not_in_shift = 1 # This enables movement forward and backward
+		
+		_affect_obstacles_to_nav_groups()
+		
+		# Trigger the rebake in the main script process
+		Global.navigation_mesh_bale_requested = true 
+
+
+func _affect_obstacles_to_nav_groups():
+	_check_tile_rotation()
+	# Ensure all upside obstacles are affected
+	for obstacle in Upside_landscape.find_children("*", "NavigationObstacle3D", true, false):
+		if not tile_rotated:
+			obstacle.add_to_group("UP_navigation_mesh_source_group")
+			obstacle.remove_from_group("DOWN_navigation_mesh_source_group")
+		else:
+			obstacle.add_to_group("DOWN_navigation_mesh_source_group")
+			obstacle.remove_from_group("UP_navigation_mesh_source_group")
+		obstacle.affect_navigation_mesh = true
+	
+	# Ensure all downside obstacles are affected
+	for obstacle in Downside_landscape.find_children("*", "NavigationObstacle3D", true, false):
+		if not tile_rotated:
+			obstacle.add_to_group("DOWN_navigation_mesh_source_group")
+			obstacle.remove_from_group("UP_navigation_mesh_source_group")
+		else:
+			obstacle.add_to_group("UP_navigation_mesh_source_group")
+			obstacle.remove_from_group("DOWN_navigation_mesh_source_group")
+		obstacle.affect_navigation_mesh = true
+	
+
+func _check_tile_rotation():
+	var tile_rotation = (round((round(rotation.z * 100)/(3.14 * 2)) / 10)) / 10
+	if tile_rotation == round(tile_rotation):
+		tile_rotated = false
+	else:
+		tile_rotated = true
