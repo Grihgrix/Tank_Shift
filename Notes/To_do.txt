@@ -5,10 +5,6 @@ To Do :
 - Add NPC behaviours
     -> Exploration
     Currently working on the navigation. NPCs can move towards arandom point of the map when I press CTRL 
-    Need for the path to go around obstacles
-    Need for a different nav mesh to be used in the down side
-    Need to rebake at each shift
-    Need for NPC to use the steer controls when navigating (not just slide)
     Identify when NPC has no path to either recalculate or use the shift
     -> Attack
     -> Shift attack
@@ -24,3 +20,5 @@ ray cast https://www.gdquest.com/library/raycast_introduction/
 Tuto followed for ray cast projectiles : https://www.youtube.com/watch?v=vGpFwaLUG4U
 
 
+Bugs: 
+- Bottom NPC path finding seems to not work as intended yet
