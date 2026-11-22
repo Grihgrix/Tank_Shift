@@ -155,14 +155,12 @@ func _physics_process(delta):
 				# Calculate if there is need for steer
 				var nav_npc_steer_angle = atan2(nav_next_destination.x, nav_next_destination.z) + PI
 				
-				if nav_npc_steer_angle != 0:
-					print(nav_npc_steer_angle / PI) # BUG Must figure out that angle
+				if round((global_rotation.y - nav_npc_steer_angle) / PI) != 0 and abs(round((global_rotation.y - nav_npc_steer_angle) / PI)) != 2:
 					# NPC Steers
 					global_rotation.y = rotate_toward(global_rotation.y, nav_npc_steer_angle, delta)
 					velocity.x = 0
 					velocity.z = 0
 				else:
-					# Move forward # BUG HERE
 					velocity.x = Global.SPEED * cos(rotation.y + PI/2) * not_in_shift
 					velocity.z = Global.SPEED * sin(rotation.y - PI/2) * not_in_shift * tile_rotation_modifier
 			else:
