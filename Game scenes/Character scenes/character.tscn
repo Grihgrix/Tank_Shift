@@ -98,6 +98,7 @@ text = "0"
 font_size = 200
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=873699269]
+navigation_layers = 0
 debug_enabled = true
 
 [node name="NPC_Activities_Timer" type="Timer" parent="." unique_id=392827701]
