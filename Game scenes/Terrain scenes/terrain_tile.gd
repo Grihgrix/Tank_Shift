@@ -22,6 +22,7 @@ const BUSHY_PLAIN_LANDSCAPE = preload("uid://rpse8bbxdrl3")
 	, 4: BUSHY_PLAIN_LANDSCAPE
 	}
 
+
 @onready var landscapes_array:Array = range(landscapes_dict.size())
 
 # Landscape nodes that will host one of the landscapes
@@ -35,6 +36,7 @@ const BUSHY_PLAIN_LANDSCAPE = preload("uid://rpse8bbxdrl3")
 func _ready():
 	# Wait is necessary so the tile_idis assigned before we check if we are a corner tile
 	await get_tree().create_timer(0.1).timeout
+	
 	############################################
 	# Identify if current tile is a spawn zone #
 	############################################
@@ -78,6 +80,30 @@ func _ready():
 	
 	instantiate_landscape(Upside_landscape, upside_landscape_key)
 	instantiate_landscape(Downside_landscape, downside_landscape_key)
+	
+	##################################
+	# Affect starting obstacle group #
+	##################################
+	
+	# Ensure all upside obstacles are affected
+	for obstacle in Upside_landscape.find_children("*", "NavigationObstacle3D", true, false):
+		obstacle.add_to_group("UP_navigation_mesh_source_group")
+		obstacle.remove_from_group("DOWN_navigation_mesh_source_group")
+		obstacle.affect_navigation_mesh = true
+	
+	# Ensure all downside obstacles are affected
+	for obstacle in Downside_landscape.find_children("*", "NavigationObstacle3D", true, false):
+		obstacle.add_to_group("DOWN_navigation_mesh_source_group")
+		obstacle.remove_from_group("UP_navigation_mesh_source_group")
+		obstacle.affect_navigation_mesh = true
+	
+	##############################
+	# Rebake the navigation mesh #
+	##############################
+	await get_tree().create_timer(1).timeout
+	print("Ready to rebake")
+	Global.navigation_mesh_bale_requested = true # this triggers the rebake in the main script process
+	
 
 
 func instantiate_landscape(parent_node, selected_landscape):

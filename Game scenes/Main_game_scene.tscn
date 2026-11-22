@@ -28,7 +28,8 @@ fog_height_density = 0.1355
 vertices = PackedVector3Array(-4.5, 0.4, -4.5, -4.5, 0.4, 4.5, 4.5, 0.4, 4.5, 4.5, 0.4, -4.5)
 polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
 geometry_source_geometry_mode = 2
-agent_radius = 1.0
+geometry_source_group_name = &"UP_navigation_mesh_source_group"
+agent_radius = 2.0
 
 [node name="Node" type="Node3D" unique_id=416084368]
 script = ExtResource("1_ljjr8")
@@ -50,7 +51,7 @@ environment = SubResource("Environment_nr5eq")
 [node name="Up_NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=1586066145]
 navigation_mesh = SubResource("NavigationMesh_wltj5")
 
-[node name="Nav_CSGBox3D" type="CSGBox3D" parent="Up_NavigationRegion3D" unique_id=1823912907 groups=["navigation_mesh_source_group"]]
+[node name="Nav_CSGBox3D" type="CSGBox3D" parent="Up_NavigationRegion3D" unique_id=1823912907 groups=["UP_navigation_mesh_source_group"]]
 visible = false
 use_collision = true
 collision_layer = 8

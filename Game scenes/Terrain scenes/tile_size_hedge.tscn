@@ -21,7 +21,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_qq35n")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=1802937919]
 shape = SubResource("BoxShape3D_wltj5")
 
-[node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="StaticBody3D" unique_id=504893878 groups=["navigation_mesh_source_group"]]
+[node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="StaticBody3D" unique_id=504893878]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.49795437, 0)
 vertices = PackedVector3Array(-0.5002276, 0, 0.5084654, 0.5007957, 0, 0.51414645, 0.5002276, 0, -0.5141464, -0.5002276, 0, -0.49142167)
 affect_navigation_mesh = true

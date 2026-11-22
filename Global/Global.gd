@@ -27,6 +27,9 @@ var board_total_length:Vector2 = Vector2(
 	(terrain_dimension.x + (2 * space_between_tiles)) * terrain_tile_size, (terrain_dimension.y + (2 * space_between_tiles)) * terrain_tile_size
 	)
 
+# NPC navigation
+var navigation_mesh_bale_requested:bool = false
+
 # Spawn locations and conditions for each character (upt to 8)
 # location X,Y,Z, Rotation Z
 var characters_spawn_locations:Dictionary = {
