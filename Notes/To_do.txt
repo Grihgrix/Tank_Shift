@@ -22,3 +22,7 @@ To Do :
 
 ray cast https://www.gdquest.com/library/raycast_introduction/
 Tuto followed for ray cast projectiles : https://www.youtube.com/watch?v=vGpFwaLUG4U
+
+
+Bugs : 
+- NPC stay blocked when trying to pass on a shifted tile

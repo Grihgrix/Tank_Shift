@@ -4,7 +4,6 @@ extends Node
 
 
 # Gameplay
-var character_count:int = 2
 var projectile_speed:int = 50
 const SPEED:float = 10.0
 const SHIFT_SPEED:float = PI / 0.5
@@ -96,4 +95,4 @@ var characters_spawn_locations:Dictionary = {
 
 # Bonuses
 var shoot_cooldown:int = 1
-var shift_cooldown:int = 5
+var shift_cooldown:int = 1
