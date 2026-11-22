@@ -111,6 +111,7 @@ func _physics_process(delta):
 		# Otherwise either X or Z or at 180 while the other is at 0, we are downside
 		is_up_or_down = -1
 	
+		
 	# When shift just happened, emit the signal
 	if prev_is_up_or_down !=is_up_or_down:
 		on_shift.emit(character_id, is_up_or_down)
@@ -121,6 +122,15 @@ func _physics_process(delta):
 		tile_rotation_modifier = 1
 	else:
 		tile_rotation_modifier = -1
+	
+	##############################################
+	# Affect NPC nav agent to its current region #
+	##############################################
+	if is_up_or_down == 1:
+		navigation_agent_3d.navigation_layers = 1
+	elif is_up_or_down == -1:
+		navigation_agent_3d.navigation_layers = 2
+	
 	##########################
 	# Capture controls input #
 	##########################

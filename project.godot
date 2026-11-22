@@ -33,7 +33,8 @@ enabled=PackedStringArray("res://addons/bakpak_import_tool/plugin.cfg", "res://a
 projectile_parent=""
 tile_parent=""
 Obstacle_Group=""
-navigation_mesh_source_group=""
+UP_navigation_mesh_source_group=""
+DOWN_navigation_mesh_source_group=""
 
 [input]
 

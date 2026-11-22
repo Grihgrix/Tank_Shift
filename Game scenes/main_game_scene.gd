@@ -32,6 +32,9 @@ func _process(delta):
 		assign_character_to_tile(character)
 	#if Global.shift_requested_on_mouse or Global.self_shift_requested:
 	#	assign_character_to_tile(character)
+	
+	if Global.navigation_mesh_bale_requested:
+		_refresh_navigation_region()
 
 
 func assign_character_to_tile(current_character):
@@ -40,5 +43,7 @@ func assign_character_to_tile(current_character):
 			current_character.reparent(tile, true)
 
 func _refresh_navigation_region():
+	Global.navigation_mesh_bale_requested = false
 	await get_tree().create_timer(1).timeout
-	up_navigation_region_3d.bake_navigation_mesh()
+	up_navigation_region_3d.bake_navigation_mesh(false)
+	

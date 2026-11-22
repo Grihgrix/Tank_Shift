@@ -22,10 +22,13 @@ var corner_tile_id_1 = (0 * 10000) + 0
 var corner_tile_id_2 = (0 * 10000) + terrain_dimension.y - 1
 var corner_tile_id_3 = ((terrain_dimension.x - 1) * 10000) + 0
 var corner_tile_id_4 = ((terrain_dimension.x - 1) * 10000) + terrain_dimension.y - 1
-var plain_proba:float = 1.0 #/ 3.0
+var plain_proba:float = 2.0 / 3.0
 var board_total_length:Vector2 = Vector2(
 	(terrain_dimension.x + (2 * space_between_tiles)) * terrain_tile_size, (terrain_dimension.y + (2 * space_between_tiles)) * terrain_tile_size
 	)
+
+# NPC navigation
+var navigation_mesh_bale_requested:bool = false
 
 # Spawn locations and conditions for each character (upt to 8)
 # location X,Y,Z, Rotation Z
