@@ -35,6 +35,8 @@ signal on_shift(shifter_id:int, shifter_is_up_or_down:int)
 # Navigation NPC
 @onready var navigation_agent_3d:NavigationAgent3D = $NavigationAgent3D
 @onready var up_navigation_region_3d = $"../Up_NavigationRegion3D"
+@onready var npc_activities_timer = $NPC_Activities_Timer # Will be used to change destination, or move between shots, or delay shifts
+
 
 
 
@@ -137,7 +139,7 @@ func _physics_process(delta):
 	#	#print("PATH FINISHED")
 	#	pass
 	
-	if not is_player:
+	if not is_player and current_state == "Exploration":
 		
 		if Input.is_action_just_released("Debug Path"):
 			_debug_npc_path_assignment()
@@ -155,16 +157,15 @@ func _physics_process(delta):
 				# Calculate if there is need for steer
 				var nav_npc_steer_angle = atan2(nav_next_destination.x, nav_next_destination.z) + PI
 				
-				if nav_npc_steer_angle != 0:
-					print(nav_npc_steer_angle / PI) # BUG Must figure out that angle
+				if abs(round((global_rotation.y - nav_npc_steer_angle) * 10 / PI))  != 0 and abs(round((global_rotation.y - nav_npc_steer_angle) * 10 / PI)) != 20:
 					# NPC Steers
 					global_rotation.y = rotate_toward(global_rotation.y, nav_npc_steer_angle, delta)
 					velocity.x = 0
 					velocity.z = 0
 				else:
-					# Move forward # BUG HERE
-					velocity.x = Global.SPEED * cos(rotation.y + PI/2) * not_in_shift
-					velocity.z = Global.SPEED * sin(rotation.y - PI/2) * not_in_shift * tile_rotation_modifier
+					global_rotation.y = nav_npc_steer_angle
+					velocity.x = Global.SPEED * cos(rotation.y + tile_rotation_modifier * PI/2) * not_in_shift
+					velocity.z = Global.SPEED * sin(rotation.y -  PI/2) * not_in_shift
 			else:
 				velocity.x = 0
 				velocity.z = 0
@@ -172,6 +173,9 @@ func _physics_process(delta):
 			#var nav_direction = nav_next_destination.normalized()
 		
 			#velocity = nav_direction * Global.SPEED
+	else:
+		velocity.x = 0
+		velocity.z = 0
 	
 	
 	###################

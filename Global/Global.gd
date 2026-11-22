@@ -4,7 +4,6 @@ extends Node
 
 
 # Gameplay
-var character_count:int = 2
 var projectile_speed:int = 50
 const SPEED:float = 10.0
 const SHIFT_SPEED:float = PI / 0.5
@@ -23,7 +22,7 @@ var corner_tile_id_1 = (0 * 10000) + 0
 var corner_tile_id_2 = (0 * 10000) + terrain_dimension.y - 1
 var corner_tile_id_3 = ((terrain_dimension.x - 1) * 10000) + 0
 var corner_tile_id_4 = ((terrain_dimension.x - 1) * 10000) + terrain_dimension.y - 1
-var plain_proba:float = 1.0 / 3.0
+var plain_proba:float = 1.0 #/ 3.0
 var board_total_length:Vector2 = Vector2(
 	(terrain_dimension.x + (2 * space_between_tiles)) * terrain_tile_size, (terrain_dimension.y + (2 * space_between_tiles)) * terrain_tile_size
 	)
@@ -96,4 +95,4 @@ var characters_spawn_locations:Dictionary = {
 
 # Bonuses
 var shoot_cooldown:int = 1
-var shift_cooldown:int = 5
+var shift_cooldown:int = 1

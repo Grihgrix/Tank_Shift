@@ -62,7 +62,7 @@ is_player = true
 character_id = 1
 
 [node name="Camera3D2" type="Camera3D" parent="Player" unique_id=988657058]
-transform = Transform3D(1, 0, 0, 0, 0.34202012, 0.93969256, 0, -0.93969256, 0.34202012, 0, 20, 4)
+transform = Transform3D(1, 0, 0, 0, 0.34202012, 0.93969256, 0, -0.93969256, 0.34202012, 0, 40, 4)
 current = true
 
 [node name="ATH_Label" type="RichTextLabel" parent="Player/Camera3D2" unique_id=1409370478]

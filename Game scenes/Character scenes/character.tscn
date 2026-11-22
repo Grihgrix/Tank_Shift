@@ -100,6 +100,8 @@ font_size = 200
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=873699269]
 debug_enabled = true
 
+[node name="NPC_Activities_Timer" type="Timer" parent="." unique_id=392827701]
+
 [connection signal="transited" from="StateMachinePlayer" to="." method="_on_state_machine_player_transited"]
 [connection signal="body_entered" from="Enemy_Detection" to="." method="_on_enemy_detection_body_entered"]
 [connection signal="body_exited" from="Enemy_Detection" to="." method="_on_enemy_detection_body_exited"]
