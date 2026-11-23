@@ -180,7 +180,7 @@ func tile_shift(delta):
 
 func _affect_obstacles_to_nav_groups():
 	_check_tile_rotation()
-	# Ensure all upside obstacles are affected
+	# Ensure all upside obstacles are affected 
 	for obstacle in Upside_landscape.find_children("*", "NavigationObstacle3D", true, false):
 		if not tile_rotated:
 			obstacle.add_to_group("UP_navigation_mesh_source_group")
