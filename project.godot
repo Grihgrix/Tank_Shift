@@ -8,6 +8,14 @@
 
 config_version=5
 
+[BakPak]
+
+ImportTool/preset_import_materials={
+"tree_leaves": "uid://bvbe8rcfyk74b",
+"tree_trunk": "uid://dm1cskx60sodj"
+}
+ImportTool/auto_generate_lods=false
+
 [application]
 
 config/name="TankShift"

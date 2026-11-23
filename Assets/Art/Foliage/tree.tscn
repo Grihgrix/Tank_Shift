@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://bmfncsw2rdlwx"]
+
+[ext_resource type="ArrayMesh" uid="uid://dl2c31ccmv5w7" path="res://Assets/Art/Foliage/tree.res" id="1_p8u63"]
+
+[node name="Tree" type="MeshInstance3D" unique_id=815490586]
+mesh = ExtResource("1_p8u63")
+metadata/bakpak_generated = true
+metadata/bakpak_lod_group = "default"

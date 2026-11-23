@@ -1,39 +1,25 @@
 [gd_scene format=3 uid="uid://cy2e64duypdw2"]
 
-[sub_resource type="SphereMesh" id="SphereMesh_bewgv"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2wda1"]
-albedo_color = Color(0.11599357, 0.311351, 0, 1)
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_wltj5"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_n6dmr"]
-albedo_color = Color(0.4640153, 0.16637677, 1.4439226e-07, 1)
+[ext_resource type="PackedScene" uid="uid://bmfncsw2rdlwx" path="res://Assets/Art/Foliage/tree.tscn" id="1_1grp2"]
+[ext_resource type="Script" uid="uid://nd5x6x22joxk" path="res://Game scenes/Terrain scenes/tree.gd" id="1_6y2o1"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_wltj5"]
 
 [node name="Tree" type="Node3D" unique_id=1373525873]
+script = ExtResource("1_6y2o1")
 
-[node name="Tree_Top_Mesh" type="MeshInstance3D" parent="." unique_id=346616040]
-transform = Transform3D(1.3, 0, 0, 0, 0.7, 0, 0, 0, 1.3, 0, 1.3086026, 0)
-mesh = SubResource("SphereMesh_bewgv")
-surface_material_override/0 = SubResource("StandardMaterial3D_2wda1")
+[node name="Tree" parent="." unique_id=815490586 instance=ExtResource("1_1grp2")]
+transform = Transform3D(0.5241246, 0, 0, 0, 0.5241246, 0, 0, 0, 0.5241246, 0, 1.6655078, -0.1163812)
 
 [node name="Trunk" type="Node3D" parent="." unique_id=238054107]
 
-[node name="Tree_trunk_Mesh" type="MeshInstance3D" parent="Trunk" unique_id=1124817397]
-transform = Transform3D(0.10000001, 0, 0, 0, 0.5, 0, 0, 0, 0.10000001, 0, 0.49999997, 0)
-mesh = SubResource("CylinderMesh_wltj5")
-surface_material_override/0 = SubResource("StandardMaterial3D_n6dmr")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="Trunk/Tree_trunk_Mesh" unique_id=37286488 groups=["Obstacle_Group"]]
-transform = Transform3D(9.999999, 0, 0, 0, 2, 0, 0, 0, 9.999999, 0, -0.99999994, 0)
+[node name="StaticBody3D" type="StaticBody3D" parent="Trunk" unique_id=37286488 groups=["Obstacle_Group"]]
 collision_layer = 3
 collision_mask = 3
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Trunk/Tree_trunk_Mesh/StaticBody3D" unique_id=677777445]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Trunk/StaticBody3D" unique_id=677777445]
 transform = Transform3D(0.10000001, 0, 0, 0, 0.5, 0, 0, 0, 0.10000001, 0, 0.49999997, 0)
 shape = SubResource("CylinderShape3D_wltj5")
 
-[node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="Trunk/Tree_trunk_Mesh/StaticBody3D" unique_id=908720362 groups=["UP_navigation_mesh_source_group"]]
+[node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="Trunk/StaticBody3D" unique_id=908720362 groups=["UP_navigation_mesh_source_group"]]
 vertices = PackedVector3Array(-0.00046794116, 0, -0.050224654, 0.025736243, 0, -0.045233384, 0.04414156, 0, -0.026516125, 0.051316485, 0, -0.0040554106, 0.048820853, 0, 0.02090094, 0.029791653, 0, 0.04304971, 0.0032755136, 0, 0.052096386, -0.019497156, 0, 0.04710511, -0.043205686, 0, 0.032131296, -0.051628448, 0, 0.0046793153, -0.04726109, 0, -0.019965079, -0.031663373, 0, -0.04055407, -0.014193922, 0, -0.048976835)
