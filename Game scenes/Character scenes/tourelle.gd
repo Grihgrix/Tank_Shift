@@ -21,7 +21,10 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	pass
+	# Tourelle aiming at player if live NPC can see the player
+	if not character.is_player and character.is_alive and character.aim_enemy_available:
+		print("character_" + str(character.character_id) + " can see player")
+		# TODO : Add aim towards player
 
 
 

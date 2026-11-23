@@ -27,6 +27,9 @@ var move_direction:int
 @onready var enemies_shift_req_detected:int = 0
 @onready var allies_detected:int = 0
 
+@onready var aim_enemy_available:bool = false
+var detected_enemy_character:CharacterBody3D
+
 # Signal to detect if ennemy just shifted
 signal on_shift(shifter_id:int, shifter_is_up_or_down:int)
 
@@ -222,6 +225,13 @@ func _on_state_machine_player_transited(from, to):
 func _on_enemy_detection_body_entered(body):
 	if not is_player and body is CharacterBody3D:
 		if body.character_id == 1:
+			# Assign the player node to the  ennemy character body variable
+			detected_enemy_character = body
+			# Trigger the marker showing that the ennemy can be seen
+			if is_up_or_down == body.is_up_or_down:
+				aim_enemy_available = true
+			
+			# Trigger the change of state
 			enemies_detected +=1
 			state_machine_player.set_param("Ennemies Detected", enemies_detected)
 			
@@ -240,6 +250,10 @@ func _on_enemy_detection_body_entered(body):
 func _on_enemy_detection_body_exited(body):
 	if not is_player and body is CharacterBody3D:
 		if body.character_id == 1:
+			# Trigger the marker showing that the ennemy can no longer be seen
+			aim_enemy_available = false
+			
+			# Trigger the state change
 			enemies_detected -=1
 			state_machine_player.set_param("Ennemies Detected", enemies_detected)
 			# Check if the enemy is on the other side
@@ -261,8 +275,16 @@ func _nearby_ennemy_shifted(shifter_id, shifter_is_up_or_down):
 		
 		if shifter_is_up_or_down == is_up_or_down:
 			# If we are on the same side now : 
+			# Trigger the marker showing that the ennemy can be seen
+			aim_enemy_available = true
+			
+			# Trigger the change of state
 			enemies_shift_req_detected -= 1
 		else :
 			# If we are now shifted away
+			# Trigger the marker showing that the ennemy can no longer be seen
+			aim_enemy_available = false
+			
+			# Trigger the change of state
 			enemies_shift_req_detected += 1
 		state_machine_player.set_param("Ennemies Shift Required", enemies_shift_req_detected)
