@@ -1,8 +1,13 @@
 [gd_scene format=3 uid="uid://ckth1hvf2wl43"]
 
 [ext_resource type="PackedScene" uid="uid://bkb87vbn55kam" path="res://Game scenes/Terrain scenes/tile_size_hedge.tscn" id="1_j3ba7"]
+[ext_resource type="PackedScene" uid="uid://n6lpdgadjoct" path="res://Assets/Art/Props/stone_wall.tscn" id="2_pru2v"]
 
 [node name="Unpassable_landscape_y" type="Node3D" unique_id=792482370]
 
 [node name="Tile_size_hedge" parent="." unique_id=1177526376 instance=ExtResource("1_j3ba7")]
 transform = Transform3D(-8.742278e-08, 0, 0.4, 0, 1, 0, -2, 0, -1.7484556e-08, 0, 0.5, 0)
+visible = false
+
+[node name="StoneWall" parent="." unique_id=1756839256 instance=ExtResource("2_pru2v")]
+transform = Transform3D(1, 0, 0, 0, 1.3014462, 0, 0, 0, 1, 0, 0.05545777, 0)

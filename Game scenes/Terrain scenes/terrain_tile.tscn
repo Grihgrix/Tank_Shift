@@ -12,9 +12,6 @@ albedo_color = Color(0.58431375, 0.59607846, 0, 1)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_f7ppj"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bewgv"]
-albedo_color = Color(0.92968, 0.4146694, 0, 1)
-
 [sub_resource type="PlaneMesh" id="PlaneMesh_d0qtd"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y2phs"]
@@ -46,7 +43,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_i4gw7")
 [node name="Downside_MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=282016631]
 transform = Transform3D(-3, 4.5298742e-07, 0, -4.5298742e-07, -3, 0, 0, 0, 3, 0, -0.05, 0)
 mesh = SubResource("PlaneMesh_f7ppj")
-surface_material_override/0 = SubResource("StandardMaterial3D_bewgv")
+surface_material_override/0 = SubResource("StandardMaterial3D_i4gw7")
 
 [node name="Landscape_Node3D" type="Node3D" parent="Downside_MeshInstance3D2" unique_id=542764185]
 
@@ -90,8 +87,17 @@ metadata/_custom_type_script = "uid://bi8gq2wkijt2"
 [node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="GrassSpawner" unique_id=490987717]
 multimesh = SubResource("MultiMesh_nr5eq")
 
-[node name="Camera3D" type="Camera3D" parent="." unique_id=1460842084]
-transform = Transform3D(-0.6108549, 0, -0.79174256, 0, 1, 0, 0.79174256, 0, -0.6108549, -5.2521114, 1.6110768, -2.737284)
+[node name="GrassSpawner2" type="CollisionShape3D" parent="." unique_id=1831294459]
+transform = Transform3D(1, 0, 0, 0, -1, -8.742278e-08, 0, 8.742278e-08, -1, 0, -0.1, 0)
+shape = SubResource("BoxShape3D_nr5eq")
+debug_color = Color(0, 0.6, 0.19607843, 0.41960785)
+script = ExtResource("2_n6dmr")
+grass_scene = ExtResource("3_nvgtd")
+grass_count = 400
+metadata/_custom_type_script = "uid://bi8gq2wkijt2"
+
+[node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="GrassSpawner2" unique_id=1261082674]
+multimesh = SubResource("MultiMesh_nr5eq")
 
 [connection signal="input_event" from="Area3D" to="." method="_on_area_3d_input_event"]
 [connection signal="mouse_entered" from="Area3D" to="." method="_on_area_3d_mouse_entered"]

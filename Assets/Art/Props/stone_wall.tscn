@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://n6lpdgadjoct"]
+
+[ext_resource type="ArrayMesh" uid="uid://cdtx1y4i21p02" path="res://assets/Art/Props/stone_wall.res" id="1_l2rtq"]
+[ext_resource type="Shader" uid="uid://dddjgvs6i7qdh" path="res://Assets/Art/Props/stone.gdshader" id="2_c3s3y"]
+
+[sub_resource type="Gradient" id="Gradient_sd4g0"]
+offsets = PackedFloat32Array(0.065891474, 0.8333333, 1)
+colors = PackedColorArray(0.3083333, 0.37, 0, 1, 0.35999307, 0.41705394, 0.0746888, 0.9253112, 1, 1, 1, 0)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_c3s3y"]
+noise_type = 0
+frequency = 0.0001
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_sd4g0"]
+noise = SubResource("FastNoiseLite_c3s3y")
+color_ramp = SubResource("Gradient_sd4g0")
+seamless = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_c3s3y"]
+render_priority = 0
+shader = ExtResource("2_c3s3y")
+shader_parameter/tex = SubResource("NoiseTexture2D_sd4g0")
+shader_parameter/base_color = Color(0.45, 0.44099998, 0.3825, 1)
+shader_parameter/scale = 0.5
+shader_parameter/threshold = 0.470000022325
+shader_parameter/softness = 0.1750000083125
+
+[node name="StoneWall" type="MeshInstance3D" unique_id=1756839256]
+transform = Transform3D(1, 0, 0, 0, 1.172724, 0, 0, 0, 1, 0, 0.09470528, 0)
+mesh = ExtResource("1_l2rtq")
+surface_material_override/0 = SubResource("ShaderMaterial_c3s3y")
+metadata/bakpak_generated = true
+metadata/bakpak_lod_group = "default"

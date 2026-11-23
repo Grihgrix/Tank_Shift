@@ -4,25 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://bvwc4o8phj4ai" path="res://Game scenes/Character scenes/character.tscn" id="2_sqh5q"]
 [ext_resource type="Script" uid="uid://cepva24pdgjxl" path="res://Game scenes/Character scenes/ath_label.gd" id="3_gk8pv"]
 [ext_resource type="PackedScene" uid="uid://cwdqucy88hqqy" path="res://Game scenes/Terrain scenes/Level.tscn" id="3_ljjr8"]
-
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_1ua0y"]
-sky_top_color = Color(0.24303111, 0.5143662, 0.861148, 1)
-sky_horizon_color = Color(0.71105695, 0.66550606, 0.9647961, 1)
-sky_curve = 0.10245305
-
-[sub_resource type="Sky" id="Sky_vqmwc"]
-sky_material = SubResource("ProceduralSkyMaterial_1ua0y")
-
-[sub_resource type="Environment" id="Environment_nr5eq"]
-background_mode = 2
-sky = SubResource("Sky_vqmwc")
-ambient_light_source = 2
-ambient_light_color = Color(1, 0.9, 0.8, 1)
-ssao_enabled = true
-ssao_intensity = 10.0
-glow_enabled = true
-glow_bloom = 0.25
-fog_height_density = 0.1355
+[ext_resource type="Environment" uid="uid://bflqurmk032wp" path="res://Assets/Art/environment.tres" id="3_t4wav"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_wltj5"]
 vertices = PackedVector3Array(-4.5, 0.4, -4.5, -4.5, 0.4, 4.5, 4.5, 0.4, 4.5, 4.5, 0.4, -4.5)
@@ -55,7 +37,7 @@ transform = Transform3D(-0.33073276, 0.6066145, 0.72293484, -0.858795, 0.1241394
 Tiles_parent_group = "tile_parent"
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1282892840]
-environment = SubResource("Environment_nr5eq")
+environment = ExtResource("3_t4wav")
 
 [node name="Up_NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=1586066145]
 visible = false
@@ -109,7 +91,7 @@ transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 1.8408813, 
 character_id = 4
 
 [node name="NPC_5" parent="." unique_id=795801486 instance=ExtResource("2_sqh5q")]
-transform = Transform3D(-0.99999994, -8.742277e-08, 0, 8.742277e-08, -0.99999994, 0, 0, 0, 1, 2.250122, 0, -1.0195313)
+transform = Transform3D(-0.9943591, 0.106065325, 0, -0.106065325, -0.9943591, 0, 0, 0, 1, 2.250122, 0, -1.0195313)
 character_id = 5
 
 [node name="NPC_6" parent="." unique_id=657848110 instance=ExtResource("2_sqh5q")]
