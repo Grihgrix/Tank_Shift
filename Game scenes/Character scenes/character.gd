@@ -34,7 +34,6 @@ signal on_shift(shifter_id:int, shifter_is_up_or_down:int)
 
 # Navigation NPC
 @onready var navigation_agent_3d:NavigationAgent3D = $NavigationAgent3D
-@onready var up_navigation_region_3d = $"../Up_NavigationRegion3D"
 @onready var npc_activities_timer = $NPC_Activities_Timer # Will be used to change destination, or move between shots, or delay shifts
 
 
@@ -203,9 +202,6 @@ func _physics_process(delta):
 	move_and_slide()
 
 func _debug_npc_path_assignment():
-	#up_navigation_region_3d.bake_navigation_mesh()
-	#await up_navigation_region_3d.bake_finished
-	#await get_tree().create_timer(1).timeout
 	print("Debug Path")
 	# This is when prtessing CTRL
 	var random_position:Vector3 = Vector3.ZERO

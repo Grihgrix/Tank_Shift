@@ -109,17 +109,17 @@ transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 1.8408813, 
 character_id = 4
 
 [node name="NPC_5" parent="." unique_id=795801486 instance=ExtResource("2_sqh5q")]
-transform = Transform3D(-0.99435914, 0.10606533, 0, -0.10606533, -0.99435914, 0, 0, 0, 1, 2.250122, 0, -1.0195313)
+transform = Transform3D(-0.99999994, -8.742277e-08, 0, 8.742277e-08, -0.99999994, 0, 0, 0, 1, 2.250122, 0, -1.0195313)
 character_id = 5
 
 [node name="NPC_6" parent="." unique_id=657848110 instance=ExtResource("2_sqh5q")]
-transform = Transform3D(-0.99435914, 0.10606533, 0, -0.10606533, -0.99435914, 0, 0, 0, 1, 16.053589, 0, -1.0195313)
+transform = Transform3D(-0.99999994, -8.742277e-08, 0, 8.742277e-08, -0.99999994, 0, 0, 0, 1, 16.053589, 0, -1.0195313)
 character_id = 6
 
 [node name="NPC_7" parent="." unique_id=257597899 instance=ExtResource("2_sqh5q")]
-transform = Transform3D(-0.99435914, 0.10606533, 0, -0.10606533, -0.99435914, 0, 0, 0, 1, 16.053589, 0, -1.0195313)
+transform = Transform3D(-0.99999994, -8.742277e-08, 0, 8.742277e-08, -0.99999994, 0, 0, 0, 1, 16.053589, 0, -1.0195313)
 character_id = 7
 
 [node name="NPC_8" parent="." unique_id=945942901 instance=ExtResource("2_sqh5q")]
-transform = Transform3D(-0.99435914, 0.10606533, 0, -0.10606533, -0.99435914, 0, 0, 0, 1, 16.053589, 0, -1.0195313)
+transform = Transform3D(-0.99999994, -8.742277e-08, 0, 8.742277e-08, -0.99999994, 0, 0, 0, 1, 16.053589, 0, -1.0195313)
 character_id = 8

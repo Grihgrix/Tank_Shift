@@ -15,6 +15,9 @@ extends Node
 @onready var Tiles_parent_group = level.get_node("Tiles_parent_group")
 
 @onready var up_navigation_region_3d = $Up_NavigationRegion3D
+@onready var down_navigation_region_3d = $Down_NavigationRegion3D
+
+
 
 
 # Called when the node enters the scene tree for the first time.
@@ -46,4 +49,5 @@ func _refresh_navigation_region():
 	Global.navigation_mesh_bale_requested = false
 	await get_tree().create_timer(1).timeout
 	up_navigation_region_3d.bake_navigation_mesh(false)
+	down_navigation_region_3d.bake_navigation_mesh(false)
 	
