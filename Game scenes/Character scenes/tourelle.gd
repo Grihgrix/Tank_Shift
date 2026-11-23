@@ -21,7 +21,15 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	pass
+	# Tourelle aiming at player if live NPC can see the player
+	if not character.is_player and character.is_alive and character.aim_enemy_available:
+		# Only NPCs when playert is at range
+		# Find the target vector from the NPC to the player
+		var target_vector = character.global_position - character.detected_enemy_character.global_position
+		# Use the vector to calculate the angle needed for the tourelle
+		var target_rotation = - atan2(target_vector.z, target_vector.x)  + PI / 2
+		# Slowly turn the tourelle towards target
+		global_rotation.y = lerp_angle(global_rotation.y, target_rotation, delta * 2)
 
 
 
