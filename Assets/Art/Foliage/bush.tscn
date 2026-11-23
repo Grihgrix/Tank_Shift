@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://ba4kpa8uhmuim"]
+
+[ext_resource type="ArrayMesh" uid="uid://bclpahwjg15r4" path="res://assets/Art/Foliage/bush.res" id="1_pwtje"]
+
+[node name="Bush" type="MeshInstance3D" unique_id=1536467258]
+mesh = ExtResource("1_pwtje")
+metadata/bakpak_generated = true
+metadata/bakpak_lod_group = "default"

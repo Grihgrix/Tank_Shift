@@ -6,7 +6,7 @@
 					"res://assets/Art/Tank/body.res",
 					"res://assets/Art/Tank/body.tscn"
 				],
-				"fingerprint": "zFiWxGSf86eBEB0NwkW/eA==",
+				"fingerprint": "APFY1C+O3LqKSctG3OwOZA==",
 				"path": "Art/Tank"
 			},
 			"Head_nocol": {
@@ -14,7 +14,7 @@
 					"res://assets/Art/Tank/head.res",
 					"res://assets/Art/Tank/head.tscn"
 				],
-				"fingerprint": "G48Zu8s7eadWQ2itysPz1w==",
+				"fingerprint": "HGvNUSEHL7RcfjRwijwGew==",
 				"path": "Art/Tank"
 			},
 			"Tree_nocol": {
@@ -22,7 +22,15 @@
 					"res://assets/Art/Foliage/tree.res",
 					"res://assets/Art/Foliage/tree.tscn"
 				],
-				"fingerprint": "cvpvl17xvVRgA43X8408Fg==",
+				"fingerprint": "aghc6CmgXsiW+LOfTZ97MA==",
+				"path": "Art/Foliage"
+			},
+			"bush_nocol": {
+				"files": [
+					"res://assets/Art/Foliage/bush.res",
+					"res://assets/Art/Foliage/bush.tscn"
+				],
+				"fingerprint": "4E/2+RT5iH2UkEjd/lyS4g==",
 				"path": "Art/Foliage"
 			},
 			"stone_wall_nocol": {
@@ -30,19 +38,21 @@
 					"res://assets/Art/Props/stone_wall.res",
 					"res://assets/Art/Props/stone_wall.tscn"
 				],
-				"fingerprint": "PxJ1F5hO76Yp5DNuYok6zg==",
+				"fingerprint": "cCaT3fZdjTHevtbipwiaKA==",
 				"path": "Art/Props"
 			}
 		},
 		"files": [
-			"res://assets/Art/Tank/body.res",
-			"res://assets/Art/Tank/body.tscn",
-			"res://assets/Art/Tank/head.res",
-			"res://assets/Art/Tank/head.tscn",
+			"res://assets/Art/Foliage/bush.res",
+			"res://assets/Art/Foliage/bush.tscn",
 			"res://assets/Art/Foliage/tree.res",
 			"res://assets/Art/Foliage/tree.tscn",
 			"res://assets/Art/Props/stone_wall.res",
-			"res://assets/Art/Props/stone_wall.tscn"
+			"res://assets/Art/Props/stone_wall.tscn",
+			"res://assets/Art/Tank/body.res",
+			"res://assets/Art/Tank/body.tscn",
+			"res://assets/Art/Tank/head.res",
+			"res://assets/Art/Tank/head.tscn"
 		]
 	},
 	"res://assets/Art/props.glb": {

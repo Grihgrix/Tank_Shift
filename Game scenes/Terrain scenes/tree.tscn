@@ -1,7 +1,8 @@
 [gd_scene format=3 uid="uid://cy2e64duypdw2"]
 
 [ext_resource type="PackedScene" uid="uid://bmfncsw2rdlwx" path="res://Assets/Art/Foliage/tree.tscn" id="1_1grp2"]
-[ext_resource type="Script" uid="uid://nd5x6x22joxk" path="res://Game scenes/Terrain scenes/tree.gd" id="1_6y2o1"]
+[ext_resource type="Script" uid="uid://nd5x6x22joxk" path="res://Assets/Art/Foliage/rand_trandform.gd" id="1_6y2o1"]
+
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_wltj5"]
 

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://n6lpdgadjoct"]
 
-[ext_resource type="ArrayMesh" uid="uid://cdtx1y4i21p02" path="res://Assets/Art/Props/stone_wall.res" id="1_l2rtq"]
+[ext_resource type="ArrayMesh" uid="uid://cdtx1y4i21p02" path="res://assets/Art/Props/stone_wall.res" id="1_l2rtq"]
 [ext_resource type="Shader" uid="uid://dddjgvs6i7qdh" path="res://Assets/Art/Props/stone.gdshader" id="2_c3s3y"]
 
 [sub_resource type="Gradient" id="Gradient_sd4g0"]
