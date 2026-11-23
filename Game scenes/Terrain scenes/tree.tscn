@@ -3,16 +3,8 @@
 [ext_resource type="PackedScene" uid="uid://bmfncsw2rdlwx" path="res://Assets/Art/Foliage/tree.tscn" id="1_1grp2"]
 [ext_resource type="Script" uid="uid://nd5x6x22joxk" path="res://Assets/Art/Foliage/rand_trandform.gd" id="1_6y2o1"]
 
-
 [node name="Tree" type="Node3D" unique_id=1373525873]
 script = ExtResource("1_6y2o1")
 
 [node name="Tree" parent="." unique_id=815490586 instance=ExtResource("1_1grp2")]
 transform = Transform3D(0.5241246, 0, 0, 0, 0.5241246, 0, 0, 0, 0.5241246, 0, 1.6655078, -0.1163812)
-
-[node name="Trunk" type="Node3D" parent="." unique_id=238054107]
-
-[node name="Tree_trunk_Mesh" type="MeshInstance3D" parent="Trunk" unique_id=1124817397]
-transform = Transform3D(0.10000001, 0, 0, 0, 0.5, 0, 0, 0, 0.10000001, 0, 0.49999997, 0)
-mesh = SubResource("CylinderMesh_wltj5")
-surface_material_override/0 = SubResource("StandardMaterial3D_n6dmr")
