@@ -24,6 +24,14 @@
 				],
 				"fingerprint": "cvpvl17xvVRgA43X8408Fg==",
 				"path": "Art/Foliage"
+			},
+			"stone_wall_nocol": {
+				"files": [
+					"res://assets/Art/Props/stone_wall.res",
+					"res://assets/Art/Props/stone_wall.tscn"
+				],
+				"fingerprint": "PxJ1F5hO76Yp5DNuYok6zg==",
+				"path": "Art/Props"
 			}
 		},
 		"files": [
@@ -32,7 +40,9 @@
 			"res://assets/Art/Tank/head.res",
 			"res://assets/Art/Tank/head.tscn",
 			"res://assets/Art/Foliage/tree.res",
-			"res://assets/Art/Foliage/tree.tscn"
+			"res://assets/Art/Foliage/tree.tscn",
+			"res://assets/Art/Props/stone_wall.res",
+			"res://assets/Art/Props/stone_wall.tscn"
 		]
 	},
 	"res://assets/Art/props.glb": {

@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://n6lpdgadjoct"]
+
+[ext_resource type="ArrayMesh" uid="uid://cdtx1y4i21p02" path="res://assets/Art/Props/stone_wall.res" id="1_l2rtq"]
+
+[node name="StoneWall" type="MeshInstance3D" unique_id=1756839256]
+mesh = ExtResource("1_l2rtq")
+metadata/bakpak_generated = true
+metadata/bakpak_lod_group = "default"
