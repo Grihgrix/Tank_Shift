@@ -23,8 +23,15 @@ func _ready():
 func _process(delta):
 	# Tourelle aiming at player if live NPC can see the player
 	if not character.is_player and character.is_alive and character.aim_enemy_available:
-		print("character_" + str(character.character_id) + " can see player")
+		print("character_" + str(character.character_id) + " can see player : " + str(character.detected_enemy_character))
 		# TODO : Add aim towards player
+		
+		var target_vector = character.global_position - character.detected_enemy_character.global_position
+		#print(str(character.global_position) + " - " + str(character.detected_enemy_character.global_position) + " = " + str(target_vector))
+		var target_rotation = - atan2(target_vector.z, target_vector.x)  + PI / 2
+		#print(str(character.global_rotation) + " - " + str(target_rotation))
+		#global_rotation.y = target_rotation
+		global_rotation.y = lerp_angle(global_rotation.y, target_rotation, delta * 2)
 
 
 
