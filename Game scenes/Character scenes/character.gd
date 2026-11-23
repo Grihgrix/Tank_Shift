@@ -88,12 +88,13 @@ func _physics_process(delta):
 	###########################
 	# Command a distant Shift #
 	###########################
-	if is_player and is_alive and Input.is_action_just_released("Distant_Shift") and shift_timer.is_stopped():
-		# Start the cooldown
-		shift_timer.start(Global.shift_cooldown)
-		# Trigger reparenting (in the main script) and shift (in the tile script)
-		Global.shift_requested_on_mouse = true
-		# Actual shift is happening in the tiles code
+	# Distant shift is cut
+	#if is_player and is_alive and Input.is_action_just_released("Distant_Shift") and shift_timer.is_stopped():
+	#	# Start the cooldown
+	#	shift_timer.start(Global.shift_cooldown)
+	#	# Trigger reparenting (in the main script) and shift (in the tile script)
+	#	Global.shift_requested_on_mouse = true
+	#	# Actual shift is happening in the tiles code
 	
 	######################################
 	# Check if we are upside down or not #
