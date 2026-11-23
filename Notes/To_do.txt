@@ -4,8 +4,7 @@ To Do :
 - Projectile could despawn trees if colliding with their trunk
 - Add NPC behaviours
     -> Exploration
-    Currently working on the navigation. NPCs can move towards arandom point of the map when I press CTRL 
-    Identify when NPC has no path to either recalculate or use the shift
+    Done, now need to be autonomous
     -> Attack
     -> Shift attack
 - Change the assets for Adrien's assets 
