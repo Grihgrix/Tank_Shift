@@ -1,0 +1,110 @@
+[gd_scene format=3 uid="uid://bvwc4o8phj4ai"]
+
+[ext_resource type="Script" uid="uid://cdx5is3f4lpts" path="res://Game scenes/Character scenes/character.gd" id="1_0wov1"]
+[ext_resource type="Script" uid="uid://b2hexpl5bkcx0" path="res://Game scenes/Character scenes/tourelle.gd" id="2_aknvi"]
+[ext_resource type="PackedScene" uid="uid://chlxgvf51pads" path="res://Assets/Art/Tank/head.tscn" id="3_wpo4s"]
+[ext_resource type="Script" uid="uid://dxnlhpjvxxsdm" path="res://Game scenes/Character scenes/shooter.gd" id="3_y3tpf"]
+[ext_resource type="PackedScene" uid="uid://dod04a7ea1c8k" path="res://Assets/Art/Tank/body.tscn" id="5_yk8nn"]
+[ext_resource type="Shader" uid="uid://cxq17nbxebj1c" path="res://Assets/Art/shader_vertcol.gdshader" id="6_yk8nn"]
+[ext_resource type="Script" uid="uid://b3nr0oxlomtmq" path="res://addons/imjp94.yafsm/src/StateMachinePlayer.gd" id="7_cv6ge"]
+[ext_resource type="Resource" uid="uid://4enqsgp2vgxl" path="res://Game scenes/Character scenes/States/Character_State_Machine.tres" id="8_ufa4k"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yk8nn"]
+render_priority = 0
+shader = ExtResource("6_yk8nn")
+shader_parameter/albedo = Color(0.55408335, 0.61, 0.2745, 1)
+shader_parameter/albedo_texture_size = Vector2i(0, 0)
+shader_parameter/point_size = 1.0
+shader_parameter/roughness = 1.0
+shader_parameter/metallic_texture_channel = Vector4(1, 0, 0, 0)
+shader_parameter/specular = 0.5
+shader_parameter/metallic = 0.0
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ufa4k"]
+render_priority = 0
+shader = ExtResource("6_yk8nn")
+shader_parameter/albedo = Color(0.6044083, 0.61, 0.2745, 1)
+shader_parameter/albedo_texture_size = Vector2i(0, 0)
+shader_parameter/point_size = 1.0
+shader_parameter/roughness = 1.0
+shader_parameter/metallic_texture_channel = Vector4(1, 0, 0, 0)
+shader_parameter/specular = 0.5
+shader_parameter/metallic = 0.0
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_f7ppj"]
+size = Vector3(2.1823273, 1.212616, 2.8248138)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_wltj5"]
+radius = 15.0
+
+[node name="Character" type="CharacterBody3D" unique_id=1998404675]
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0, 0, 0)
+collision_layer = 3
+collision_mask = 3
+axis_lock_linear_y = true
+script = ExtResource("1_0wov1")
+
+[node name="Proto_tank" type="Node3D" parent="." unique_id=1523143693]
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0, 1.15, 0)
+
+[node name="Tourelle" type="Node3D" parent="Proto_tank" unique_id=827514542]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.2926066, 0)
+script = ExtResource("2_aknvi")
+
+[node name="Head" parent="Proto_tank/Tourelle" unique_id=897098856 instance=ExtResource("3_wpo4s")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+surface_material_override/0 = SubResource("ShaderMaterial_yk8nn")
+
+[node name="Shooter" type="Node3D" parent="Proto_tank/Tourelle/Head" unique_id=967923646]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 1.4, 0.36, 0)
+script = ExtResource("3_y3tpf")
+
+[node name="Shooter_Timer" type="Timer" parent="Proto_tank/Tourelle/Head/Shooter" unique_id=623596999]
+wait_time = 3.0
+one_shot = true
+
+[node name="Body" parent="Proto_tank" unique_id=1597050894 instance=ExtResource("5_yk8nn")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, -1.0939587, 0)
+surface_material_override/0 = SubResource("ShaderMaterial_ufa4k")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=931742010]
+transform = Transform3D(0.9999704, 0, 0, 0, 0.9999704, 0, 0, 0, 1, 0.006202703, 1.053331, -0.0024032593)
+shape = SubResource("BoxShape3D_f7ppj")
+
+[node name="Shift_Timer" type="Timer" parent="." unique_id=983244169]
+wait_time = 5.0
+one_shot = true
+
+[node name="StateMachinePlayer" type="Node" parent="." unique_id=1033437065]
+script = ExtResource("7_cv6ge")
+state_machine = ExtResource("8_ufa4k")
+metadata/_custom_type_script = "uid://b3nr0oxlomtmq"
+
+[node name="Enemy_Detection" type="Area3D" parent="." unique_id=462094498]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Enemy_Detection" unique_id=276988103]
+shape = SubResource("SphereShape3D_wltj5")
+
+[node name="Label3D" type="Label3D" parent="." unique_id=1630385336]
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0, 4.876709, 0)
+billboard = 1
+text = "0"
+font_size = 200
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=873699269]
+navigation_layers = 0
+debug_enabled = true
+
+[node name="NPC_Activities_Timer" type="Timer" parent="." unique_id=392827701]
+
+[connection signal="transited" from="StateMachinePlayer" to="." method="_on_state_machine_player_transited"]
+[connection signal="body_entered" from="Enemy_Detection" to="." method="_on_enemy_detection_body_entered"]
+[connection signal="body_exited" from="Enemy_Detection" to="." method="_on_enemy_detection_body_exited"]

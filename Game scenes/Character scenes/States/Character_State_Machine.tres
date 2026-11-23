@@ -22,7 +22,7 @@ metadata/graph_offset = Vector2(291, 282.5)
 
 [sub_resource type="Resource" id="Resource_php0s"]
 script = ExtResource("2_jct8u")
-name = "Shift"
+name = "In danger"
 metadata/graph_offset = Vector2(591, 442.5)
 
 [sub_resource type="Resource" id="Resource_7fk43"]
