@@ -35,3 +35,4 @@ avoir un signe qu'un tank se trouve de l'autre cote d'une tile
 liste de cibles dans l'UI (barree si l'ennemi a ete tue)
 niveau de difficulte en fonction de la densite des obstacle ou ajouter des PV aux ennemis 
 differentes tailles et formes de niveaux mais predefinis dans des bouton du menu (carres, couloirs plus ou moins etroits, plus ou moins de surface disponible)
+

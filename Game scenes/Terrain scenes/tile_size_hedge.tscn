@@ -11,8 +11,6 @@ albedo_color = Color(0.122547455, 0.2514293, 2.4065375e-08, 1)
 transform = Transform3D(2, 0, 0, 0, 0.5, 0, 0, 0, 0.2, 0, 0, 0)
 
 [node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=1125394913 groups=["Obstacle_Group"]]
-collision_layer = 3
-collision_mask = 3
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D" unique_id=1544587050]
 mesh = SubResource("BoxMesh_f7ppj")

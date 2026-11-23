@@ -2,21 +2,36 @@
 
 [ext_resource type="PackedScene" uid="uid://cy2e64duypdw2" path="res://Game scenes/Terrain scenes/tree.tscn" id="1_xy1fu"]
 
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_wltj5"]
+height = 0.9940796
+radius = 0.9067383
+
 [node name="Forest_landscape" type="Node3D" unique_id=126152373]
 
-[node name="Tree1" parent="." unique_id=1373525873 instance=ExtResource("1_xy1fu")]
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=1523812449 groups=["Obstacle_Group"]]
+collision_layer = 2
+collision_mask = 2
 
-[node name="Tree2" parent="." unique_id=1962657790 instance=ExtResource("1_xy1fu")]
+[node name="Tree1" parent="StaticBody3D" unique_id=1373525873 instance=ExtResource("1_xy1fu")]
+
+[node name="Tree2" parent="StaticBody3D" unique_id=1962657790 instance=ExtResource("1_xy1fu")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.61907053, 0, 0.3034401)
 
-[node name="Tree3" parent="." unique_id=1636035262 instance=ExtResource("1_xy1fu")]
+[node name="Tree3" parent="StaticBody3D" unique_id=1636035262 instance=ExtResource("1_xy1fu")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.61907053, 0, -0.6402289)
 
-[node name="Tree4" parent="." unique_id=38258437 instance=ExtResource("1_xy1fu")]
+[node name="Tree4" parent="StaticBody3D" unique_id=38258437 instance=ExtResource("1_xy1fu")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5373682, 0, 0.3034401)
 
-[node name="Tree5" parent="." unique_id=163790501 instance=ExtResource("1_xy1fu")]
+[node name="Tree5" parent="StaticBody3D" unique_id=163790501 instance=ExtResource("1_xy1fu")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4330556, 0, -0.8498342)
 
-[node name="Tree6" parent="." unique_id=937479540 instance=ExtResource("1_xy1fu")]
+[node name="Tree6" parent="StaticBody3D" unique_id=937479540 instance=ExtResource("1_xy1fu")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8171136, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=2126294481]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5029602, -0.25018618)
+shape = SubResource("CylinderShape3D_wltj5")
+
+[node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="StaticBody3D" unique_id=420865225 groups=["UP_navigation_mesh_source_group"]]
+vertices = PackedVector3Array(0.0035150312, 0, 0.6564693, 0.3915061, 0, 0.58682984, 0.7562839, 0, 0.2817428, 0.91545975, 0, -0.15267445, 0.8292395, 0, -0.66999584, 0.48767486, 0, -1.0314575, 0.013463523, 0, -1.1773686, -0.5370195, 0, -1.0115606, -0.86531955, 0, -0.58709174, -0.90179735, 0, -0.02334409, -0.62987196, 0, 0.43760246, -0.2783588, 0, 0.6199915)
