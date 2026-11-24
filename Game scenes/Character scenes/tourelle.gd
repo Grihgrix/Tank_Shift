@@ -91,4 +91,6 @@ func _input(event):
 		
 		# Assign new angle to the tourelle
 		group_tourelle.global_rotation.y = atan2(mouse_position_rel_player.x, mouse_position_rel_player.z) + PI
+		group_tourelle.global_rotation.x = character.global_rotation.x
+		group_tourelle.global_rotation.z = character.global_rotation.z
 		
