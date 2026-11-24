@@ -189,17 +189,15 @@ class BakPakLODGroupEditor extends EditorProperty:
 		print("[BakPakImportTool] Regenerating LODs for: ", mesh_path)
 
 		var base_mesh = mi.mesh
-		var new_mesh = BakPakUtils.generate_mesh_lods(base_mesh, lod_group)
+		var lod_result = BakPakUtils.generate_mesh_lods(base_mesh, lod_group)
 
-		# Maintain the original path and UID
-		new_mesh.take_over_path(mesh_path)
-		var err = ResourceSaver.save(new_mesh, mesh_path)
-		if err == OK:
+		# Writes the file and refreshes the mesh object already in use for this path
+		# (keeping its UID), so every scene showing the mesh updates.
+		var live_mesh = BakPakUtils.save_resource_in_place(lod_result.mesh, mesh_path)
+		if live_mesh:
 			print("[BakPakImportTool] Successfully regenerated LODs and saved to: ", mesh_path)
-			# Update the MeshInstance3D with the new mesh (it should be the same path, but we want to be sure it refreshes)
-			mi.mesh = ResourceLoader.load(mesh_path, "", ResourceLoader.CACHE_MODE_REPLACE)
-			EditorInterface.get_resource_filesystem().update_file(mesh_path)
+			mi.mesh = live_mesh
 		else:
-			printerr("[BakPakImportTool] Failed to save regenerated mesh: ", err)
+			printerr("[BakPakImportTool] Failed to save regenerated mesh: ", mesh_path)
 
 		dialog.queue_free()

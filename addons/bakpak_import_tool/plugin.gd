@@ -1,8 +1,21 @@
 @tool
 extends EditorPlugin
 
+const Fingerprint = preload("res://addons/bakpak_import_tool/fingerprint.gd")
+
+## Generated files go to this folder, following the collection hierarchy of the GLB.
+## The spelling is matched to what exists on disk (see BakPakUtils.canonicalize_path).
+const IMPORT_ROOT = "res://assets/"
+
 var _inspector_plugin: EditorInspectorPlugin
 var _context_menu_plugin: EditorContextMenuPlugin
+
+# Generated scenes waiting to be written: Array of {"root": Node, "path": String}.
+# They are saved together by _flush_pending_scene_saves() so the editor is told
+# once, before and after, which scenes are being replaced.
+var _pending_scene_saves: Array = []
+# True while this plugin is the one emitting EditorFileSystem's reimport signals.
+var _notifying_editor := false
 
 func _enable_plugin() -> void:
 	# Add autoloads here.
@@ -160,6 +173,7 @@ func _on_context_regenerate_lods(paths: PackedStringArray) -> void:
 	for path in paths:
 		if path.ends_with(".tscn"):
 			_regenerate_lods_for_scene(path)
+	_flush_pending_scene_saves()
 
 func _on_context_reimport_from_glb(paths: PackedStringArray) -> void:
 	var import_data = _load_import_data()
@@ -167,6 +181,7 @@ func _on_context_reimport_from_glb(paths: PackedStringArray) -> void:
 
 	for path in paths:
 		if path.ends_with(".tscn"):
+			path = BakPakUtils.canonicalize_path(path)
 			# Find which GLB this tscn belongs to
 			for glb_path in import_data:
 				var data = import_data[glb_path]
@@ -193,6 +208,9 @@ func _on_context_force_reimport_glb(paths: PackedStringArray) -> void:
 			_on_glb_imported(path, [], true)
 
 func _on_resources_reimported(resources: PackedStringArray) -> void:
+	if _notifying_editor:
+		# Our own notification about generated scenes (see _flush_pending_scene_saves).
+		return
 	print("[BakPakImportTool] Resources reimported: ", resources)
 	for resource_path: String in resources:
 		if resource_path.ends_with(".glb"):
@@ -203,6 +221,9 @@ func _on_glb_imported(resource_path: String, force_entities: Array = [], force_a
 	if not FileAccess.file_exists(resource_path):
 		printerr("[BakPakImportTool] GLB file not found: ", resource_path)
 		return
+
+	BakPakUtils.clear_path_cache()
+	resource_path = BakPakUtils.canonicalize_path(resource_path)
 
 	# print("[BakPakImportTool] GLB file imported or updated: ", resource_path)
 
@@ -250,13 +271,13 @@ func _on_glb_imported(resource_path: String, force_entities: Array = [], force_a
 		print("[BakPakImportTool] No entities found under 'Export' in: ", resource_path)
 	else:
 		for entity in entities:
-			var target_dir = "res://assets/".path_join(entity.path)
+			var target_dir = BakPakUtils.canonicalize_path(IMPORT_ROOT.path_join(entity.path))
 			var fingerprint = _get_entity_fingerprint(entity.node)
 
 			# MOVE DETECTION
 			if old_entities.has(entity.name):
 				var old_entity_data = old_entities[entity.name]
-				var old_dir = "res://assets/".path_join(old_entity_data.get("path", ""))
+				var old_dir = BakPakUtils.canonicalize_path(IMPORT_ROOT.path_join(old_entity_data.get("path", "")))
 
 				if old_dir != target_dir:
 					print("[BakPakImportTool] Entity '", entity.name, "' moved from ", old_dir, " to ", target_dir)
@@ -338,6 +359,9 @@ func _on_glb_imported(resource_path: String, force_entities: Array = [], force_a
 			}
 			current_all_files.append_array(processed_files)
 
+	# Write the generated scenes that changed and refresh the open scenes using them.
+	_flush_pending_scene_saves()
+
 	# Compare and delete old files that are no longer in current_all_files
 	var old_all_files = []
 	if import_data.has(resource_path):
@@ -354,7 +378,11 @@ func _on_glb_imported(resource_path: String, force_entities: Array = [], force_a
 				if not f in old_all_files:
 					old_all_files.append(f)
 
+	BakPakUtils.clear_path_cache() # Files were created/removed since the listings were cached.
 	for old_file in old_all_files:
+		# Resolve the on-disk spelling first: a path that differs from a current
+		# file only by case is the same file on Windows/macOS and must not be deleted.
+		old_file = BakPakUtils.canonicalize_path(old_file)
 		if not old_file in current_all_files:
 			if FileAccess.file_exists(old_file):
 				var err = DirAccess.remove_absolute(old_file)
@@ -413,65 +441,40 @@ func _find_entities_recursive(node: Node, current_path: String, entities: Array,
 
 
 func _get_entity_fingerprint(node: Node) -> String:
-	var data = []
-	_collect_fingerprint_data(node, data)
-	var json_str = JSON.stringify(data)
-	var fingerprint = Marshalls.raw_to_base64(json_str.md5_buffer())
-	# print("[BakPakImportTool] Generated fingerprint for ", node.name, ": ", fingerprint)
-	return fingerprint
+	# The fingerprint must change whenever the files generated for this entity
+	# would change. That is the content of the entity's node subtree (hashed by
+	# Fingerprint: meshes by their actual vertex/index/attribute data, materials,
+	# skins, bones, transforms, metadata...) plus the project-side inputs of the
+	# pipeline: the settings below and the material each surface resolves to.
+	var resolved_materials = []
+	_collect_resolved_materials(node, resolved_materials)
+	var pipeline_inputs = [
+		ProjectSettings.get_setting("BakPak/ImportTool/auto_generate_lods", true),
+		ProjectSettings.get_setting("BakPak/ImportTool/max_primitive_collision_shapes", 10),
+		ProjectSettings.get_setting("BakPak/ImportTool/collision_debug_color", Color(0.0, 0.6, 0.7, 0.4)),
+		resolved_materials
+	]
+	return Fingerprint.entity_fingerprint(node, pipeline_inputs)
 
 
-func _collect_fingerprint_data(node: Node, data: Array) -> void:
+# Lists, for every surface of the entity, what _merge_meshes() will do with it:
+# final surface name, whether a preset matched, and which material gets assigned.
+# Editing the preset/default materials in the Project Settings therefore triggers
+# a re-import of exactly the entities that use the affected slots.
+func _collect_resolved_materials(node: Node, results: Array) -> void:
 	if node.name.begins_with("_"):
 		return
 
-	var node_data = {
-		"name": node.name,
-		"type": node.get_class()
-	}
-
-	if node is Node3D:
-		node_data["transform"] = var_to_str(node.transform)
-
-	if node is MeshInstance3D:
-		var mesh = node.mesh
-		if mesh:
-			var mesh_info = {
-				"surfaces": mesh.get_surface_count(),
-				"aabb": var_to_str(mesh.get_aabb())
-			}
-			# Add surface details
-			var surface_details = []
-			for i in range(mesh.get_surface_count()):
-				var surface_mat_path = ""
-				var mat = node.get_active_material(i)
-				if mat:
-					surface_mat_path = mat.resource_path
-
-				surface_details.append({
-					"name": mesh.surface_get_name(i),
-					"mat": surface_mat_path
-				})
-			mesh_info["surface_details"] = surface_details
-			node_data["mesh"] = mesh_info
-
-		if node.skin:
-			node_data["skin"] = node.skin.resource_path
-
-	if node is Skeleton3D:
-		var bones = []
-		for i in range(node.get_bone_count()):
-			bones.append({
-				"name": node.get_bone_name(i),
-				"parent": node.get_bone_parent(i),
-				"rest": var_to_str(node.get_bone_rest(i))
-			})
-		node_data["bones"] = bones
-
-	data.append(node_data)
+	if node is MeshInstance3D and node.mesh:
+		for i in range(node.mesh.get_surface_count()):
+			var mat_info = _get_final_material_info(node.get_active_material(i), node.mesh.surface_get_name(i))
+			var final_mat_path = ""
+			if mat_info.material:
+				final_mat_path = mat_info.material.resource_path
+			results.append([mat_info.name, mat_info.matched, final_mat_path])
 
 	for child in node.get_children():
-		_collect_fingerprint_data(child, data)
+		_collect_resolved_materials(child, results)
 
 
 func _process_entity(entity_node: Node, base_dir: String, base_name: String) -> Array:
@@ -593,13 +596,11 @@ func _process_entity(entity_node: Node, base_dir: String, base_name: String) -> 
 			})
 
 	var tscn_path = base_dir.path_join(snake_name + ".tscn")
+	var auto_generate_lods = ProjectSettings.get_setting("BakPak/ImportTool/auto_generate_lods", true)
 	var current_lod_group = ProjectSettings.get_setting("BakPak/ImportTool/default_lod_group", "default")
-	if FileAccess.file_exists(tscn_path):
-		var existing_scene = ResourceLoader.load(tscn_path, "", ResourceLoader.CACHE_MODE_REPLACE)
-		if existing_scene:
-			var scene_inst = existing_scene.instantiate()
-			current_lod_group = scene_inst.get_meta("bakpak_lod_group", current_lod_group)
-			scene_inst.free()
+	if auto_generate_lods and FileAccess.file_exists(tscn_path):
+		var previous_scene = ResourceLoader.load(tscn_path, "PackedScene") as PackedScene
+		current_lod_group = BakPakUtils.get_scene_root_meta(previous_scene, "bakpak_lod_group", current_lod_group)
 
 	var saved_meshes = []
 	var material_names = []
@@ -609,7 +610,7 @@ func _process_entity(entity_node: Node, base_dir: String, base_name: String) -> 
 		merged_mesh = _merge_meshes(static_visual_data)
 
 		if merged_mesh:
-			if ProjectSettings.get_setting("BakPak/ImportTool/auto_generate_lods", true):
+			if auto_generate_lods:
 				var lod_result = BakPakUtils.generate_mesh_lods(merged_mesh, current_lod_group)
 				merged_mesh = lod_result.mesh
 				if not lod_result.lod_info.is_empty():
@@ -617,22 +618,21 @@ func _process_entity(entity_node: Node, base_dir: String, base_name: String) -> 
 
 			if merged_mesh.get_surface_count() > 0:
 				save_path = base_dir.path_join(snake_name + ".res")
-				# Use take_over_path to maintain UID consistency if file already exists
-				merged_mesh.take_over_path(save_path)
-				var err = ResourceSaver.save(merged_mesh, save_path)
-				if err == OK:
-					EditorInterface.get_resource_filesystem().update_file(save_path)
+				# Write the file and refresh the mesh object the editor already has
+				# for this path, so open scenes show the new geometry right away.
+				var live_mesh = BakPakUtils.save_resource_in_place(merged_mesh, save_path)
+				if live_mesh:
+					merged_mesh = live_mesh
 					saved_meshes.append(save_path)
 					generated_files.append(save_path)
 				else:
-					printerr("[BakPakImportTool] Failed to save merged mesh: ", save_path, " Error: ", err)
 					save_path = ""
 
 	# Save skinned meshes to .res files
 	for i in range(skinned_visual_data.size()):
 		var sm = skinned_visual_data[i]
 		var mesh_to_save = sm.mesh
-		if ProjectSettings.get_setting("bakpak_import_tool/auto_generate_lods", true):
+		if auto_generate_lods:
 			var lod_result = BakPakUtils.generate_mesh_lods(mesh_to_save, current_lod_group)
 			mesh_to_save = lod_result.mesh
 			if not lod_result.lod_info.is_empty():
@@ -642,16 +642,11 @@ func _process_entity(entity_node: Node, base_dir: String, base_name: String) -> 
 		if skinned_visual_data.size() > 1:
 			sm_path = base_dir.path_join(snake_name + "_" + str(i) + ".res")
 
-		# Use take_over_path to maintain UID consistency if file already exists
-		mesh_to_save.take_over_path(sm_path)
-		var err = ResourceSaver.save(mesh_to_save, sm_path)
-		if err == OK:
-			EditorInterface.get_resource_filesystem().update_file(sm_path)
-			sm.saved_path = sm_path
+		var live_mesh = BakPakUtils.save_resource_in_place(mesh_to_save, sm_path)
+		if live_mesh:
+			sm.mesh = live_mesh
 			saved_meshes.append(sm_path)
 			generated_files.append(sm_path)
-		else:
-			printerr("[BakPakImportTool] Failed to save skinned mesh: ", sm_path, " Error: ", err)
 
 	_cleanup_obsolete_meshes(base_dir, snake_name, saved_meshes)
 
@@ -679,7 +674,7 @@ func _process_entity(entity_node: Node, base_dir: String, base_name: String) -> 
 				if not detection.shape is ConcavePolygonShape3D:
 					collision_shapes.append(detection)
 
-	_generate_tscn_complex(merged_mesh, merged_collision_mesh, collision_shapes, save_path, base_dir, base_name, skeletons_data, skinned_visual_data, skip_collision)
+	_generate_tscn_complex(merged_mesh, merged_collision_mesh, collision_shapes, base_dir, base_name, skeletons_data, skinned_visual_data, skip_collision)
 	generated_files.append(base_dir.path_join(snake_name + ".tscn"))
 
 	# Collect material names for logging
@@ -704,7 +699,7 @@ func _process_entity(entity_node: Node, base_dir: String, base_name: String) -> 
 		var tris_str = "/".join(first_lod_info)
 		final_lod_summary = " — %d LODs [%s]" % [lod_count, tris_str]
 
-	var rel_path = base_dir.path_join(snake_name).trim_prefix("res://assets/")
+	var rel_path = base_dir.path_join(snake_name).trim_prefix(BakPakUtils.canonicalize_path(IMPORT_ROOT) + "/")
 	print("[BakPakImportTool] Successfully imported '%s' — Materials : %s%s" % [rel_path, ", ".join(material_names), final_lod_summary])
 
 	return generated_files
@@ -1020,13 +1015,16 @@ func _detect_primitive_shape(mesh: Mesh, transform: Transform3D) -> Dictionary:
 	return {"shape": shape, "transform": Transform3D.IDENTITY}
 
 
-func _generate_tscn_complex(merged_mesh: Mesh, merged_collision_mesh: Mesh, collision_shapes: Array, mesh_path: String, base_dir: String, base_name: String, skeletons: Array, skinned_meshes: Array, skip_collision: bool = false) -> void:
+func _generate_tscn_complex(merged_mesh: Mesh, merged_collision_mesh: Mesh, collision_shapes: Array, base_dir: String, base_name: String, skeletons: Array, skinned_meshes: Array, skip_collision: bool = false) -> void:
 	var snake_name = base_name.to_snake_case()
 	var pascal_name = snake_name.to_pascal_case()
 	var tscn_path = base_dir.path_join(snake_name + ".tscn")
 	var root: Node3D = null
 
 	var existing_meta = {}
+	# Digest of the scene as it is currently saved, to detect whether this import
+	# changes it at all. Stays empty when the scene has to be written regardless.
+	var saved_digest = PackedByteArray()
 
 	# Determine root type
 	var root_type = "Node3D"
@@ -1036,7 +1034,11 @@ func _generate_tscn_complex(merged_mesh: Mesh, merged_collision_mesh: Mesh, coll
 		root_type = "MeshInstance3D"
 
 	if FileAccess.file_exists(tscn_path):
-		var existing_scene = ResourceLoader.load(tscn_path, "", ResourceLoader.CACHE_MODE_REPLACE)
+		# Read the saved scene straight from disk, without going through (or altering)
+		# the PackedScene the editor may have cached: scenes that are open keep using
+		# that cached state to tell their local changes apart from the instanced
+		# scene, until _flush_pending_scene_saves() has them reload it.
+		var existing_scene = ResourceLoader.load(tscn_path, "PackedScene", ResourceLoader.CACHE_MODE_IGNORE)
 		if existing_scene:
 			var instance = existing_scene.instantiate()
 			# Store existing metadata
@@ -1060,6 +1062,8 @@ func _generate_tscn_complex(merged_mesh: Mesh, merged_collision_mesh: Mesh, coll
 
 			if can_reuse:
 				root = instance
+				if not _scene_has_stale_paths(tscn_path):
+					saved_digest = Fingerprint.scene_digest(root)
 			else:
 				instance.free()
 
@@ -1093,14 +1097,10 @@ func _generate_tscn_complex(merged_mesh: Mesh, merged_collision_mesh: Mesh, coll
 				static_mi.name = "StaticMesh"
 				root.add_child(static_mi)
 
-		var mesh_to_assign = merged_mesh
-		if mesh_path != "":
-			var loaded_mesh = ResourceLoader.load(mesh_path, "", ResourceLoader.CACHE_MODE_REPLACE)
-			if loaded_mesh:
-				mesh_to_assign = loaded_mesh
-
-		static_mi.mesh = mesh_to_assign
+		# merged_mesh is the live resource for its .res file (see _process_entity).
+		static_mi.mesh = merged_mesh
 		static_mi.lod_bias = bias
+		_report_surface_overrides(static_mi, tscn_path)
 
 	# Skeletons and Skinned Meshes
 	var skeleton_map = {} # Original Skeleton3D -> New Skeleton3D
@@ -1180,15 +1180,10 @@ func _generate_tscn_complex(merged_mesh: Mesh, merged_collision_mesh: Mesh, coll
 		# sm.transform was set to IDENTITY in _on_glb_imported if the mesh data was centered.
 		new_mi.transform = sm.transform
 
-		var mesh_to_use = sm.mesh
-		if sm.get("saved_path", "") != "":
-			var loaded_mesh = ResourceLoader.load(sm.saved_path, "", ResourceLoader.CACHE_MODE_REPLACE)
-			if loaded_mesh:
-				mesh_to_use = loaded_mesh
-
-		new_mi.mesh = mesh_to_use
+		new_mi.mesh = sm.mesh
 		new_mi.skin = sm.skin
 		new_mi.lod_bias = bias
+		_report_surface_overrides(new_mi, tscn_path)
 
 	# Collisions - Skip if it's ONLY a skeleton scene OR if entity has _nocol suffix (detected in _process_entity)
 	if not skip_collision and (static_mi or not collision_shapes.is_empty() or merged_collision_mesh):
@@ -1233,42 +1228,139 @@ func _generate_tscn_complex(merged_mesh: Mesh, merged_collision_mesh: Mesh, coll
 	# If they want to delete something, they can do it manually, or we can add metadata to our children later.
 
 	_set_owner_recursive(root, root)
-	_save_tscn_safely(root, tscn_path)
-	root.free()
 
-func _save_tscn_safely(root_node: Node, tscn_path: String) -> void:
-	var packed_scene = PackedScene.new()
-	packed_scene.take_over_path(tscn_path)
-	var err = packed_scene.pack(root_node)
-	if err != OK:
-		printerr("[BakPakImportTool] Failed to pack scene for: ", tscn_path, " Error: ", err)
+	if not saved_digest.is_empty() and Fingerprint.scene_digest(root) == saved_digest:
+		# Nothing changed in the scene itself (the usual case: only the mesh data in
+		# the .res changed, and that is already live). Leave the file alone.
+		root.free()
 		return
 
-	var open_scenes = EditorInterface.get_open_scenes()
-	var is_open = tscn_path in open_scenes
+	_queue_scene_save(root, tscn_path)
 
-	if is_open:
-		# Godot 4.x doesn't have a close_scene_from_path, so we need to rely on reload or just closing the active one if it matches.
-		# But the requirement said: "You can use EditorInterface.open_scene_from_path and EditorInterface.close_scene"
-		# Actually, EditorInterface.close_scene() closes the CURRENT scene.
-		# So we must switch to it first, or just close it if it IS the current one.
 
-		if EditorInterface.get_edited_scene_root() and EditorInterface.get_edited_scene_root().scene_file_path == tscn_path:
-			EditorInterface.close_scene()
+# A surface override stored in the generated scene takes precedence over the
+# material assigned to the mesh surface, so a material slot set up later in Blender
+# (or a new preset) stays hidden behind it. Overrides are user data and are kept;
+# this only makes the situation visible in the import log.
+func _report_surface_overrides(mi: MeshInstance3D, tscn_path: String) -> void:
+	if not mi.mesh:
+		return
+	var overridden = []
+	for i in range(mi.mesh.get_surface_count()):
+		if mi.get_surface_override_material(i):
+			overridden.append("%d (%s)" % [i, mi.mesh.surface_get_name(i)])
+	if not overridden.is_empty():
+		print("[BakPakImportTool] Note: '%s' keeps its Surface Material Override on surface %s of '%s'. The override hides the imported/preset material; clear it in the generated scene to see the material coming from the GLB." % [tscn_path.get_file(), ", ".join(overridden), mi.name])
+
+
+# Whether the saved scene refers to one of its dependencies through a path that is
+# not spelled as on disk (written by earlier versions of this tool, which always
+# used "res://assets/"). Such a scene is re-saved so the reference gets corrected.
+func _scene_has_stale_paths(tscn_path: String) -> bool:
+	for dependency in ResourceLoader.get_dependencies(tscn_path):
+		var dependency_path = dependency
+		if dependency.get_slice_count("::") >= 3:
+			dependency_path = dependency.get_slice("::", 2)
+		if dependency_path.begins_with("res://") and BakPakUtils.canonicalize_path(dependency_path) != dependency_path:
+			return true
+	return false
+
+
+# Takes ownership of `root_node`: it is freed once the scene has been written.
+func _queue_scene_save(root_node: Node, tscn_path: String) -> void:
+	_pending_scene_saves.append({"root": root_node, "path": tscn_path})
+
+
+# Writes the queued generated scenes and brings the editor up to date with them.
+#
+# A generated scene can be open in a tab and/or instanced in other open scenes.
+# Those hold instantiated nodes, which do not change when the .tscn is rewritten.
+# The editor already has the machinery to deal with a scene file being regenerated
+# underneath open scenes - it is what runs when an imported scene (.glb, .blend) is
+# re-imported: it reloads the tabs showing the scene and replaces its instances in
+# every open scene while keeping their local overrides. It is driven by
+# EditorFileSystem's "resources_reimporting" / "resources_reimported" signals, so
+# the scenes generated here are announced through the same two signals.
+func _flush_pending_scene_saves() -> void:
+	if _pending_scene_saves.is_empty():
+		return
+
+	var pending = _pending_scene_saves
+	_pending_scene_saves = []
+	var fs = EditorInterface.get_resource_filesystem()
+
+	# Only scenes that are actually open or instanced need the editor's attention.
+	var in_use = PackedStringArray()
+	if fs.has_signal("resources_reimporting"):
+		for entry in pending:
+			if FileAccess.file_exists(entry.path) and _is_scene_in_use(entry.path):
+				in_use.append(entry.path)
+
+	if not in_use.is_empty():
+		# Lets the editor record the local overrides of the instances it is about to replace.
+		_notifying_editor = true
+		fs.emit_signal("resources_reimporting", in_use)
+		_notifying_editor = false
+
+	var saved = []
+	for entry in pending:
+		var packed_scene = PackedScene.new()
+		var err = packed_scene.pack(entry.root)
+		if err == OK:
+			# (In the editor, ResourceSaver already reports the saved file to EditorFileSystem.)
+			err = ResourceSaver.save(packed_scene, entry.path)
+		entry.root.free()
+		if err == OK:
+			saved.append(entry.path)
 		else:
-			# If it's open but NOT the current one, we'd need to switch to it to close it with close_scene().
-			# This might be disruptive. Let's see if there is a better way.
-			# For now, let's just close it if it's the current one, which is the most common case for "reimporting".
-			pass
+			printerr("[BakPakImportTool] Failed to save TSCN: ", entry.path, " Error: ", err)
 
-	err = ResourceSaver.save(packed_scene, tscn_path)
-	if err == OK:
-		EditorInterface.get_resource_filesystem().update_file(tscn_path)
-	else:
-		printerr("[BakPakImportTool] Failed to save TSCN: ", tscn_path, " Error: ", err)
+	if not in_use.is_empty():
+		_notifying_editor = true
+		fs.emit_signal("resources_reimported", in_use)
+		_notifying_editor = false
 
-	if is_open:
-		EditorInterface.open_scene_from_path(tscn_path)
+	# A scene nobody has open can still be cached (e.g. referenced by another loaded
+	# scene); refresh that copy from the new file. Scenes in use were just reloaded
+	# by the editor.
+	for path in saved:
+		if not path in in_use and ResourceLoader.has_cached(path):
+			ResourceLoader.load(path, "", ResourceLoader.CACHE_MODE_REPLACE)
+
+
+# Whether `tscn_path` is open in a scene tab, or instanced/inherited by an open scene.
+func _is_scene_in_use(tscn_path: String) -> bool:
+	var open_scenes = EditorInterface.get_open_scenes()
+	if tscn_path in open_scenes:
+		return true
+
+	# Instances, including nested ones and ones added since the scene was last saved.
+	for scene_root in EditorInterface.get_open_scene_roots():
+		if _has_instance_of(scene_root, tscn_path):
+			return true
+
+	# Inherited scenes: the base scene is a dependency of the open scene's file.
+	var uid_text = ""
+	var uid = ResourceLoader.get_resource_uid(tscn_path)
+	if uid != ResourceUID.INVALID_ID:
+		uid_text = ResourceUID.id_to_text(uid)
+	for open_scene in open_scenes:
+		if not FileAccess.file_exists(open_scene):
+			continue
+		for dependency in ResourceLoader.get_dependencies(open_scene):
+			if dependency == tscn_path or dependency.ends_with("::" + tscn_path) or (uid_text != "" and dependency.begins_with(uid_text)):
+				return true
+
+	return false
+
+
+func _has_instance_of(node: Node, tscn_path: String) -> bool:
+	if node.scene_file_path == tscn_path:
+		return true
+	for child in node.get_children():
+		if _has_instance_of(child, tscn_path):
+			return true
+	return false
 
 
 func _regenerate_all_lods_with_progress() -> void:
@@ -1319,6 +1411,8 @@ func _regenerate_all_lods_with_progress() -> void:
 
 		_regenerate_lods_for_scene(file_path)
 
+	_flush_pending_scene_saves()
+
 	progress.value = total
 	label.text = "Finished!"
 
@@ -1337,22 +1431,18 @@ func _find_generated_scenes(dir: EditorFileSystemDirectory, results: Array) -> v
 
 	for i in range(dir.get_file_count()):
 		var file_path = dir.get_file_path(i)
-		if file_path.ends_with(".tscn"):
-			# Check if it was generated by BakPak
-			var scene = ResourceLoader.load(file_path, "", ResourceLoader.CACHE_MODE_REPLACE)
-			if scene:
-				var inst = scene.instantiate()
-				if inst and inst.has_meta("bakpak_generated"):
-					results.append(file_path)
-				if inst:
-					inst.free()
+		if BakPakUtils.is_generated_scene(file_path):
+			results.append(file_path)
 
 func _regenerate_all_lods() -> void:
 	_regenerate_all_lods_with_progress()
 
 
+# Scenes whose nodes had to change are queued; callers run _flush_pending_scene_saves().
 func _regenerate_lods_for_scene(tscn_path: String) -> void:
-	var scene = ResourceLoader.load(tscn_path, "", ResourceLoader.CACHE_MODE_REPLACE)
+	tscn_path = BakPakUtils.canonicalize_path(tscn_path)
+	# Read from disk without touching the cached PackedScene (see _generate_tscn_complex).
+	var scene = ResourceLoader.load(tscn_path, "PackedScene", ResourceLoader.CACHE_MODE_IGNORE)
 	if not scene:
 		return
 
@@ -1421,14 +1511,8 @@ func _regenerate_lods_for_scene(tscn_path: String) -> void:
 			if mesh_path != "" and not "::" in mesh_path:
 				# print("[BakPakImportTool] Regenerating LODs for: ", tscn_path, " mesh: ", mesh_path)
 				var lod_result = BakPakUtils.generate_mesh_lods(mi.mesh, lod_group)
-				var new_mesh = lod_result.mesh
-				# Maintain the original path and UID
-				new_mesh.take_over_path(mesh_path)
-				var err = ResourceSaver.save(new_mesh, mesh_path)
-				if err == OK:
-					EditorInterface.get_resource_filesystem().update_file(mesh_path)
-				else:
-					printerr("[BakPakImportTool] Failed to save regenerated mesh: ", mesh_path, " Error: ", err)
+				# Refreshes the mesh object already in use for this path (and keeps its UID).
+				BakPakUtils.save_resource_in_place(lod_result.mesh, mesh_path)
 
 		# Update LOD Bias
 		if not is_equal_approx(mi.lod_bias, target_bias):
@@ -1436,9 +1520,9 @@ func _regenerate_lods_for_scene(tscn_path: String) -> void:
 			scene_changed = true
 
 	if scene_changed:
-		_save_tscn_safely(instance, tscn_path)
-
-	instance.free()
+		_queue_scene_save(instance, tscn_path)
+	else:
+		instance.free()
 
 func _find_mesh_instances_recursive(node: Node, results: Array) -> void:
 	if node is MeshInstance3D:
@@ -1503,8 +1587,42 @@ func _load_import_data() -> Dictionary:
 	var err = json.parse(json_text)
 	if err == OK:
 		if json.data is Dictionary:
-			return json.data
+			BakPakUtils.clear_path_cache()
+			return _canonicalize_import_data(json.data)
 	return {}
+
+
+# Rewrites the paths of the import history as they are spelled on disk. Earlier
+# versions recorded "res://assets/..." whatever the real folder name was, and could
+# hold two entries for the same GLB differing only by case.
+func _canonicalize_import_data(data: Dictionary) -> Dictionary:
+	var result = {}
+	# Entries whose key is already spelled correctly win over case variants.
+	for exact_pass in [true, false]:
+		for glb_path in data:
+			var canonical_glb = BakPakUtils.canonicalize_path(glb_path)
+			if (canonical_glb == glb_path) != exact_pass or result.has(canonical_glb):
+				continue
+			var glb_data = data[glb_path]
+			if not glb_data is Dictionary:
+				continue
+			if glb_data.has("files"):
+				glb_data["files"] = _canonicalize_paths(glb_data["files"])
+			var entities = glb_data.get("entities", {})
+			for entity_name in entities:
+				if entities[entity_name] is Dictionary and entities[entity_name].has("files"):
+					entities[entity_name]["files"] = _canonicalize_paths(entities[entity_name]["files"])
+			result[canonical_glb] = glb_data
+	return result
+
+
+func _canonicalize_paths(paths: Array) -> Array:
+	var result = []
+	for path in paths:
+		var canonical = BakPakUtils.canonicalize_path(path)
+		if not canonical in result:
+			result.append(canonical)
+	return result
 
 
 func _save_import_data(data: Dictionary) -> void:

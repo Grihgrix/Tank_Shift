@@ -1,11 +1,20 @@
 [gd_scene format=3 uid="uid://mymu6kvb6f6k"]
 
-[ext_resource type="ArrayMesh" uid="uid://1kgmpluksueq" path="res://assets/Art/Tank/projectile.res" id="1_vr5fr"]
+[ext_resource type="ArrayMesh" uid="uid://1kgmpluksueq" path="res://Assets/Art/Tank/projectile.res" id="1_vr5fr"]
 [ext_resource type="Shader" uid="uid://d00nt8p0ck8ox" path="res://Assets/Art/Tank/projectile.gdshader" id="2_yenom"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ow208"]
+frequency = 0.0049
+offset = Vector3(0.75, 0, 0)
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_gxtkx"]
+noise = SubResource("FastNoiseLite_ow208")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_47153"]
 render_priority = 0
 shader = ExtResource("2_yenom")
+shader_parameter/noise = SubResource("NoiseTexture2D_gxtkx")
+shader_parameter/noise_speed = 3.0
 shader_parameter/tint = Color(3.0467367, 1.8815031, 0.6359082, 1)
 shader_parameter/contrast = -0.003
 

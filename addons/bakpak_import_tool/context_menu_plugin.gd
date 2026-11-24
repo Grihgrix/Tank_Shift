@@ -8,20 +8,11 @@ func _popup_menu(paths: PackedStringArray):
 	var has_glb = false
 	for path in paths:
 		if path.ends_with(".tscn"):
-			# Optimization: don't load everything if it doesn't even have "bakpak" in meta or similar?
-			# Actually, we have to check metadata.
-			var scene = ResourceLoader.load(path, "PackedScene", ResourceLoader.CACHE_MODE_REPLACE)
-			if scene:
-				var state = scene.get_state()
-				# Checking metadata without instantiating if possible?
-				# PackedScene doesn't expose metadata easily without instantiating.
-				var inst = scene.instantiate()
-				if inst and inst.has_meta("bakpak_generated"):
-					has_bakpak_tscn = true
-					inst.free()
-					break
-				if inst:
-					inst.free()
+			# Read-only check. It must not reload the scene into the cache
+			# (CACHE_MODE_REPLACE): that overwrites, on every right-click, the scene
+			# state open scenes use to track their instances of it.
+			if BakPakUtils.is_generated_scene(path):
+				has_bakpak_tscn = true
 		elif path.ends_with(".glb") or path.ends_with(".gltf"):
 			has_glb = true
 

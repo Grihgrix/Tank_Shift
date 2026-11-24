@@ -3,102 +3,66 @@
 		"entities": {
 			"Body_nocol": {
 				"files": [
-					"res://assets/Art/Tank/body.res",
-					"res://assets/Art/Tank/body.tscn"
+					"res://Assets/Art/Tank/body.res",
+					"res://Assets/Art/Tank/body.tscn"
 				],
-				"fingerprint": "2JJhJ4uHIRpbJoeY/T6Pvw==",
+				"fingerprint": "v2:y2FyMlyUgTX1C8OpBTX5/rurUIppehGfZzShqUT3xEw=",
 				"path": "Art/Tank"
 			},
 			"Head_nocol": {
 				"files": [
-					"res://assets/Art/Tank/head.res",
-					"res://assets/Art/Tank/head.tscn"
+					"res://Assets/Art/Tank/head.res",
+					"res://Assets/Art/Tank/head.tscn"
 				],
-				"fingerprint": "jfjubIozFPXDDu8LY3TmyA==",
+				"fingerprint": "v2:+OSjNNCVT7DOgNVuaG9k+ipTHFsM/Q+Fq0I+X7yYs/0=",
 				"path": "Art/Tank"
 			},
 			"Projectile_nocol": {
 				"files": [
-					"res://assets/Art/Tank/projectile.res",
-					"res://assets/Art/Tank/projectile.tscn"
+					"res://Assets/Art/Tank/projectile.res",
+					"res://Assets/Art/Tank/projectile.tscn"
 				],
-				"fingerprint": "jqj3RXBD1Uz58D6HFyem9w==",
+				"fingerprint": "v2:sY2EqKTuekWiDYEQeipUSMUBoNxTE9vAl1IKfML3sNo=",
 				"path": "Art/Tank"
 			},
 			"Tree_nocol": {
 				"files": [
-					"res://assets/Art/Foliage/tree.res",
-					"res://assets/Art/Foliage/tree.tscn"
+					"res://Assets/Art/Foliage/tree.res",
+					"res://Assets/Art/Foliage/tree.tscn"
 				],
-				"fingerprint": "R9S1W6l0SeO+v4VbUf6zDg==",
+				"fingerprint": "v2:G76/LpB2+/V7IPKkZjmBkNRdKC7eksl2zB2GQYZv0gY=",
 				"path": "Art/Foliage"
 			},
 			"bush_nocol": {
 				"files": [
-					"res://assets/Art/Foliage/bush.res",
-					"res://assets/Art/Foliage/bush.tscn"
+					"res://Assets/Art/Foliage/bush.res",
+					"res://Assets/Art/Foliage/bush.tscn"
 				],
-				"fingerprint": "jiOxdymDT+qnKcZo0lryAQ==",
+				"fingerprint": "v2:cSJ6kJs+zBH5wSc0WiR01szB9uVMahkwwdm6kO9KvVc=",
 				"path": "Art/Foliage"
 			},
 			"stone_wall_nocol": {
 				"files": [
-					"res://assets/Art/Props/stone_wall.res",
-					"res://assets/Art/Props/stone_wall.tscn"
+					"res://Assets/Art/Props/stone_wall.res",
+					"res://Assets/Art/Props/stone_wall.tscn"
 				],
-				"fingerprint": "sMRoILB2DDrKeHbq0t/Gug==",
+				"fingerprint": "v2:qGnD7OtxLc3DJ7qjtcM4gPSjfkO8X9X0NVNx2KQU8wM=",
 				"path": "Art/Props"
 			}
 		},
 		"files": [
-			"res://assets/Art/Tank/body.res",
-			"res://assets/Art/Tank/body.tscn",
-			"res://assets/Art/Tank/head.res",
-			"res://assets/Art/Tank/head.tscn",
-			"res://assets/Art/Tank/projectile.res",
-			"res://assets/Art/Tank/projectile.tscn",
-			"res://assets/Art/Foliage/tree.res",
-			"res://assets/Art/Foliage/tree.tscn",
-			"res://assets/Art/Foliage/bush.res",
-			"res://assets/Art/Foliage/bush.tscn",
-			"res://assets/Art/Props/stone_wall.res",
-			"res://assets/Art/Props/stone_wall.tscn"
-		]
-	},
-	"res://assets/Art/props.glb": {
-		"entities": {
-			"Body_nocol": {
-				"files": [
-					"res://assets/Art/Tank/body.res",
-					"res://assets/Art/Tank/body.tscn"
-				],
-				"fingerprint": "jGyEH4qjSCNDycwcxsl0Eg==",
-				"path": "Art/Tank"
-			},
-			"Head_nocol": {
-				"files": [
-					"res://assets/Art/Tank/head.res",
-					"res://assets/Art/Tank/head.tscn"
-				],
-				"fingerprint": "13802SftzpN2tR0HOXN1TQ==",
-				"path": "Art/Tank"
-			},
-			"Tree_nocol": {
-				"files": [
-					"res://assets/Art/Foliage/tree.res",
-					"res://assets/Art/Foliage/tree.tscn"
-				],
-				"fingerprint": "f0ANo06k10AaC2xDLpfdLQ==",
-				"path": "Art/Foliage"
-			}
-		},
-		"files": [
-			"res://assets/Art/Tank/body.res",
-			"res://assets/Art/Tank/body.tscn",
-			"res://assets/Art/Tank/head.res",
-			"res://assets/Art/Tank/head.tscn",
-			"res://assets/Art/Foliage/tree.res",
-			"res://assets/Art/Foliage/tree.tscn"
+			"res://Assets/Art/Foliage/bush.res",
+			"res://Assets/Art/Foliage/bush.tscn",
+			"res://Assets/Art/Foliage/tree.res",
+			"res://Assets/Art/Foliage/tree.tscn",
+			"res://Assets/Art/Props/stone_wall.res",
+			"res://Assets/Art/Props/stone_wall.tscn",
+			"res://Assets/Art/Tank/body.res",
+			"res://Assets/Art/Tank/body.tscn",
+			"res://Assets/Art/Tank/head.res",
+			"res://Assets/Art/Tank/head.tscn",
+			"res://Assets/Art/Tank/projectile.res",
+			"res://Assets/Art/Tank/projectile.tscn"
 		]
 	}
 }

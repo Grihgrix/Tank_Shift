@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://chlxgvf51pads"]
 
-[ext_resource type="ArrayMesh" uid="uid://dq77jhn5tgays" path="res://assets/Art/Tank/head.res" id="1_1810l"]
+[ext_resource type="ArrayMesh" uid="uid://dq77jhn5tgays" path="res://Assets/Art/Tank/head.res" id="1_1810l"]
 
 [node name="Head" type="MeshInstance3D" unique_id=897098856]
 mesh = ExtResource("1_1810l")
