@@ -1,23 +1,22 @@
 [gd_scene format=3 uid="uid://suu8idgxtenm"]
 
 [ext_resource type="Script" uid="uid://8phnf5pjmac0" path="res://Game scenes/Character scenes/projectile_rc.gd" id="1_21kgf"]
-
-[sub_resource type="SphereMesh" id="SphereMesh_wltj5"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ywjyb"]
-albedo_color = Color(0.15487596, 0.154876, 0.15487596, 1)
+[ext_resource type="PackedScene" uid="uid://mymu6kvb6f6k" path="res://Assets/Art/Tank/projectile.tscn" id="2_20g6y"]
 
 [node name="Projectile" type="RayCast3D" unique_id=679734095]
 top_level = true
 script = ExtResource("1_21kgf")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1742461407]
-mesh = SubResource("SphereMesh_wltj5")
-surface_material_override/0 = SubResource("StandardMaterial3D_ywjyb")
-
 [node name="Timer" type="Timer" parent="." unique_id=5218242]
 wait_time = 10.0
 one_shot = true
 autostart = true
+
+[node name="Projectile" parent="." unique_id=868710385 instance=ExtResource("2_20g6y")]
+transform = Transform3D(-6.441498e-08, 0, 1.473643, 0, 1.473643, 0, -1.473643, 0, -6.441498e-08, 0, 0, 0)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=2060511679]
+light_color = Color(1, 0.57566667, 0.32999998, 1)
+light_energy = 2.0
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

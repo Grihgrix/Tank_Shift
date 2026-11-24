@@ -687,6 +687,8 @@ func _process_entity(entity_node: Node, base_dir: String, base_name: String) -> 
 		for surf in v.surface_info:
 			var mat_info = _get_final_material_info(surf.material, surf.slot_name)
 			var mname = mat_info.name
+			if not mat_info.matched:
+				mname += " (no preset)"
 			if not mname in material_names:
 				material_names.append(mname)
 
@@ -817,6 +819,7 @@ func _get_final_material_info(mat: Material, slot_name: String) -> Dictionary:
 
 	var final_mat = default_mat
 	var final_surf_name = "DefaultMaterial"
+	var matched = false
 
 	if match_name != "" and preset_materials.has(match_name):
 		var preset_value = preset_materials[match_name]
@@ -826,12 +829,15 @@ func _get_final_material_info(mat: Material, slot_name: String) -> Dictionary:
 			final_mat = preset_value
 
 		final_surf_name = match_name
+		matched = true
 	else:
-		# No preset found, use default
-		final_surf_name = "DefaultMaterial"
+		# No preset found: keep the source slot name so the surface stays identifiable,
+		# and use the default material (null when no default is configured)
+		if match_name != "":
+			final_surf_name = match_name
 		final_mat = default_mat
 
-	return {"material": final_mat, "name": final_surf_name}
+	return {"material": final_mat, "name": final_surf_name, "matched": matched}
 
 
 func _merge_meshes(extracted_data: Array, ignore_materials: bool = false) -> ArrayMesh:
@@ -840,7 +846,8 @@ func _merge_meshes(extracted_data: Array, ignore_materials: bool = false) -> Arr
 	var material_refs = {} # merge_key -> Material reference
 	var surface_names = {} # merge_key -> Final Surface Name
 
-	for data in extracted_data:
+	for data_idx in range(extracted_data.size()):
+		var data = extracted_data[data_idx]
 		var mesh: Mesh = data.mesh
 		var transform: Transform3D = data.transform
 
@@ -861,6 +868,17 @@ func _merge_meshes(extracted_data: Array, ignore_materials: bool = false) -> Arr
 				final_mat = mat_info.material
 				final_surf_name = mat_info.name
 				merge_key = final_surf_name
+
+				if not mat_info.matched:
+					# Slots without a preset must keep their own surface: key them by
+					# source slot rather than by a shared fallback name, otherwise every
+					# unmatched slot collapses into a single surface.
+					if surface_info.slot_name != "":
+						merge_key = "slot:" + surface_info.slot_name
+					elif surface_info.material:
+						merge_key = "mat:%d" % surface_info.material.get_instance_id()
+					else:
+						merge_key = "surface:%d:%d" % [data_idx, surface_idx]
 			else:
 				var mat_info = _get_final_material_info(null, "")
 				final_mat = mat_info.material
