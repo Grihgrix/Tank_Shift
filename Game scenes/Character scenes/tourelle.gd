@@ -70,7 +70,7 @@ func _input(event):
 		group_tourelle.rotation.y = mouse_viewport_angular_position_Ref_tour
 	
 	# V2 using raycast ?
-	if character.is_player and character.is_alive and event is InputEventMouseMotion:
+	if character.is_player and character.is_alive and character.not_in_shift == 1 and event is InputEventMouseMotion:
 		# Get the camera related objects
 		var mouse_position_viewport = get_viewport().get_mouse_position()
 		var camera = get_viewport().get_camera_3d()
