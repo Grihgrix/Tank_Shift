@@ -2,42 +2,36 @@
 
 [ext_resource type="Script" uid="uid://cdx5is3f4lpts" path="res://Game scenes/Character scenes/character.gd" id="1_0wov1"]
 [ext_resource type="Script" uid="uid://b2hexpl5bkcx0" path="res://Game scenes/Character scenes/tourelle.gd" id="2_aknvi"]
-[ext_resource type="PackedScene" uid="uid://chlxgvf51pads" path="res://Assets/Art/Tank/head.tscn" id="3_wpo4s"]
+[ext_resource type="PackedScene" uid="uid://chlxgvf51pads" path="res://assets/Art/Tank/head.tscn" id="3_wpo4s"]
 [ext_resource type="Script" uid="uid://dxnlhpjvxxsdm" path="res://Game scenes/Character scenes/shooter.gd" id="3_y3tpf"]
-[ext_resource type="PackedScene" uid="uid://dod04a7ea1c8k" path="res://Assets/Art/Tank/body.tscn" id="5_yk8nn"]
-[ext_resource type="Shader" uid="uid://cxq17nbxebj1c" path="res://Assets/Art/shader_vertcol.gdshader" id="6_yk8nn"]
+[ext_resource type="PackedScene" uid="uid://dod04a7ea1c8k" path="res://assets/Art/Tank/body.tscn" id="5_yk8nn"]
 [ext_resource type="Script" uid="uid://b3nr0oxlomtmq" path="res://addons/imjp94.yafsm/src/StateMachinePlayer.gd" id="7_cv6ge"]
+[ext_resource type="Shader" uid="uid://cphnjdrmpqeor" path="res://Assets/Art/Tank/toon_shader.gdshader" id="7_msid3"]
 [ext_resource type="Resource" uid="uid://4enqsgp2vgxl" path="res://Game scenes/Character scenes/States/Character_State_Machine.tres" id="8_ufa4k"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_yk8nn"]
-render_priority = 0
-shader = ExtResource("6_yk8nn")
-shader_parameter/albedo = Color(0.55408335, 0.61, 0.2745, 1)
-shader_parameter/albedo_texture_size = Vector2i(0, 0)
-shader_parameter/point_size = 1.0
-shader_parameter/roughness = 1.0
-shader_parameter/metallic_texture_channel = Vector4(1, 0, 0, 0)
-shader_parameter/specular = 0.5
-shader_parameter/metallic = 0.0
-shader_parameter/uv1_scale = Vector3(1, 1, 1)
-shader_parameter/uv1_offset = Vector3(0, 0, 0)
-shader_parameter/uv2_scale = Vector3(1, 1, 1)
-shader_parameter/uv2_offset = Vector3(0, 0, 0)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ufa4k"]
 render_priority = 0
-shader = ExtResource("6_yk8nn")
-shader_parameter/albedo = Color(0.6044083, 0.61, 0.2745, 1)
-shader_parameter/albedo_texture_size = Vector2i(0, 0)
-shader_parameter/point_size = 1.0
-shader_parameter/roughness = 1.0
-shader_parameter/metallic_texture_channel = Vector4(1, 0, 0, 0)
-shader_parameter/specular = 0.5
-shader_parameter/metallic = 0.0
-shader_parameter/uv1_scale = Vector3(1, 1, 1)
-shader_parameter/uv1_offset = Vector3(0, 0, 0)
-shader_parameter/uv2_scale = Vector3(1, 1, 1)
-shader_parameter/uv2_offset = Vector3(0, 0, 0)
+shader = ExtResource("7_msid3")
+shader_parameter/albedo_color = Color(0.55408335, 0.61, 0.2745, 1)
+shader_parameter/use_stepped = true
+shader_parameter/steps = 3.0
+shader_parameter/step_smoothness = 0.0
+shader_parameter/shadow_tint = Color(0, 0, 0, 1)
+shader_parameter/shadow_tint_amount = 0.4
+shader_parameter/specular = 0.0
+shader_parameter/normal_strength = 0.0
+shader_parameter/use_rim = true
+shader_parameter/rim_color = Color(1, 1, 1, 1)
+shader_parameter/rim_amount = 0.738
+shader_parameter/rim_smoothness = 0.01
+shader_parameter/rim_mask_shadow = 0.5000000074506
+shader_parameter/rim_blend = 1.0
+shader_parameter/use_pattern = false
+shader_parameter/pattern_uv_mode = 2
+shader_parameter/pattern_tiling = 32.0
+shader_parameter/pattern_amount = 0.5
+shader_parameter/pattern_smoothness = 0.5
+shader_parameter/pattern_blend = 0.2
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_f7ppj"]
 size = Vector3(2.1823273, 1.212616, 2.8248138)
@@ -60,8 +54,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.2926066, 0)
 script = ExtResource("2_aknvi")
 
 [node name="Head" parent="Proto_tank/Tourelle" unique_id=897098856 instance=ExtResource("3_wpo4s")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
-surface_material_override/0 = SubResource("ShaderMaterial_yk8nn")
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0.014311792, 0.011791229, -0.0051119328)
+surface_material_override/0 = SubResource("ShaderMaterial_ufa4k")
 
 [node name="Shooter" type="Node3D" parent="Proto_tank/Tourelle/Head" unique_id=967923646]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 1.4, 0.36, 0)
@@ -72,7 +66,7 @@ wait_time = 3.0
 one_shot = true
 
 [node name="Body" parent="Proto_tank" unique_id=1597050894 instance=ExtResource("5_yk8nn")]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, -1.0939587, 0)
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0.014311792, -1.0821675, -0.0051119328)
 surface_material_override/0 = SubResource("ShaderMaterial_ufa4k")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=931742010]

@@ -6,7 +6,7 @@
 					"res://assets/Art/Tank/body.res",
 					"res://assets/Art/Tank/body.tscn"
 				],
-				"fingerprint": "APFY1C+O3LqKSctG3OwOZA==",
+				"fingerprint": "2JJhJ4uHIRpbJoeY/T6Pvw==",
 				"path": "Art/Tank"
 			},
 			"Head_nocol": {
@@ -14,7 +14,15 @@
 					"res://assets/Art/Tank/head.res",
 					"res://assets/Art/Tank/head.tscn"
 				],
-				"fingerprint": "HGvNUSEHL7RcfjRwijwGew==",
+				"fingerprint": "jfjubIozFPXDDu8LY3TmyA==",
+				"path": "Art/Tank"
+			},
+			"Projectile_nocol": {
+				"files": [
+					"res://assets/Art/Tank/projectile.res",
+					"res://assets/Art/Tank/projectile.tscn"
+				],
+				"fingerprint": "jqj3RXBD1Uz58D6HFyem9w==",
 				"path": "Art/Tank"
 			},
 			"Tree_nocol": {
@@ -22,7 +30,7 @@
 					"res://assets/Art/Foliage/tree.res",
 					"res://assets/Art/Foliage/tree.tscn"
 				],
-				"fingerprint": "aghc6CmgXsiW+LOfTZ97MA==",
+				"fingerprint": "R9S1W6l0SeO+v4VbUf6zDg==",
 				"path": "Art/Foliage"
 			},
 			"bush_nocol": {
@@ -30,7 +38,7 @@
 					"res://assets/Art/Foliage/bush.res",
 					"res://assets/Art/Foliage/bush.tscn"
 				],
-				"fingerprint": "4E/2+RT5iH2UkEjd/lyS4g==",
+				"fingerprint": "jiOxdymDT+qnKcZo0lryAQ==",
 				"path": "Art/Foliage"
 			},
 			"stone_wall_nocol": {
@@ -38,21 +46,23 @@
 					"res://assets/Art/Props/stone_wall.res",
 					"res://assets/Art/Props/stone_wall.tscn"
 				],
-				"fingerprint": "cCaT3fZdjTHevtbipwiaKA==",
+				"fingerprint": "sMRoILB2DDrKeHbq0t/Gug==",
 				"path": "Art/Props"
 			}
 		},
 		"files": [
-			"res://assets/Art/Foliage/bush.res",
-			"res://assets/Art/Foliage/bush.tscn",
-			"res://assets/Art/Foliage/tree.res",
-			"res://assets/Art/Foliage/tree.tscn",
-			"res://assets/Art/Props/stone_wall.res",
-			"res://assets/Art/Props/stone_wall.tscn",
 			"res://assets/Art/Tank/body.res",
 			"res://assets/Art/Tank/body.tscn",
 			"res://assets/Art/Tank/head.res",
-			"res://assets/Art/Tank/head.tscn"
+			"res://assets/Art/Tank/head.tscn",
+			"res://assets/Art/Tank/projectile.res",
+			"res://assets/Art/Tank/projectile.tscn",
+			"res://assets/Art/Foliage/tree.res",
+			"res://assets/Art/Foliage/tree.tscn",
+			"res://assets/Art/Foliage/bush.res",
+			"res://assets/Art/Foliage/bush.tscn",
+			"res://assets/Art/Props/stone_wall.res",
+			"res://assets/Art/Props/stone_wall.tscn"
 		]
 	},
 	"res://assets/Art/props.glb": {
