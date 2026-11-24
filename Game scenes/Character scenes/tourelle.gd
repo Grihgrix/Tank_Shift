@@ -36,9 +36,7 @@ func _process(delta):
 # Only triggers when the mouse is clicked are moves
 func _input(event):
 	# Mouse in viewport coordinates.
-	#if event is InputEventMouseButton:
-	#	pass
-	if character.is_player and character.is_alive and event is InputEventMouseMotion:
+	if character.is_player and character.is_alive and event is InputEventMouseMotion and 1 == 0:
 		# Find mouse position
 		current_mouse_postion = event.position
 		# Find tourelle position
@@ -70,3 +68,27 @@ func _input(event):
 
 		# Assign new angle to the tourelle
 		group_tourelle.rotation.y = mouse_viewport_angular_position_Ref_tour
+	
+	# V2 using raycast ?
+	if character.is_player and character.is_alive and event is InputEventMouseMotion:
+		# Get the camera related objects
+		var mouse_position_viewport = get_viewport().get_mouse_position()
+		var camera = get_viewport().get_camera_3d()
+		
+		# Raycast origin and direction :
+		var raycast_origin = camera.project_ray_origin(mouse_position_viewport)
+		var raycast_direction = camera.project_ray_normal(mouse_position_viewport)
+		
+		# Define intersection with plan where Y = 0
+		var raycast_distance = -(raycast_origin.y - 0.0) / raycast_direction.y
+		
+		var mouse_position_on_lvl = raycast_origin + raycast_direction * raycast_distance
+		#print(str(mouse_position_on_lvl) + " - " + str(character.global_position))
+		
+		# Calculate the mouse position relative ot hte player position
+		var mouse_position_rel_player = mouse_position_on_lvl - character.global_position
+		
+		
+		# Assign new angle to the tourelle
+		group_tourelle.global_rotation.y = atan2(mouse_position_rel_player.x, mouse_position_rel_player.z) + PI
+		
