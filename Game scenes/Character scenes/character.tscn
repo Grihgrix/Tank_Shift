@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" uid="uid://cdx5is3f4lpts" path="res://Game scenes/Character scenes/character.gd" id="1_0wov1"]
 [ext_resource type="Script" uid="uid://b2hexpl5bkcx0" path="res://Game scenes/Character scenes/tourelle.gd" id="2_aknvi"]
-[ext_resource type="PackedScene" uid="uid://chlxgvf51pads" path="res://assets/Art/Tank/head.tscn" id="3_wpo4s"]
+[ext_resource type="PackedScene" uid="uid://chlxgvf51pads" path="res://Assets/Art/Tank/head.tscn" id="3_wpo4s"]
 [ext_resource type="Script" uid="uid://dxnlhpjvxxsdm" path="res://Game scenes/Character scenes/shooter.gd" id="3_y3tpf"]
-[ext_resource type="PackedScene" uid="uid://dod04a7ea1c8k" path="res://assets/Art/Tank/body.tscn" id="5_yk8nn"]
+[ext_resource type="PackedScene" uid="uid://dod04a7ea1c8k" path="res://Assets/Art/Tank/body.tscn" id="5_yk8nn"]
 [ext_resource type="Script" uid="uid://b3nr0oxlomtmq" path="res://addons/imjp94.yafsm/src/StateMachinePlayer.gd" id="7_cv6ge"]
 [ext_resource type="Shader" uid="uid://cphnjdrmpqeor" path="res://Assets/Art/Tank/toon_shader.gdshader" id="7_msid3"]
 [ext_resource type="Resource" uid="uid://4enqsgp2vgxl" path="res://Game scenes/Character scenes/States/Character_State_Machine.tres" id="8_ufa4k"]

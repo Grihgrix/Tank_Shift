@@ -167,15 +167,18 @@ func tile_shift(delta):
 		tile_shift_triggered = false
 		rotation.z = rotation_z_target
 		position.y = 0 # ensures we remain on the tile side we are supposed to be on
-		# Reenable character to move
-		for child in get_children():
-			if child is CharacterBody3D:
-				child.not_in_shift = 1 # This enables movement forward and backward
 		
 		_affect_obstacles_to_nav_groups()
 		
 		# Trigger the rebake in the main script process
 		Global.navigation_mesh_bale_requested = true 
+		
+		# Reenable character to move
+		await get_tree().create_timer(0.1).timeout
+		for child in get_children():
+			if child is CharacterBody3D:
+				child.not_in_shift = 1 # This enables movement forward and backward
+		
 
 
 func _affect_obstacles_to_nav_groups():

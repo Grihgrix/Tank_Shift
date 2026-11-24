@@ -3,6 +3,8 @@ extends Node3D
 @onready var group_tourelle = $"."
 @onready var tourelle = $Head
 @onready var character = $"../.."
+@onready var shooter = $Head/Shooter
+
 
 
 # Variable for mouse angle measurements and calculations
@@ -35,38 +37,28 @@ func _process(delta):
 
 # Only triggers when the mouse is clicked are moves
 func _input(event):
-	# Mouse in viewport coordinates.
-	#if event is InputEventMouseButton:
-	#	pass
-	if character.is_player and character.is_alive and event is InputEventMouseMotion:
-		# Find mouse position
-		current_mouse_postion = event.position
-		# Find tourelle position
-		current_tourelle_viewport_position = get_viewport().get_camera_3d().unproject_position(tourelle.global_position)
-		# Calculate mouse postion relative to tourele in the viewport
-		tourelle_mouse_positon = current_mouse_postion - current_tourelle_viewport_position
-
-		# Calculate angular position of the mouse with the tourelle being (0,0)
-		mouse_viewport_angular_position = atan2(-tourelle_mouse_positon.y, tourelle_mouse_positon.x)
-
-		if cos(mouse_viewport_angular_position) >=0:
-			cosinus_cam = "+"
-		else:
-			cosinus_cam = "-"
-		if sin(mouse_viewport_angular_position) >=0:
-			sinus_cam = "+"
-		else:
-			sinus_cam = "-"
-
-		# Convert viewport angle to tourelle angle
-		if  cosinus_cam == "-" and sinus_cam == "-":
-			mouse_viewport_angular_position_Ref_tour = (1.5 * PI) + mouse_viewport_angular_position
-		elif cosinus_cam == "+"  and sinus_cam == "-":
-			mouse_viewport_angular_position_Ref_tour = -0.5 * PI + mouse_viewport_angular_position
-		elif cosinus_cam == "+"  and sinus_cam == "+":
-			mouse_viewport_angular_position_Ref_tour = (- 0.5 * PI) + mouse_viewport_angular_position
-		elif cosinus_cam == "-"  and sinus_cam == "+":
-			mouse_viewport_angular_position_Ref_tour = (1.5 * PI) + mouse_viewport_angular_position
-
+	# find the mouse in the world referential and use its postion to turn the tourelle (using raycast)
+	if character.is_player and character.is_alive and character.not_in_shift == 1 and event is InputEventMouseMotion:
+		# Get the camera related objects
+		var mouse_position_viewport = get_viewport().get_mouse_position()
+		var camera = get_viewport().get_camera_3d()
+		
+		# Raycast origin and direction :
+		var raycast_origin = camera.project_ray_origin(mouse_position_viewport)
+		var raycast_direction = camera.project_ray_normal(mouse_position_viewport)
+		
+		# Define intersection with plan where Y = shooter Y
+		var raycast_distance = -(raycast_origin.y - shooter.global_position.y) / raycast_direction.y
+		
+		var mouse_position_on_lvl = raycast_origin + raycast_direction * raycast_distance
+		#print(str(mouse_position_on_lvl) + " - " + str(character.global_position))
+		
+		# Calculate the mouse position relative ot hte player position
+		var mouse_position_rel_player = mouse_position_on_lvl - character.global_position
+		
+		
 		# Assign new angle to the tourelle
-		group_tourelle.rotation.y = mouse_viewport_angular_position_Ref_tour
+		group_tourelle.global_rotation.y = atan2(mouse_position_rel_player.x, mouse_position_rel_player.z) + PI
+		group_tourelle.global_rotation.x = character.global_rotation.x
+		group_tourelle.global_rotation.z = character.global_rotation.z
+		
