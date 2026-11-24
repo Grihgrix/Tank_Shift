@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://mymu6kvb6f6k"]
+
+[ext_resource type="ArrayMesh" uid="uid://1kgmpluksueq" path="res://assets/Art/Tank/projectile.res" id="1_vr5fr"]
+[ext_resource type="Shader" uid="uid://d00nt8p0ck8ox" path="res://Assets/Art/Tank/projectile.gdshader" id="2_yenom"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_47153"]
+render_priority = 0
+shader = ExtResource("2_yenom")
+shader_parameter/tint = Color(3.0467367, 1.8815031, 0.6359082, 1)
+shader_parameter/contrast = -0.003
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b6cj4"]
+albedo_color = Color(0.04, 0.04, 0.04, 1)
+
+[node name="Projectile" type="MeshInstance3D" unique_id=1795958546]
+mesh = ExtResource("1_vr5fr")
+surface_material_override/0 = SubResource("ShaderMaterial_47153")
+surface_material_override/1 = SubResource("StandardMaterial3D_b6cj4")
+metadata/bakpak_generated = true
+metadata/bakpak_lod_group = "default"
