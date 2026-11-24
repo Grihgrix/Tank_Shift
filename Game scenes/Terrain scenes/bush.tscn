@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bpsp568epha1m"]
 
-[ext_resource type="PackedScene" uid="uid://ba4kpa8uhmuim" path="res://assets/Art/Foliage/bush.tscn" id="1_1pthu"]
+[ext_resource type="PackedScene" uid="uid://ba4kpa8uhmuim" path="res://Assets/Art/Foliage/bush.tscn" id="1_1pthu"]
 [ext_resource type="Material" uid="uid://doey4mc44radc" path="res://Assets/Art/Foliage/mat_bush.res" id="2_ia0ql"]
 [ext_resource type="Script" uid="uid://nd5x6x22joxk" path="res://Assets/Art/Foliage/rand_trandform.gd" id="3_u2h7y"]
 
