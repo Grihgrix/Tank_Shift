@@ -28,10 +28,12 @@ script = ExtResource("1_ljjr8")
 [node name="Topside_DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1646275945]
 transform = Transform3D(1, 0, 0, 0, 0.34202015, 0.9396926, 0, -0.9396926, 0.34202015, 0, 30, 0)
 shadow_enabled = true
+sky_mode = 1
 
 [node name="Downside_DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1049685885]
 transform = Transform3D(-0.33073276, 0.6066145, 0.72293484, -0.858795, 0.1241394, -0.4970523, -0.39126372, -0.7852442, 0.47990042, 42.01996, -62.795364, 73.72279)
 shadow_enabled = true
+sky_mode = 1
 
 [node name="Projectiles_parent_node" type="Node3D" parent="." unique_id=1350631440 groups=["projectile_parent"]]
 
@@ -61,9 +63,13 @@ navigation_layers = 2
 [node name="Nav_CSGBox3D" type="CSGBox3D" parent="Down_NavigationRegion3D" unique_id=811424129 groups=["DOWN_navigation_mesh_source_group"]]
 size = Vector3(10, 0.2, 10)
 
-[node name="Player" parent="." unique_id=1998404675 instance=ExtResource("2_sqh5q")]
+[node name="Player" parent="." unique_id=1998404675 node_paths=PackedStringArray("dead_meshs_position") instance=ExtResource("2_sqh5q")]
 is_player = true
 character_id = 1
+dead_meshs_position = {
+NodePath("Proto_tank/Tourelle/Head"): NodePath("Proto_tank/Tourelle/Dead_Head_Pos"),
+NodePath("Proto_tank/Body"): NodePath("Proto_tank/Dead_Body_Pos")
+}
 
 [node name="Camera3D2" type="Camera3D" parent="Player" unique_id=988657058]
 transform = Transform3D(1, 0, 0, 0, 0.34202012, 0.93969256, 0, -0.93969256, 0.34202012, 0, 30, 4)
@@ -80,30 +86,58 @@ Shift :  PH"
 script = ExtResource("3_gk8pv")
 metadata/_edit_use_anchors_ = true
 
-[node name="NPC_2" parent="." unique_id=465305077 instance=ExtResource("2_sqh5q")]
+[node name="NPC_2" parent="." unique_id=465305077 node_paths=PackedStringArray("dead_meshs_position") instance=ExtResource("2_sqh5q")]
 transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 18.881073, 0, -2.8225098)
 character_id = 2
+dead_meshs_position = {
+NodePath("Proto_tank/Tourelle/Head"): NodePath("Proto_tank/Tourelle/Dead_Head_Pos"),
+NodePath("Proto_tank/Body"): NodePath("Proto_tank/Dead_Body_Pos")
+}
 
-[node name="NPC_3" parent="." unique_id=1275291371 instance=ExtResource("2_sqh5q")]
+[node name="NPC_3" parent="." unique_id=1275291371 node_paths=PackedStringArray("dead_meshs_position") instance=ExtResource("2_sqh5q")]
 transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 18.446655, 0, -16.891724)
 character_id = 3
+dead_meshs_position = {
+NodePath("Proto_tank/Tourelle/Head"): NodePath("Proto_tank/Tourelle/Dead_Head_Pos"),
+NodePath("Proto_tank/Body"): NodePath("Proto_tank/Dead_Body_Pos")
+}
 
-[node name="NPC_4" parent="." unique_id=812337567 instance=ExtResource("2_sqh5q")]
+[node name="NPC_4" parent="." unique_id=812337567 node_paths=PackedStringArray("dead_meshs_position") instance=ExtResource("2_sqh5q")]
 transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 1.8408813, 0, -16.891724)
 character_id = 4
+dead_meshs_position = {
+NodePath("Proto_tank/Tourelle/Head"): NodePath("Proto_tank/Tourelle/Dead_Head_Pos"),
+NodePath("Proto_tank/Body"): NodePath("Proto_tank/Dead_Body_Pos")
+}
 
-[node name="NPC_5" parent="." unique_id=795801486 instance=ExtResource("2_sqh5q")]
+[node name="NPC_5" parent="." unique_id=795801486 node_paths=PackedStringArray("dead_meshs_position") instance=ExtResource("2_sqh5q")]
 transform = Transform3D(-0.9943591, 0.106065325, 0, -0.106065325, -0.9943591, 0, 0, 0, 1, 2.250122, 0, -1.0195313)
 character_id = 5
+dead_meshs_position = {
+NodePath("Proto_tank/Tourelle/Head"): NodePath("Proto_tank/Tourelle/Dead_Head_Pos"),
+NodePath("Proto_tank/Body"): NodePath("Proto_tank/Dead_Body_Pos")
+}
 
-[node name="NPC_6" parent="." unique_id=657848110 instance=ExtResource("2_sqh5q")]
+[node name="NPC_6" parent="." unique_id=657848110 node_paths=PackedStringArray("dead_meshs_position") instance=ExtResource("2_sqh5q")]
 transform = Transform3D(-0.99999994, -8.742277e-08, 0, 8.742277e-08, -0.99999994, 0, 0, 0, 1, 16.053589, 0, -1.0195313)
 character_id = 6
+dead_meshs_position = {
+NodePath("Proto_tank/Tourelle/Head"): NodePath("Proto_tank/Tourelle/Dead_Head_Pos"),
+NodePath("Proto_tank/Body"): NodePath("Proto_tank/Dead_Body_Pos")
+}
 
-[node name="NPC_7" parent="." unique_id=257597899 instance=ExtResource("2_sqh5q")]
+[node name="NPC_7" parent="." unique_id=257597899 node_paths=PackedStringArray("dead_meshs_position") instance=ExtResource("2_sqh5q")]
 transform = Transform3D(-0.99999994, -8.742277e-08, 0, 8.742277e-08, -0.99999994, 0, 0, 0, 1, 16.053589, 0, -1.0195313)
 character_id = 7
+dead_meshs_position = {
+NodePath("Proto_tank/Tourelle/Head"): NodePath("Proto_tank/Tourelle/Dead_Head_Pos"),
+NodePath("Proto_tank/Body"): NodePath("Proto_tank/Dead_Body_Pos")
+}
 
-[node name="NPC_8" parent="." unique_id=945942901 instance=ExtResource("2_sqh5q")]
+[node name="NPC_8" parent="." unique_id=945942901 node_paths=PackedStringArray("dead_meshs_position") instance=ExtResource("2_sqh5q")]
 transform = Transform3D(-0.99999994, -8.742277e-08, 0, 8.742277e-08, -0.99999994, 0, 0, 0, 1, 16.053589, 0, -1.0195313)
 character_id = 8
+dead_meshs_position = {
+NodePath("Proto_tank/Tourelle/Head"): NodePath("Proto_tank/Tourelle/Dead_Head_Pos"),
+NodePath("Proto_tank/Body"): NodePath("Proto_tank/Dead_Body_Pos")
+}

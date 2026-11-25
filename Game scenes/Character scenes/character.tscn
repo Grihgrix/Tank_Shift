@@ -18,7 +18,7 @@ size = Vector3(2.1823273, 1.212616, 2.8248138)
 [sub_resource type="SphereShape3D" id="SphereShape3D_wltj5"]
 radius = 15.0
 
-[node name="Character" type="CharacterBody3D" unique_id=1998404675 node_paths=PackedStringArray("colored_meshes")]
+[node name="Character" type="CharacterBody3D" unique_id=1998404675 node_paths=PackedStringArray("colored_meshes", "dead_meshs_position")]
 transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0, 0, 0)
 collision_layer = 3
 collision_mask = 3
@@ -28,6 +28,10 @@ team_a_mat = ExtResource("4_cv6ge")
 team_b_mat = ExtResource("3_php0s")
 dead_mat = ExtResource("4_8x8i8")
 colored_meshes = [NodePath("Proto_tank/Tourelle/Head"), NodePath("Proto_tank/Body")]
+dead_meshs_position = {
+NodePath("Proto_tank/Tourelle/Head"): NodePath("Proto_tank/Tourelle/Dead_Head_Pos"),
+NodePath("Proto_tank/Body"): NodePath("Proto_tank/Dead_Body_Pos")
+}
 
 [node name="Proto_tank" type="Node3D" parent="." unique_id=1523143693]
 transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0, 1.15, 0)
@@ -37,7 +41,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.2926066, 0)
 script = ExtResource("2_aknvi")
 
 [node name="Head" parent="Proto_tank/Tourelle" unique_id=897098856 instance=ExtResource("3_wpo4s")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0.014311792, 0.011791229, -0.0051119328)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0.011, -0.0051)
 surface_material_override/0 = ExtResource("3_php0s")
 
 [node name="Shooter" type="Node3D" parent="Proto_tank/Tourelle/Head" unique_id=967923646]
@@ -48,9 +52,15 @@ script = ExtResource("3_y3tpf")
 wait_time = 3.0
 one_shot = true
 
+[node name="Dead_Head_Pos" type="Node3D" parent="Proto_tank/Tourelle" unique_id=369363596]
+transform = Transform3D(-0.5421155, -0.54459274, 0.639945, -0.34445372, 0.83865964, 0.42190236, -0.766461, 0.008288354, -0.64223737, -0.5176862, -0.09153372, -0.0051)
+
 [node name="Body" parent="Proto_tank" unique_id=1597050894 instance=ExtResource("5_yk8nn")]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0.014311792, -1.0821675, -0.0051119328)
+transform = Transform3D(-4.3711385e-08, 0, -0.99999994, 0, 1, 0, 0.99999994, 0, -4.3711385e-08, 0, -1.08, -0.0051)
 surface_material_override/0 = ExtResource("3_php0s")
+
+[node name="Dead_Body_Pos" type="Node3D" parent="Proto_tank" unique_id=1667641960]
+transform = Transform3D(-0.1190871, -0.17818087, -0.97676504, -0.12940438, 0.9781599, -0.16265836, 0.98441494, 0.10702714, -0.13954362, 0.014311792, -1.1978832, -0.0051119328)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=931742010]
 transform = Transform3D(0.9999704, 0, 0, 0, 0.9999704, 0, 0, 0, 1, 0.006202703, 1.053331, -0.0024032593)
@@ -85,6 +95,7 @@ debug_enabled = true
 
 [node name="FxExplosionBig" parent="." unique_id=474446918 instance=ExtResource("9_cv6ge")]
 transform = Transform3D(2.55912, 0, 0, 0, 2.55912, 0, 0, 0, 2.5591202, 0, 0.7054677, 0)
+burst_on_ready = false
 
 [connection signal="transited" from="StateMachinePlayer" to="." method="_on_state_machine_player_transited"]
 [connection signal="body_entered" from="Enemy_Detection" to="." method="_on_enemy_detection_body_entered"]

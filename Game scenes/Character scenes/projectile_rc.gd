@@ -36,7 +36,7 @@ func _physics_process(delta):
 		collider = get_collider()
 		if collider is CharacterBody3D:
 			# Implement character death
-			collider.is_alive = false
+			collider.death()
 
 		# Depsawn projectile if we had a collision
 		despawn_projectile()

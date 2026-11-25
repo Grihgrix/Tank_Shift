@@ -18,11 +18,14 @@ var move_direction:int
 @export var is_player:bool
 @export var character_id:int
 
+# Visuals
 @export_category("Visuals")
 @export var team_a_mat : Material
 @export var team_b_mat : Material
 @export var dead_mat : Material
 @export var colored_meshes: Array[MeshInstance3D]
+@export var dead_meshs_position: Dictionary[MeshInstance3D, Node3D]
+@onready var explosion_fx: Node = $FxExplosionBig
 
 @onready var is_alive:bool = true
 
@@ -300,3 +303,12 @@ func _nearby_ennemy_shifted(shifter_id, shifter_is_up_or_down):
 			# Trigger the change of state
 			enemies_shift_req_detected += 1
 		state_machine_player.set_param("Ennemies Shift Required", enemies_shift_req_detected)
+
+func death():
+	is_alive = false
+	for meshs in colored_meshes:
+		meshs.set_surface_override_material(0, dead_mat)
+	explosion_fx.burst()
+	for mesh in dead_meshs_position.keys():
+		mesh.position = dead_meshs_position[mesh].position
+		mesh.rotation = dead_meshs_position[mesh].rotation
