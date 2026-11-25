@@ -5,6 +5,7 @@ extends RayCast3D
 #@export var speed:int = Global.projectile_speed
 
 @onready var particles : GPUParticles3D = $GPUParticles3D
+@export var explosion_scene: PackedScene
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -51,7 +52,10 @@ func despawn_projectile():
 	visible = false
 	process_mode = Node.PROCESS_MODE_DISABLED
 
-
+	# Spawn the explosion effect
+	var explosion = explosion_scene.instantiate()
+	get_tree().current_scene.add_child(explosion)
+	explosion.global_position = global_position
 
 	await get_tree().create_timer(1).timeout
 

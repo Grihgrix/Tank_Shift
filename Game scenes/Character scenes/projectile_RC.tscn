@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://8phnf5pjmac0" path="res://Game scenes/Character scenes/projectile_rc.gd" id="1_21kgf"]
 [ext_resource type="PackedScene" uid="uid://mymu6kvb6f6k" path="res://Assets/Art/Tank/projectile.tscn" id="2_20g6y"]
+[ext_resource type="PackedScene" uid="uid://h544dcdf148c" path="res://Assets/Art/Tank/fx_explosion_small.tscn" id="2_rh17j"]
 
 [sub_resource type="Curve" id="Curve_20g6y"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.92567575, 0), 0.0, 0.0, 0, 0]
@@ -24,6 +25,7 @@ scale_curve = SubResource("CurveTexture_20g6y")
 [node name="Projectile" type="RayCast3D" unique_id=679734095]
 top_level = true
 script = ExtResource("1_21kgf")
+explosion_scene = ExtResource("2_rh17j")
 
 [node name="Timer" type="Timer" parent="." unique_id=5218242]
 wait_time = 10.0
