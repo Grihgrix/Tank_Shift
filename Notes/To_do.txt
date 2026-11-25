@@ -6,6 +6,7 @@ To Do :
     -> Exploration
     Done, now need to be autonomous
     -> Attack
+    V1 working, but could be refined
     -> Shift attack
 - Change the assets for Adrien's assets 
 - Add a sign of which tiles have a character on the other side of it (shadow or periscope ?)
