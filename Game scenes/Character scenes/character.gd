@@ -32,13 +32,22 @@ var move_direction:int
 
 # NPC behaviour
 @onready var state_machine_player:StateMachinePlayer = $StateMachinePlayer
+@onready var current_state = state_machine_player.get_current()
 @onready var enemy_detection:Area3D = $Enemy_Detection
 @onready var enemies_detected:int = 0
 @onready var enemies_shift_req_detected:int = 0
 @onready var allies_detected:int = 0
 
 @onready var aim_enemy_available:bool = false
+@onready var npc_is_shooting:bool = false
 var detected_enemy_character:CharacterBody3D
+var npc_dodge_rand_array:Array = [-1, 1]
+@onready var npc_dodge_direction_modifier = 1 # picked between 1 and -1 when npc_dodge_direction_timer stops
+@onready var npc_dodge_angular_direction_modifier = 1 # picked between 1 and -1 when npc_dodge_direction_timer stops
+@onready var npc_dodge_direction_timer:Timer = $NPC_dodge_direction_Timer
+@onready var npc_dodge_angular_direction_timer:Timer = $NPC_dodge_angular_direction_Timer
+
+
 
 # Signal to detect if ennemy just shifted
 signal on_shift(shifter_id:int, shifter_is_up_or_down:int)
@@ -65,15 +74,16 @@ func _ready():
 	label_3d.text = str(character_id)
 
 	# Visuals
-	for meshs in colored_meshes:
+	for mesh in colored_meshes:
 		if is_player:
-			meshs.set_surface_override_material(0, team_a_mat)
+			mesh.set_surface_override_material(0, team_a_mat)
 		else:
-			meshs.set_surface_override_material(0, team_b_mat)
+			mesh.set_surface_override_material(0, team_b_mat)
+	
 
 func _physics_process(delta):
 	# Get the current state of the state machine for this character
-	var current_state = state_machine_player.get_current()
+	current_state = state_machine_player.get_current()
 	label_3d.text = str(character_id) + " state = " + current_state
 
 	#if character_id == 2:
@@ -114,7 +124,25 @@ func _physics_process(delta):
 	#	# Trigger reparenting (in the main script) and shift (in the tile script)
 	#	Global.shift_requested_on_mouse = true
 	#	# Actual shift is happening in the tiles code
-
+	
+	#######################################
+	# NPC behaviours related timer checks #
+	#######################################
+	
+	# MPC dodge direction picker
+	if npc_dodge_angular_direction_timer.is_stopped():
+		# Choose new direction
+		npc_dodge_angular_direction_modifier = [-1,1].pick_random()
+		# Relaunch the timer at a new random time
+		npc_dodge_angular_direction_timer.start(round(randf_range(1,30))) # anything between 1 secong and 30 sec
+	
+	# NPC doge forward or backward
+	if npc_dodge_direction_timer.is_stopped():
+		# Choose new direction
+		npc_dodge_direction_modifier = [-1,1].pick_random()
+		# Relaunch the timer at a new random time
+		npc_dodge_direction_timer.start(round(randf_range(1,3))) # anything between 1 secong and 10 sec
+	
 	######################################
 	# Check if we are upside down or not #
 	######################################
@@ -195,6 +223,26 @@ func _physics_process(delta):
 				# Stop when very close to objectif
 				velocity.x = 0
 				velocity.z = 0
+	elif not is_player and is_alive and current_state == "Attaque":
+		# Same target vector as used in tourelle for NPC aiming
+		var target_vector = global_position - detected_enemy_character.global_position
+		# Use the vector to calculate the orthogonal direction for the NPC to turn towards
+		var dodge_rotation = (npc_dodge_angular_direction_modifier * PI) - atan2(target_vector.z, target_vector.x) # this will make give a direction either right or left at 90 degrees from the direction of the player (so we can turn around the player)
+		# Trigger turn
+		global_rotation.y = rotate_toward(global_rotation.y, dodge_rotation, delta)
+		
+		# Doge translation
+		if npc_is_shooting:
+			# NPC stops to shoot
+			velocity.x = 0
+			velocity.z = 0
+		else:
+			# If noty shooting NPC turns around target
+			velocity.x = Global.SPEED * cos(rotation.y + tile_rotation_modifier * PI/2) * not_in_shift * npc_dodge_direction_modifier
+			velocity.z = Global.SPEED * sin(rotation.y -  PI/2) * not_in_shift * npc_dodge_direction_modifier
+		
+	elif not is_player and is_alive and current_state == "Ennemy below":
+		pass
 	else:
 		# if current state is not exploration
 		velocity.x = 0
@@ -250,12 +298,13 @@ func _on_state_machine_player_transited(from, to):
 
 
 func _on_enemy_detection_body_entered(body):
-	if not is_player and body is CharacterBody3D:
+	if not is_player and is_alive and body is CharacterBody3D:
 		if body.character_id == 1:
 			# Assign the player node to the  ennemy character body variable
 			detected_enemy_character = body
 			# Trigger the marker showing that the ennemy can be seen
 			if is_up_or_down == body.is_up_or_down:
+				# only aim if the ennemy is visible (on the same side as you)
 				aim_enemy_available = true
 
 			# Trigger the change of state
