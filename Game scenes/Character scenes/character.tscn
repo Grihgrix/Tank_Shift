@@ -106,6 +106,7 @@ shape = SubResource("BoxShape3D_f7ppj")
 [node name="Shift_Timer" type="Timer" parent="." unique_id=983244169]
 wait_time = 5.0
 one_shot = true
+autostart = true
 
 [node name="StateMachinePlayer" type="Node" parent="." unique_id=1033437065]
 script = ExtResource("7_cv6ge")
@@ -135,6 +136,9 @@ one_shot = true
 one_shot = true
 
 [node name="NPC_is_Shooting_Timer" type="Timer" parent="." unique_id=662904188]
+one_shot = true
+
+[node name="NPC_shift_Timer" type="Timer" parent="." unique_id=1344004840]
 one_shot = true
 
 [node name="FxExplosionBig" parent="." unique_id=474446918 instance=ExtResource("9_cv6ge")]
