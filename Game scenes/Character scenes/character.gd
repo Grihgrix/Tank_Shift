@@ -42,11 +42,15 @@ var move_direction:int
 @onready var npc_is_shooting:bool = false
 var detected_enemy_character:CharacterBody3D
 var npc_dodge_rand_array:Array = [-1, 1]
+
 @onready var npc_dodge_direction_modifier = 1 # picked between 1 and -1 when npc_dodge_direction_timer stops
 @onready var npc_dodge_angular_direction_modifier = 1 # picked between 1 and -1 when npc_dodge_direction_timer stops
+
 @onready var npc_dodge_direction_timer:Timer = $NPC_dodge_direction_Timer
 @onready var npc_dodge_angular_direction_timer:Timer = $NPC_dodge_angular_direction_Timer
 
+@onready var npc_shift_timer:Timer = $NPC_shift_Timer
+@onready var npc_shift_decision:bool = false
 
 
 # Signal to detect if ennemy just shifted
@@ -62,7 +66,8 @@ signal on_shift(shifter_id:int, shifter_is_up_or_down:int)
 
 
 func _ready():
-
+	# Ensires no immediate shift happens at game start
+	npc_shift_timer.start(randf_range(4,10))
 	# Intialize character spawn position
 	position.x = Global.characters_spawn_locations[character_id]["x"]
 	position.y = Global.characters_spawn_locations[character_id]["y"]
@@ -111,6 +116,32 @@ func _physics_process(delta):
 		# Trigger shift of current parent
 		var current_tile:Node = get_parent()
 		current_tile.self_shift_requested = true
+	
+	# Self shift NPC decision
+	if not is_player and is_alive and npc_shift_timer.is_stopped():
+		# Ensures NPC do not get stuck in a shift loop
+		npc_shift_timer.start(randf_range(4,10))
+		
+		# Proba threshold will give a certain chance for a shift to be triggered at the end of each npc shift timer
+		var shift_proba_threshold:float = 0.1
+		# Define the shift probability depending on the current state of the NPC
+		if current_state == "Exploration":
+			shift_proba_threshold = 0.2
+		elif current_state == "Attaque":
+			shift_proba_threshold = 0.1
+		elif current_state == "Ennemy below":
+			shift_proba_threshold = 0.3
+		
+		
+		# check if we trigger the shift
+		if randf() <= shift_proba_threshold:
+			# Start the cooldown
+			shift_timer.start(Global.shift_cooldown)
+			# Trigger reparenting (in the main script)
+			Global.self_shift_requested = true
+			# Trigger shift of current parent
+			var current_tile:Node = get_parent()
+			current_tile.self_shift_requested = true
 
 
 
@@ -179,10 +210,21 @@ func _physics_process(delta):
 		navigation_agent_3d.navigation_layers = 2
 
 	
-	###########################
-	# Capture NPC Destination #
-	###########################
-	if not is_player and is_alive and current_state == "Exploration":
+	######################################
+	# Autmatic NPC destination decission #
+	######################################
+	
+	if not is_player and is_alive and (current_state == "Exploration" or current_state == "Ennemy below"):
+		# Add here a timer mechanism that will change destination to a new random location
+		#_calculate_new_NPC_destination()
+		pass
+		
+	
+	#####################################################
+	# Define NPC movement using pre-defined Destination #
+	#####################################################
+	
+	if not is_player and is_alive and (current_state == "Exploration" or current_state == "Ennemy below"):
 		# Trigger the new destination assignment (for now when pressing CTRL, but to be replaced by timer controlled or when path finished)
 		if Input.is_action_just_released("Debug Path"):
 			_debug_npc_path_assignment()
@@ -240,9 +282,6 @@ func _physics_process(delta):
 			# If noty shooting NPC turns around target
 			velocity.x = Global.SPEED * cos(rotation.y + tile_rotation_modifier * PI/2) * not_in_shift * npc_dodge_direction_modifier
 			velocity.z = Global.SPEED * sin(rotation.y -  PI/2) * not_in_shift * npc_dodge_direction_modifier
-		
-	elif not is_player and is_alive and current_state == "Ennemy below":
-		pass
 	else:
 		# if current state is not exploration
 		velocity.x = 0
@@ -280,15 +319,17 @@ func _physics_process(delta):
 	##################
 	move_and_slide()
 
+# TODO : Decommission debug CTRL before release
 func _debug_npc_path_assignment():
 	print("Debug Path")
 	# This is when prtessing CTRL
+	_calculate_new_NPC_destination()
+	
+func _calculate_new_NPC_destination():
 	var random_position:Vector3 = Vector3.ZERO
 	random_position.x = randf_range(1.0, Global.board_total_length.x - 1.0)
 	random_position.z = randf_range(1.0, - (Global.board_total_length.y - 1.0))
-	#random_position.x = 1
-	random_position.y = 1
-	#random_position.z = -20
+	random_position.y = 0
 	print(str(character_id) + str(random_position))
 	navigation_agent_3d.set_target_position(random_position)
 
