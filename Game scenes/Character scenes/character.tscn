@@ -24,12 +24,9 @@ radius = 15.0
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_php0s"]
 render_priority = 1
 shader = ExtResource("12_8x8i8")
-shader_parameter/outer_circle_radius = 0.5
-shader_parameter/inner_circle_radius = 0.2025
-shader_parameter/edge_thickness = 0.08
-shader_parameter/transparency = 0.5
-shader_parameter/tint = Color(0.99171156, 0.14869271, 0, 1)
-shader_parameter/edge_tint = Color(0.8326685, 0.20569424, 0.1486966, 1)
+shader_parameter/power = 1.0
+shader_parameter/tint = Color(0.10374347, 0.103743546, 0.103743516, 1)
+shader_parameter/opacity_factor = 0.6
 
 [node name="Character" type="CharacterBody3D" unique_id=1998404675 node_paths=PackedStringArray("colored_meshes", "dead_meshs_position")]
 transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0, 0, 0)
@@ -111,7 +108,12 @@ transform = Transform3D(2.55912, 0, 0, 0, 2.55912, 0, 0, 0, 2.5591202, 0, 0.7054
 burst_on_ready = false
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1988937796]
-transform = Transform3D(1.6399065, 0, 0, 0, -1.6399065, -1.4336517e-07, 0, 1.4336527e-07, -1.6399076, 0, -0.5738737, 0)
+transform = Transform3D(2.6149988, 0, 0, 0, -2.6149988, -2.2861043e-07, 0, 2.2861062e-07, -2.6150007, 0, -0.57387364, 0)
+mesh = SubResource("PlaneMesh_nr5eq")
+surface_material_override/0 = SubResource("ShaderMaterial_php0s")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=300205818]
+transform = Transform3D(2.614998, 0, 0, 0, 2.614998, -1.8474108e-13, 0, -1.563194e-13, 2.6150007, 0, 0.20011574, 0)
 mesh = SubResource("PlaneMesh_nr5eq")
 surface_material_override/0 = SubResource("ShaderMaterial_php0s")
 

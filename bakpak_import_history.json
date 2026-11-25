@@ -6,7 +6,7 @@
 					"res://Assets/Art/Tank/body.res",
 					"res://Assets/Art/Tank/body.tscn"
 				],
-				"fingerprint": "v2:y2FyMlyUgTX1C8OpBTX5/rurUIppehGfZzShqUT3xEw=",
+				"fingerprint": "v3:SBC6tAGuj2/QpJ3nmGbMM1/vF8VlQa6Ge6gZfJuGdpY=",
 				"path": "Art/Tank"
 			},
 			"Head_nocol": {
@@ -14,7 +14,7 @@
 					"res://Assets/Art/Tank/head.res",
 					"res://Assets/Art/Tank/head.tscn"
 				],
-				"fingerprint": "v3:9tZQ7hJsO6OI2d/r6GmRUnKY6H0JM3Qszvno8PlwHY0=",
+				"fingerprint": "v3:JPyznFUIc0I1OojXwcxl4acYP/NfDLi3RG6rYomohpo=",
 				"path": "Art/Tank"
 			},
 			"Projectile_nocol": {
@@ -22,7 +22,7 @@
 					"res://Assets/Art/Tank/projectile.res",
 					"res://Assets/Art/Tank/projectile.tscn"
 				],
-				"fingerprint": "v2:sY2EqKTuekWiDYEQeipUSMUBoNxTE9vAl1IKfML3sNo=",
+				"fingerprint": "v3:wDdPtw5qZBAINgnuik5zkwde3Q8blRpIo7dfm5DHYNU=",
 				"path": "Art/Tank"
 			},
 			"Tree_nocol": {
@@ -30,7 +30,7 @@
 					"res://Assets/Art/Foliage/tree.res",
 					"res://Assets/Art/Foliage/tree.tscn"
 				],
-				"fingerprint": "v2:G76/LpB2+/V7IPKkZjmBkNRdKC7eksl2zB2GQYZv0gY=",
+				"fingerprint": "v3:/HP4MdGMrAMzZdpchK3sHs9ptn/HUMIK1kM+uXDo84s=",
 				"path": "Art/Foliage"
 			},
 			"bush_nocol": {
@@ -51,18 +51,18 @@
 			}
 		},
 		"files": [
-			"res://Assets/Art/Foliage/bush.res",
-			"res://Assets/Art/Foliage/bush.tscn",
-			"res://Assets/Art/Foliage/tree.res",
-			"res://Assets/Art/Foliage/tree.tscn",
-			"res://Assets/Art/Props/stone_wall.res",
-			"res://Assets/Art/Props/stone_wall.tscn",
 			"res://Assets/Art/Tank/body.res",
 			"res://Assets/Art/Tank/body.tscn",
 			"res://Assets/Art/Tank/head.res",
 			"res://Assets/Art/Tank/head.tscn",
 			"res://Assets/Art/Tank/projectile.res",
-			"res://Assets/Art/Tank/projectile.tscn"
+			"res://Assets/Art/Tank/projectile.tscn",
+			"res://Assets/Art/Foliage/tree.res",
+			"res://Assets/Art/Foliage/tree.tscn",
+			"res://Assets/Art/Foliage/bush.res",
+			"res://Assets/Art/Foliage/bush.tscn",
+			"res://Assets/Art/Props/stone_wall.res",
+			"res://Assets/Art/Props/stone_wall.tscn"
 		]
 	}
 }
