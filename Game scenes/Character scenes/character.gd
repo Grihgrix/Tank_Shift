@@ -189,8 +189,15 @@ func _physics_process(delta):
 				if abs(round((global_rotation.y - nav_npc_steer_angle) * 10 / PI))  != 0 and abs(round((global_rotation.y - nav_npc_steer_angle) * 10 / PI)) != 20:
 					# NPC Steers
 					global_rotation.y = rotate_toward(global_rotation.y, nav_npc_steer_angle, delta)
-					velocity.x = 0
-					velocity.z = 0
+					
+					# Check if the turn is more than 90 degrees, if so stop during turn
+					if (global_rotation.y - nav_npc_steer_angle) >=  2 * PI / 3 and (global_rotation.y - nav_npc_steer_angle) <= 4 * PI / 3:
+						# if angle is too tight, stop moving and just turn
+						velocity.x = 0
+						velocity.z = 0
+					else: 
+						velocity.x = Global.SPEED * cos(rotation.y + tile_rotation_modifier * PI/2) * not_in_shift
+						velocity.z = Global.SPEED * sin(rotation.y -  PI/2) * not_in_shift
 				else:
 					global_rotation.y = nav_npc_steer_angle
 					velocity.x = Global.SPEED * cos(rotation.y + tile_rotation_modifier * PI/2) * not_in_shift
