@@ -1,8 +1,11 @@
 [gd_scene format=3 uid="uid://ba4kpa8uhmuim"]
 
 [ext_resource type="ArrayMesh" uid="uid://bclpahwjg15r4" path="res://Assets/Art/Foliage/bush.res" id="1_pwtje"]
+[ext_resource type="Material" uid="uid://doey4mc44radc" path="res://Assets/Art/Foliage/mat_bush.res" id="2_rl1xs"]
 
 [node name="Bush" type="MeshInstance3D" unique_id=1536467258]
 mesh = ExtResource("1_pwtje")
+surface_material_override/0 = ExtResource("2_rl1xs")
+surface_material_override/1 = ExtResource("2_rl1xs")
 metadata/bakpak_generated = true
 metadata/bakpak_lod_group = "default"
