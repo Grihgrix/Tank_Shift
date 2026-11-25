@@ -150,32 +150,20 @@ func _physics_process(delta):
 	elif is_up_or_down == -1:
 		navigation_agent_3d.navigation_layers = 2
 
-	##########################
-	# Capture controls input #
-	##########################
-
-	if is_player and is_alive:
-		# Capture rotation controls
-		steer_direction = Input.get_axis("ui_right", "ui_left") # Left = 1 # Right = -1
-		# Capture translation controls
-		move_direction = Input.get_axis("ui_up", "ui_down") # Up = -1 # Down = 1
-
+	
 	###########################
 	# Capture NPC Destination #
 	###########################
-
-	#if navigation_agent_3d.is_navigation_finished():
-	#	#print("PATH FINISHED")
-	#	pass
-
-	if not is_player and current_state == "Exploration":
-
+	if not is_player and is_alive and current_state == "Exploration":
+		# Trigger the new destination assignment (for now when pressing CTRL, but to be replaced by timer controlled or when path finished)
 		if Input.is_action_just_released("Debug Path"):
 			_debug_npc_path_assignment()
-
+		
+		# Stop the NPC if he arrived at destination
 		if navigation_agent_3d.is_navigation_finished():
 			velocity.x = 0
 			velocity.z = 0
+		# Otherwise move towards destination
 		else:
 			#var nav_destination = navigation_agent_3d.get_next_path_position()
 			var nav_next_destination = navigation_agent_3d.get_next_path_position() - global_position
@@ -191,7 +179,7 @@ func _physics_process(delta):
 					global_rotation.y = rotate_toward(global_rotation.y, nav_npc_steer_angle, delta)
 					
 					# Check if the turn is more than 90 degrees, if so stop during turn
-					if (global_rotation.y - nav_npc_steer_angle) >=  2 * PI / 3 and (global_rotation.y - nav_npc_steer_angle) <= 4 * PI / 3:
+					if abs(global_rotation.y - nav_npc_steer_angle) >=  2 * PI / 3 and abs(global_rotation.y - nav_npc_steer_angle) <= 4 * PI / 3:
 						# if angle is too tight, stop moving and just turn
 						velocity.x = 0
 						velocity.z = 0
@@ -199,26 +187,29 @@ func _physics_process(delta):
 						velocity.x = Global.SPEED * cos(rotation.y + tile_rotation_modifier * PI/2) * not_in_shift
 						velocity.z = Global.SPEED * sin(rotation.y -  PI/2) * not_in_shift
 				else:
+					# if next location is straght ahead
 					global_rotation.y = nav_npc_steer_angle
 					velocity.x = Global.SPEED * cos(rotation.y + tile_rotation_modifier * PI/2) * not_in_shift
 					velocity.z = Global.SPEED * sin(rotation.y -  PI/2) * not_in_shift
 			else:
+				# Stop when very close to objectif
 				velocity.x = 0
 				velocity.z = 0
-
-			#var nav_direction = nav_next_destination.normalized()
-
-			#velocity = nav_direction * Global.SPEED
 	else:
+		# if current state is not exploration
 		velocity.x = 0
 		velocity.z = 0
 
 
-	###################
-	# Apply movements #
-	###################
-
-	if is_player:
+	#########################################
+	# Controlled player movements movements #
+	#########################################
+	
+	if is_player and is_alive:
+		# Capture rotation controls
+		steer_direction = Input.get_axis("ui_right", "ui_left") # Left = 1 # Right = -1
+		# Capture translation controls
+		move_direction = Input.get_axis("ui_up", "ui_down") # Up = -1 # Down = 1
 		# Character moving forward or backward
 		velocity.z = move_direction * Global.SPEED * cos(rotation.y) * not_in_shift
 		velocity.x = move_direction * Global.SPEED * sin(rotation.y) * not_in_shift * tile_rotation_modifier
@@ -235,7 +226,10 @@ func _physics_process(delta):
 			trail.emitting = true
 		else:
 			trail.emitting = false
-
+	
+	##################
+	# Apply movement #
+	##################
 	move_and_slide()
 
 func _debug_npc_path_assignment():
