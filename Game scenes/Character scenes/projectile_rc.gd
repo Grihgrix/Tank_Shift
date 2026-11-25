@@ -4,6 +4,7 @@ extends RayCast3D
 
 #@export var speed:int = Global.projectile_speed
 
+@onready var particles : GPUParticles3D = $GPUParticles3D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -23,24 +24,37 @@ func _physics_process(delta):
 	force_raycast_update()
 	# Find the object with which we would collide if any
 	var collider = get_collider()
-	
+
 	if is_colliding():
 		# Keep the pojectile on the object colliding
 		global_position = get_collision_point()
 		# Stop the projectile from moving
 		set_physics_process(false)
-		
+
 		# Detecti if we hit a character
 		collider = get_collider()
 		if collider is CharacterBody3D:
 			# Implement character death
 			collider.is_alive = false
-	
+
 		# Depsawn projectile if we had a collision
 		despawn_projectile()
 
 
 func despawn_projectile():
+	# Keep the particles visible until they finish disappearing
+	particles.reparent(get_tree().current_scene)
+	particles.emitting = false
+
+	# Disable the projectile and make it invisible
+	enabled = false
+	visible = false
+	process_mode = Node.PROCESS_MODE_DISABLED
+
+
+
+	await get_tree().create_timer(1).timeout
+
 	queue_free()
 
 
