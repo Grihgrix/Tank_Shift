@@ -128,7 +128,14 @@ font_size = 200
 navigation_layers = 0
 debug_enabled = true
 
-[node name="NPC_Activities_Timer" type="Timer" parent="." unique_id=392827701]
+[node name="NPC_dodge_direction_Timer" type="Timer" parent="." unique_id=392827701]
+one_shot = true
+
+[node name="NPC_dodge_angular_direction_Timer" type="Timer" parent="." unique_id=154664293]
+one_shot = true
+
+[node name="NPC_is_Shooting_Timer" type="Timer" parent="." unique_id=662904188]
+one_shot = true
 
 [node name="FxExplosionBig" parent="." unique_id=474446918 instance=ExtResource("9_cv6ge")]
 transform = Transform3D(2.55912, 0, 0, 0, 2.55912, 0, 0, 0, 2.5591202, 0, 0.7054677, 0)

@@ -10,6 +10,11 @@ script = ExtResource("2_jct8u")
 name = "Attaque"
 metadata/graph_offset = Vector2(600.5, 142.5)
 
+[sub_resource type="Resource" id="Resource_php0s"]
+script = ExtResource("2_jct8u")
+name = "Ennemy below"
+metadata/graph_offset = Vector2(591, 442.5)
+
 [sub_resource type="Resource" id="Resource_8x8i8"]
 script = ExtResource("2_jct8u")
 name = "Entry"
@@ -20,10 +25,18 @@ script = ExtResource("2_jct8u")
 name = "Exploration"
 metadata/graph_offset = Vector2(291, 282.5)
 
-[sub_resource type="Resource" id="Resource_php0s"]
-script = ExtResource("2_jct8u")
-name = "In danger"
-metadata/graph_offset = Vector2(591, 442.5)
+[sub_resource type="Resource" id="Resource_yry0i"]
+script = ExtResource("4_yry0i")
+value = 1
+name = "Ennemies Shift Required"
+
+[sub_resource type="Resource" id="Resource_sun7h"]
+script = ExtResource("3_bw8vo")
+from = "Attaque"
+to = "Ennemy below"
+conditions = {
+"Ennemies Shift Required": SubResource("Resource_yry0i")
+}
 
 [sub_resource type="Resource" id="Resource_7fk43"]
 script = ExtResource("4_yry0i")
@@ -37,17 +50,34 @@ conditions = {
 "Ennemies Detected": SubResource("Resource_7fk43")
 }
 
-[sub_resource type="Resource" id="Resource_yry0i"]
+[sub_resource type="Resource" id="Resource_8girb"]
 script = ExtResource("4_yry0i")
 value = 1
+name = "Ennemies Detected"
+
+[sub_resource type="Resource" id="Resource_j8ev7"]
+script = ExtResource("4_yry0i")
 name = "Ennemies Shift Required"
 
-[sub_resource type="Resource" id="Resource_sun7h"]
+[sub_resource type="Resource" id="Resource_w00cs"]
 script = ExtResource("3_bw8vo")
-from = "Attaque"
-to = "In danger"
+from = "Ennemy below"
+to = "Attaque"
 conditions = {
-"Ennemies Shift Required": SubResource("Resource_yry0i")
+"Ennemies Detected": SubResource("Resource_8girb"),
+"Ennemies Shift Required": SubResource("Resource_j8ev7")
+}
+
+[sub_resource type="Resource" id="Resource_sws4m"]
+script = ExtResource("4_yry0i")
+name = "Ennemies Detected"
+
+[sub_resource type="Resource" id="Resource_d578a"]
+script = ExtResource("3_bw8vo")
+from = "Ennemy below"
+to = "Exploration"
+conditions = {
+"Ennemies Detected": SubResource("Resource_sws4m")
 }
 
 [sub_resource type="Resource" id="Resource_p2cyq"]
@@ -81,63 +111,33 @@ name = "Ennemies Shift Required"
 [sub_resource type="Resource" id="Resource_rnbln"]
 script = ExtResource("3_bw8vo")
 from = "Exploration"
-to = "In danger"
+to = "Ennemy below"
 conditions = {
 "Ennemies Shift Required": SubResource("Resource_jct8u")
-}
-
-[sub_resource type="Resource" id="Resource_8girb"]
-script = ExtResource("4_yry0i")
-value = 1
-name = "Ennemies Detected"
-
-[sub_resource type="Resource" id="Resource_j8ev7"]
-script = ExtResource("4_yry0i")
-name = "Ennemies Shift Required"
-
-[sub_resource type="Resource" id="Resource_w00cs"]
-script = ExtResource("3_bw8vo")
-from = "In danger"
-to = "Attaque"
-conditions = {
-"Ennemies Detected": SubResource("Resource_8girb"),
-"Ennemies Shift Required": SubResource("Resource_j8ev7")
-}
-
-[sub_resource type="Resource" id="Resource_sws4m"]
-script = ExtResource("4_yry0i")
-name = "Ennemies Detected"
-
-[sub_resource type="Resource" id="Resource_d578a"]
-script = ExtResource("3_bw8vo")
-from = "In danger"
-to = "Exploration"
-conditions = {
-"Ennemies Detected": SubResource("Resource_sws4m")
 }
 
 [resource]
 script = ExtResource("1_sws4m")
 states = {
 "Attaque": SubResource("Resource_msid3"),
+"Ennemy below": SubResource("Resource_php0s"),
 "Entry": SubResource("Resource_8x8i8"),
-"Exploration": SubResource("Resource_lbtpe"),
-"In danger": SubResource("Resource_php0s")
+"Exploration": SubResource("Resource_lbtpe")
 }
 transitions = {
 "Attaque": {
-"Exploration": SubResource("Resource_1xrgu"),
-"In danger": SubResource("Resource_sun7h")
+"Ennemy below": SubResource("Resource_sun7h"),
+"Exploration": SubResource("Resource_1xrgu")
+},
+"Ennemy below": {
+"Attaque": SubResource("Resource_w00cs"),
+"Exploration": SubResource("Resource_d578a")
 },
 "Entry": {
 "Exploration": SubResource("Resource_p2cyq")
 },
 "Exploration": {
 "Attaque": SubResource("Resource_fbnvg"),
-"In danger": SubResource("Resource_rnbln")
-},
-"In danger": {
-"Attaque": SubResource("Resource_w00cs"),
-"Exploration": SubResource("Resource_d578a")
+"Ennemy below": SubResource("Resource_rnbln")
 }
 }

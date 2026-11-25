@@ -14,6 +14,7 @@ var projectiles_node:Node
 @onready var character = $"../../../.."
 @onready var tourelle = $"../../Tourelle"
 @onready var shooter_timer = $Shooter_Timer
+@onready var npc_is_shooting_timer = $"../../../../NPC_is_Shooting_Timer"
 
 
 
@@ -24,13 +25,22 @@ func _ready():
 
 
 func _physics_process(delta):
+	
+	if npc_is_shooting_timer.is_stopped():
+		npc_is_shooting_timer.start(round(randf_range(1,3)))
+		if character.npc_is_shooting:
+			character.npc_is_shooting = false
+		else:
+			character.npc_is_shooting = true
+	
+	
 	if character.is_player and character.is_alive and Input.is_action_just_released("Shoot") and shooter_timer.is_stopped():
 		shooter_timer.start(Global.shoot_cooldown)
 		shoot_rc()
 	# Test to ensure that NPC and player death works
-	#elif not character.is_player and character.is_alive and shooter_timer.is_stopped():
-	#	shooter_timer.start(Global.shoot_cooldown)
-	#	shoot_rc()
+	elif not character.is_player and character.is_alive and shooter_timer.is_stopped() and character.npc_is_shooting and character.current_state == "Attaque":
+		shooter_timer.start(Global.shoot_cooldown)
+		shoot_rc()
 
 func shoot_rc():
 	var projectile_rc:Node = PROJECTILE_RC.instantiate() # Intantiate new projectile
