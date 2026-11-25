@@ -2,10 +2,30 @@
 
 [ext_resource type="Script" uid="uid://8phnf5pjmac0" path="res://Game scenes/Character scenes/projectile_rc.gd" id="1_21kgf"]
 [ext_resource type="PackedScene" uid="uid://mymu6kvb6f6k" path="res://Assets/Art/Tank/projectile.tscn" id="2_20g6y"]
+[ext_resource type="PackedScene" uid="uid://h544dcdf148c" path="res://Assets/Art/Tank/fx_explosion_small.tscn" id="2_rh17j"]
+
+[sub_resource type="Curve" id="Curve_20g6y"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.92567575, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_20g6y"]
+curve = SubResource("Curve_20g6y")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_vqmwc"]
+emission_shape = 1
+emission_sphere_radius = 0.3
+initial_velocity_max = 1.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.099999994
+scale_max = 0.5
+scale_curve = SubResource("CurveTexture_20g6y")
+
+[sub_resource type="SphereMesh" id="SphereMesh_nr5eq"]
 
 [node name="Projectile" type="RayCast3D" unique_id=679734095]
 top_level = true
 script = ExtResource("1_21kgf")
+explosion_scene = ExtResource("2_rh17j")
 
 [node name="Timer" type="Timer" parent="." unique_id=5218242]
 wait_time = 10.0
@@ -18,5 +38,11 @@ transform = Transform3D(-6.441498e-08, 0, 1.473643, 0, 1.473643, 0, -1.473643, 0
 [node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=2060511679]
 light_color = Color(1, 0.57566667, 0.32999998, 1)
 light_energy = 2.0
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="." unique_id=388379156]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0.5935843)
+amount = 75
+process_material = SubResource("ParticleProcessMaterial_vqmwc")
+draw_pass_1 = SubResource("SphereMesh_nr5eq")
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

@@ -805,12 +805,16 @@ func _get_final_material_info(mat: Material, slot_name: String) -> Dictionary:
 	if default_mat_path != "":
 		default_mat = load(default_mat_path)
 
-	var match_name = slot_name
+	# Name the material has in the source file. Empty for geometry without a material:
+	# Godot's glTF importer gives every such primitive its own unnamed placeholder
+	# material, so those can only be recognized by their lack of a name.
+	var source_name = slot_name
+	if source_name == "" and mat:
+		source_name = mat.resource_name
+
+	var match_name = source_name
 	if match_name == "" and mat:
-		if mat.resource_name != "":
-			match_name = mat.resource_name
-		else:
-			match_name = mat.get_class()
+		match_name = mat.get_class()
 
 	var final_mat = default_mat
 	var final_surf_name = "DefaultMaterial"
@@ -826,10 +830,12 @@ func _get_final_material_info(mat: Material, slot_name: String) -> Dictionary:
 		final_surf_name = match_name
 		matched = true
 	else:
-		# No preset found: keep the source slot name so the surface stays identifiable,
-		# and use the default material (null when no default is configured)
-		if match_name != "":
-			final_surf_name = match_name
+		# No preset found: a material named in the source file keeps its name, and so
+		# its own surface. Geometry without a named material all goes to the
+		# "DefaultMaterial" surface. Both use the default material (null when no
+		# default is configured).
+		if source_name != "":
+			final_surf_name = source_name
 		final_mat = default_mat
 
 	return {"material": final_mat, "name": final_surf_name, "matched": matched}
@@ -841,8 +847,7 @@ func _merge_meshes(extracted_data: Array, ignore_materials: bool = false) -> Arr
 	var material_refs = {} # merge_key -> Material reference
 	var surface_names = {} # merge_key -> Final Surface Name
 
-	for data_idx in range(extracted_data.size()):
-		var data = extracted_data[data_idx]
+	for data in extracted_data:
 		var mesh: Mesh = data.mesh
 		var transform: Transform3D = data.transform
 
@@ -862,18 +867,11 @@ func _merge_meshes(extracted_data: Array, ignore_materials: bool = false) -> Arr
 				var mat_info = _get_final_material_info(surface_info.material, surface_info.slot_name)
 				final_mat = mat_info.material
 				final_surf_name = mat_info.name
+				# One surface per distinct material of the whole entity: the final name
+				# is unique per preset, per named material without a preset, and shared
+				# by everything else ("DefaultMaterial"). It must not depend on which
+				# sub-object or material instance the geometry comes from.
 				merge_key = final_surf_name
-
-				if not mat_info.matched:
-					# Slots without a preset must keep their own surface: key them by
-					# source slot rather than by a shared fallback name, otherwise every
-					# unmatched slot collapses into a single surface.
-					if surface_info.slot_name != "":
-						merge_key = "slot:" + surface_info.slot_name
-					elif surface_info.material:
-						merge_key = "mat:%d" % surface_info.material.get_instance_id()
-					else:
-						merge_key = "surface:%d:%d" % [data_idx, surface_idx]
 			else:
 				var mat_info = _get_final_material_info(null, "")
 				final_mat = mat_info.material

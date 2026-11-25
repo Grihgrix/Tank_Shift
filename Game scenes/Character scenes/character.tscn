@@ -2,36 +2,16 @@
 
 [ext_resource type="Script" uid="uid://cdx5is3f4lpts" path="res://Game scenes/Character scenes/character.gd" id="1_0wov1"]
 [ext_resource type="Script" uid="uid://b2hexpl5bkcx0" path="res://Game scenes/Character scenes/tourelle.gd" id="2_aknvi"]
+[ext_resource type="Material" uid="uid://btph15lgas4ee" path="res://Assets/Art/Tank/mat_tank_team_b.tres" id="3_php0s"]
 [ext_resource type="PackedScene" uid="uid://chlxgvf51pads" path="res://Assets/Art/Tank/head.tscn" id="3_wpo4s"]
 [ext_resource type="Script" uid="uid://dxnlhpjvxxsdm" path="res://Game scenes/Character scenes/shooter.gd" id="3_y3tpf"]
+[ext_resource type="Material" uid="uid://hkyg607hex8f" path="res://Assets/Art/Tank/mat_tank_dead.tres" id="4_8x8i8"]
+[ext_resource type="Material" uid="uid://bo4scscnougk5" path="res://Assets/Art/Tank/mat_tank_team_a.tres" id="4_cv6ge"]
 [ext_resource type="PackedScene" uid="uid://dod04a7ea1c8k" path="res://Assets/Art/Tank/body.tscn" id="5_yk8nn"]
 [ext_resource type="Script" uid="uid://b3nr0oxlomtmq" path="res://addons/imjp94.yafsm/src/StateMachinePlayer.gd" id="7_cv6ge"]
-[ext_resource type="Shader" uid="uid://cphnjdrmpqeor" path="res://Assets/Art/Tank/toon_shader.gdshader" id="7_msid3"]
 [ext_resource type="Resource" uid="uid://4enqsgp2vgxl" path="res://Game scenes/Character scenes/States/Character_State_Machine.tres" id="8_ufa4k"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ufa4k"]
-render_priority = 0
-shader = ExtResource("7_msid3")
-shader_parameter/albedo_color = Color(0.55408335, 0.61, 0.2745, 1)
-shader_parameter/use_stepped = true
-shader_parameter/steps = 3.0
-shader_parameter/step_smoothness = 0.0
-shader_parameter/shadow_tint = Color(0, 0, 0, 1)
-shader_parameter/shadow_tint_amount = 0.4
-shader_parameter/specular = 0.0
-shader_parameter/normal_strength = 0.0
-shader_parameter/use_rim = true
-shader_parameter/rim_color = Color(1, 1, 1, 1)
-shader_parameter/rim_amount = 0.738
-shader_parameter/rim_smoothness = 0.01
-shader_parameter/rim_mask_shadow = 0.5000000074506
-shader_parameter/rim_blend = 1.0
-shader_parameter/use_pattern = false
-shader_parameter/pattern_uv_mode = 2
-shader_parameter/pattern_tiling = 32.0
-shader_parameter/pattern_amount = 0.5
-shader_parameter/pattern_smoothness = 0.5
-shader_parameter/pattern_blend = 0.2
+[ext_resource type="PackedScene" uid="uid://no1sss2jt3ms" path="res://Assets/Art/Tank/fx_explosion_big.tscn" id="9_cv6ge"]
+[ext_resource type="Shader" uid="uid://bfunqpa85kksr" path="res://Assets/Art/Tank/under_indicator_shader.gdshader" id="12_8x8i8"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_f7ppj"]
 size = Vector3(2.1823273, 1.212616, 2.8248138)
@@ -39,12 +19,56 @@ size = Vector3(2.1823273, 1.212616, 2.8248138)
 [sub_resource type="SphereShape3D" id="SphereShape3D_wltj5"]
 radius = 15.0
 
-[node name="Character" type="CharacterBody3D" unique_id=1998404675]
+[sub_resource type="PlaneMesh" id="PlaneMesh_nr5eq"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_php0s"]
+render_priority = 1
+shader = ExtResource("12_8x8i8")
+shader_parameter/power = 1.0
+shader_parameter/tint = Color(0.10374347, 0.103743546, 0.103743516, 1)
+shader_parameter/opacity_factor = 0.6
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8x8i8"]
+render_priority = 1
+shader = ExtResource("12_8x8i8")
+shader_parameter/power = 1.0
+shader_parameter/tint = Color(0.10374347, 0.103743546, 0.103743516, 1)
+shader_parameter/opacity_factor = 0.7
+
+[sub_resource type="Curve" id="Curve_8x8i8"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.92567575, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_20g6y"]
+curve = SubResource("Curve_8x8i8")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_8x8i8"]
+emission_shape = 3
+emission_box_extents = Vector3(0.2, 0, 0.2)
+spread = 0.0
+initial_velocity_max = 1.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.099999994
+scale_max = 0.5
+scale_curve = SubResource("CurveTexture_20g6y")
+
+[sub_resource type="SphereMesh" id="SphereMesh_gra5t"]
+
+[node name="Character" type="CharacterBody3D" unique_id=1998404675 node_paths=PackedStringArray("colored_meshes", "dead_meshs_position", "particle_trails")]
 transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0, 0, 0)
 collision_layer = 3
 collision_mask = 3
 axis_lock_linear_y = true
 script = ExtResource("1_0wov1")
+team_a_mat = ExtResource("4_cv6ge")
+team_b_mat = ExtResource("3_php0s")
+dead_mat = ExtResource("4_8x8i8")
+colored_meshes = [NodePath("Proto_tank/Tourelle/Head"), NodePath("Proto_tank/Body")]
+dead_meshs_position = {
+NodePath("Proto_tank/Tourelle/Head"): NodePath("Proto_tank/Tourelle/Dead_Head_Pos"),
+NodePath("Proto_tank/Body"): NodePath("Proto_tank/Dead_Body_Pos")
+}
+particle_trails = [NodePath("Particles_Trail"), NodePath("Particles_Trail2")]
 
 [node name="Proto_tank" type="Node3D" parent="." unique_id=1523143693]
 transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0, 1.15, 0)
@@ -54,8 +78,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.2926066, 0)
 script = ExtResource("2_aknvi")
 
 [node name="Head" parent="Proto_tank/Tourelle" unique_id=897098856 instance=ExtResource("3_wpo4s")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0.014311792, 0.011791229, -0.0051119328)
-surface_material_override/0 = SubResource("ShaderMaterial_ufa4k")
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0.011, -0.0051)
+surface_material_override/0 = ExtResource("3_php0s")
 
 [node name="Shooter" type="Node3D" parent="Proto_tank/Tourelle/Head" unique_id=967923646]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 1.4, 0.36, 0)
@@ -65,9 +89,15 @@ script = ExtResource("3_y3tpf")
 wait_time = 3.0
 one_shot = true
 
+[node name="Dead_Head_Pos" type="Node3D" parent="Proto_tank/Tourelle" unique_id=369363596]
+transform = Transform3D(-0.5421155, -0.54459274, 0.639945, -0.34445372, 0.83865964, 0.42190236, -0.766461, 0.008288354, -0.64223737, -0.5176862, -0.09153372, -0.0051)
+
 [node name="Body" parent="Proto_tank" unique_id=1597050894 instance=ExtResource("5_yk8nn")]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0.014311792, -1.0821675, -0.0051119328)
-surface_material_override/0 = SubResource("ShaderMaterial_ufa4k")
+transform = Transform3D(-4.3711385e-08, 0, -0.99999994, 0, 1, 0, 0.99999994, 0, -4.3711385e-08, 0, -1.08, -0.0051)
+surface_material_override/0 = ExtResource("3_php0s")
+
+[node name="Dead_Body_Pos" type="Node3D" parent="Proto_tank" unique_id=1667641960]
+transform = Transform3D(-0.1190871, -0.17818087, -0.97676504, -0.12940438, 0.9781599, -0.16265836, 0.98441494, 0.10702714, -0.13954362, 0.014311792, -1.1978832, -0.0051119328)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=931742010]
 transform = Transform3D(0.9999704, 0, 0, 0, 0.9999704, 0, 0, 0, 1, 0.006202703, 1.053331, -0.0024032593)
@@ -89,6 +119,7 @@ shape = SubResource("SphereShape3D_wltj5")
 
 [node name="Label3D" type="Label3D" parent="." unique_id=1630385336]
 transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0, 4.876709, 0)
+visible = false
 billboard = 1
 text = "0"
 font_size = 200
@@ -98,6 +129,34 @@ navigation_layers = 0
 debug_enabled = true
 
 [node name="NPC_Activities_Timer" type="Timer" parent="." unique_id=392827701]
+
+[node name="FxExplosionBig" parent="." unique_id=474446918 instance=ExtResource("9_cv6ge")]
+transform = Transform3D(2.55912, 0, 0, 0, 2.55912, 0, 0, 0, 2.5591202, 0, 0.7054677, 0)
+burst_on_ready = false
+
+[node name="UnderIndicator" type="MeshInstance3D" parent="." unique_id=1988937796]
+transform = Transform3D(2.6149988, 0, 0, 0, -2.6149988, -2.2861043e-07, 0, 2.2861062e-07, -2.6150007, 0, -0.57387364, 0)
+mesh = SubResource("PlaneMesh_nr5eq")
+surface_material_override/0 = SubResource("ShaderMaterial_php0s")
+
+[node name="TankShadow" type="MeshInstance3D" parent="." unique_id=300205818]
+transform = Transform3D(4.323344, 0, 0, 0, 4.323344, -3.0543016e-13, 0, -2.58441e-13, 4.3233495, 0, 0.33530116, 0)
+mesh = SubResource("PlaneMesh_nr5eq")
+surface_material_override/0 = SubResource("ShaderMaterial_8x8i8")
+
+[node name="Particles_Trail" type="GPUParticles3D" parent="." unique_id=1523222776]
+transform = Transform3D(-4.3711374e-08, 0, -0.99999976, 0, 0.99999976, 0, 1, 0, -4.371139e-08, -0.7457853, 0.26193902, -0.034441352)
+amount = 50
+lifetime = 0.5
+process_material = SubResource("ParticleProcessMaterial_8x8i8")
+draw_pass_1 = SubResource("SphereMesh_gra5t")
+
+[node name="Particles_Trail2" type="GPUParticles3D" parent="." unique_id=1100180572]
+transform = Transform3D(-4.371137e-08, 0, -0.9999997, 0, 0.9999997, 0, 1, 0, -4.371139e-08, 0.6932746, 0.26193902, -0.034441352)
+amount = 50
+lifetime = 0.5
+process_material = SubResource("ParticleProcessMaterial_8x8i8")
+draw_pass_1 = SubResource("SphereMesh_gra5t")
 
 [connection signal="transited" from="StateMachinePlayer" to="." method="_on_state_machine_player_transited"]
 [connection signal="body_entered" from="Enemy_Detection" to="." method="_on_enemy_detection_body_entered"]
