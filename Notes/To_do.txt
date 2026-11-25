@@ -1,18 +1,9 @@
 To Do : 
 
-- Character should either be despawned or chage skin to a burnt wrech upon death
-- Projectile could despawn trees if colliding with their trunk
-- Add NPC behaviours
-    -> Exploration
-    Done, now need to be autonomous
-    -> Attack
-    V1 working, but could be refined
-    -> Shift attack
-- Change the assets for Adrien's assets 
-- Add a sign of which tiles have a character on the other side of it (shadow or periscope ?)
+- Destination in exploration should be automated
 - Add a tableau de chasse listing all characters destroyed by each character
 - Add some menus
-- Add an explosion animation upon projectile despawn
+- Balance the game (faster turn, slower projectiles ?)
 
 
 
@@ -21,8 +12,10 @@ Tuto followed for ray cast projectiles : https://www.youtube.com/watch?v=vGpFwaL
 
 
 Bugs: 
-- Bottom NPC path finding seems to not work as intended yet
-
+- Shift can make an unwanted rotation on character which then shoot up in stead of flat
+    Particularly if anothere character initiated the shift nearby
+    Could have a regular rerotation on x and z axises as quick fix ?
+- Player shift is also stopped at begining of game ? Unexpected
 
 
 End concept :
