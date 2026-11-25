@@ -17,7 +17,7 @@ extends RefCounted
 
 ## Bump when the hashed data or the import pipeline's output changes, so that every
 ## entity is processed once more with the new code.
-const VERSION := 2
+const VERSION := 3
 
 
 ## Fingerprint of an entity of an imported GLB scene.
