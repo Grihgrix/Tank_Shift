@@ -28,7 +28,33 @@ shader_parameter/power = 1.0
 shader_parameter/tint = Color(0.10374347, 0.103743546, 0.103743516, 1)
 shader_parameter/opacity_factor = 0.6
 
-[node name="Character" type="CharacterBody3D" unique_id=1998404675 node_paths=PackedStringArray("colored_meshes", "dead_meshs_position")]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8x8i8"]
+render_priority = 1
+shader = ExtResource("12_8x8i8")
+shader_parameter/power = 1.0
+shader_parameter/tint = Color(0.10374347, 0.103743546, 0.103743516, 1)
+shader_parameter/opacity_factor = 0.7
+
+[sub_resource type="Curve" id="Curve_8x8i8"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.92567575, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_20g6y"]
+curve = SubResource("Curve_8x8i8")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_8x8i8"]
+emission_shape = 3
+emission_box_extents = Vector3(0.2, 0, 0.2)
+spread = 0.0
+initial_velocity_max = 1.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.099999994
+scale_max = 0.5
+scale_curve = SubResource("CurveTexture_20g6y")
+
+[sub_resource type="SphereMesh" id="SphereMesh_gra5t"]
+
+[node name="Character" type="CharacterBody3D" unique_id=1998404675 node_paths=PackedStringArray("colored_meshes", "dead_meshs_position", "particle_trails")]
 transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0, 0, 0)
 collision_layer = 3
 collision_mask = 3
@@ -42,6 +68,7 @@ dead_meshs_position = {
 NodePath("Proto_tank/Tourelle/Head"): NodePath("Proto_tank/Tourelle/Dead_Head_Pos"),
 NodePath("Proto_tank/Body"): NodePath("Proto_tank/Dead_Body_Pos")
 }
+particle_trails = [NodePath("Particles_Trail"), NodePath("Particles_Trail2")]
 
 [node name="Proto_tank" type="Node3D" parent="." unique_id=1523143693]
 transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0, 1.15, 0)
@@ -107,15 +134,29 @@ debug_enabled = true
 transform = Transform3D(2.55912, 0, 0, 0, 2.55912, 0, 0, 0, 2.5591202, 0, 0.7054677, 0)
 burst_on_ready = false
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1988937796]
+[node name="UnderIndicator" type="MeshInstance3D" parent="." unique_id=1988937796]
 transform = Transform3D(2.6149988, 0, 0, 0, -2.6149988, -2.2861043e-07, 0, 2.2861062e-07, -2.6150007, 0, -0.57387364, 0)
 mesh = SubResource("PlaneMesh_nr5eq")
 surface_material_override/0 = SubResource("ShaderMaterial_php0s")
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=300205818]
-transform = Transform3D(2.614998, 0, 0, 0, 2.614998, -1.8474108e-13, 0, -1.563194e-13, 2.6150007, 0, 0.20011574, 0)
+[node name="TankShadow" type="MeshInstance3D" parent="." unique_id=300205818]
+transform = Transform3D(4.323344, 0, 0, 0, 4.323344, -3.0543016e-13, 0, -2.58441e-13, 4.3233495, 0, 0.33530116, 0)
 mesh = SubResource("PlaneMesh_nr5eq")
-surface_material_override/0 = SubResource("ShaderMaterial_php0s")
+surface_material_override/0 = SubResource("ShaderMaterial_8x8i8")
+
+[node name="Particles_Trail" type="GPUParticles3D" parent="." unique_id=1523222776]
+transform = Transform3D(-4.3711374e-08, 0, -0.99999976, 0, 0.99999976, 0, 1, 0, -4.371139e-08, -0.7457853, 0.26193902, -0.034441352)
+amount = 50
+lifetime = 0.5
+process_material = SubResource("ParticleProcessMaterial_8x8i8")
+draw_pass_1 = SubResource("SphereMesh_gra5t")
+
+[node name="Particles_Trail2" type="GPUParticles3D" parent="." unique_id=1100180572]
+transform = Transform3D(-4.371137e-08, 0, -0.9999997, 0, 0.9999997, 0, 1, 0, -4.371139e-08, 0.6932746, 0.26193902, -0.034441352)
+amount = 50
+lifetime = 0.5
+process_material = SubResource("ParticleProcessMaterial_8x8i8")
+draw_pass_1 = SubResource("SphereMesh_gra5t")
 
 [connection signal="transited" from="StateMachinePlayer" to="." method="_on_state_machine_player_transited"]
 [connection signal="body_entered" from="Enemy_Detection" to="." method="_on_enemy_detection_body_entered"]

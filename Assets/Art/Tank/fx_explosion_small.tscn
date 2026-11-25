@@ -159,6 +159,7 @@ material = SubResource("StandardMaterial3D_n27vr")
 orientation = 1
 
 [node name="FxExplosionSmall" type="Node3D" unique_id=474446918]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
 script = ExtResource("1_xa3ak")
 
 [node name="Fire" type="GPUParticles3D" parent="." unique_id=355176088]
@@ -166,6 +167,7 @@ emitting = false
 one_shot = true
 explosiveness = 0.9
 fixed_fps = 0
+local_coords = true
 process_material = SubResource("ParticleProcessMaterial_n27vr")
 draw_pass_1 = SubResource("SphereMesh_3lufp")
 
@@ -176,6 +178,7 @@ lifetime = 0.7
 one_shot = true
 explosiveness = 0.9
 fixed_fps = 0
+local_coords = true
 process_material = SubResource("ParticleProcessMaterial_08boe")
 draw_pass_1 = SubResource("CylinderMesh_3lufp")
 
@@ -185,6 +188,7 @@ lifetime = 2.0
 one_shot = true
 explosiveness = 0.9
 fixed_fps = 0
+local_coords = true
 process_material = SubResource("ParticleProcessMaterial_o07cc")
 draw_pass_1 = SubResource("SphereMesh_3lufp")
 
@@ -194,5 +198,6 @@ amount = 1
 lifetime = 0.25
 one_shot = true
 fixed_fps = 0
+local_coords = true
 process_material = SubResource("ParticleProcessMaterial_xa3ak")
 draw_pass_1 = SubResource("QuadMesh_3lufp")

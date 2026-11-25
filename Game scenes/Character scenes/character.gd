@@ -25,6 +25,7 @@ var move_direction:int
 @export var dead_mat : Material
 @export var colored_meshes: Array[MeshInstance3D]
 @export var dead_meshs_position: Dictionary[MeshInstance3D, Node3D]
+@export var particle_trails: Array[GPUParticles3D]
 @onready var explosion_fx: Node = $FxExplosionBig
 
 @onready var is_alive:bool = true
@@ -217,6 +218,16 @@ func _physics_process(delta):
 
 		# Character rotating right or left
 		global_rotation.y += (steer_direction * is_up_or_down *  delta)
+
+	###################
+	# Particle Trails #
+	###################
+
+	for trail in particle_trails:
+		if velocity.length() > 0.1:
+			trail.emitting = true
+		else:
+			trail.emitting = false
 
 	move_and_slide()
 
