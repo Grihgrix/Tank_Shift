@@ -82,6 +82,7 @@ debug_color = Color(0, 0.6, 0.19607843, 0.41960785)
 script = ExtResource("2_n6dmr")
 grass_scene = ExtResource("3_nvgtd")
 grass_count = 400
+grass_material = ExtResource("4_cnt1e")
 metadata/_custom_type_script = "uid://bi8gq2wkijt2"
 
 [node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="GrassSpawner" unique_id=490987717]
