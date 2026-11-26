@@ -43,7 +43,7 @@ layout_mode = 2
 
 [node name="Easy_map_Button" type="Button" parent="VBoxContainer/Difficulty_Container" unique_id=1821256321]
 layout_mode = 2
-text = "Small"
+text = "Easy"
 
 [node name="Medium_map_Button" type="Button" parent="VBoxContainer/Difficulty_Container" unique_id=542321099]
 layout_mode = 2
@@ -51,7 +51,7 @@ text = "Medium"
 
 [node name="Hard_Map_Button" type="Button" parent="VBoxContainer/Difficulty_Container" unique_id=1017466321]
 layout_mode = 2
-text = "Large"
+text = "Hard"
 
 [node name="Launch_Button" type="Button" parent="VBoxContainer" unique_id=498933435]
 layout_mode = 2
