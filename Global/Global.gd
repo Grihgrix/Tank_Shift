@@ -8,7 +8,7 @@ var projectile_speed:int = 20
 const SPEED:float = 10.0
 const SHIFT_SPEED:float = PI / 0.5
 var living_npc_count:int = 7 # to be used for UI
-var projectile_damage:int = 34
+#var projectile_damage:int = (100 / 3) + 1 # 34
 
 # Cooldown
 var shoot_cooldown:float = 0.5
