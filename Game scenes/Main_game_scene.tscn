@@ -102,6 +102,8 @@ transform = Transform3D(1, 0, 0, 0, 0.34202012, 0.93969256, 0, -0.93969256, 0.34
 current = true
 
 [node name="ATH_Label" type="RichTextLabel" parent="Player/Camera3D2" unique_id=1409370478]
+anchors_preset = -1
+anchor_right = 0.081597224
 offset_left = 40.0
 offset_top = 26.0
 offset_right = 188.0
