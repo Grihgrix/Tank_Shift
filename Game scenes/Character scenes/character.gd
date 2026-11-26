@@ -2,7 +2,7 @@ extends CharacterBody3D
 
 
 # UI variables
-@export var hp:int = 100
+@export var hp:int = 3
 
 # Variables to help the basic controls to work in both up and down side
 @onready var is_up_or_down:int # to be used as a marker of whethere we are upside or downside (value down : -1 or up: 1)

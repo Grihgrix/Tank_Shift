@@ -36,7 +36,7 @@ func _physics_process(delta):
 		collider = get_collider()
 		if collider is CharacterBody3D and collider.is_alive:
 			# Damage the collider
-			collider.hp -= Global.projectile_damage
+			collider.hp -= 1 #Global.projectile_damage
 			
 			# Implement character death
 			if collider.hp <= 0:
