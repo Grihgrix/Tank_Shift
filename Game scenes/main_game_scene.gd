@@ -72,3 +72,26 @@ func _update_lighting():
 			world_environment.environment = night_environment
 			day_light.visible = false
 			night_light.visible = true
+
+func _unhandled_input(event: InputEvent) -> void:
+	if Engine.is_editor_hint() and event is InputEventKey and event.pressed and event.keycode == KEY_F9:
+		snapshot(get_tree().current_scene)
+
+func snapshot(root: Node) -> void:
+	root.scene_file_path = ""
+	_claim(root, root)
+	var packed := PackedScene.new()
+	var err := packed.pack(root)
+	if err != OK:
+		push_error("pack failed: %s" % err)
+		return
+	var path := "res://snapshots/snap_%d.tscn" % Time.get_unix_time_from_system()
+	DirAccess.make_dir_recursive_absolute("res://snapshots")
+	ResourceSaver.save(packed, path)
+	print("Saved ", path)
+
+func _claim(node: Node, root: Node) -> void:
+	for child in node.get_children():
+		child.scene_file_path = ""   # stop it being saved as an instance reference
+		child.owner = root           # make it part of the saved scene
+		_claim(child, root)
