@@ -1,10 +1,31 @@
 [gd_scene format=3 uid="uid://5re30mheve6q"]
 
 [ext_resource type="Script" uid="uid://dvvfcaytjtq6e" path="res://Game scenes/main_game_scene.gd" id="1_ljjr8"]
+[ext_resource type="Environment" uid="uid://cvgejdtawml2g" path="res://Assets/Art/environment_night.tres" id="2_m0lal"]
 [ext_resource type="PackedScene" uid="uid://bvwc4o8phj4ai" path="res://Game scenes/Character scenes/character.tscn" id="2_sqh5q"]
 [ext_resource type="Script" uid="uid://cepva24pdgjxl" path="res://Game scenes/Character scenes/ath_label.gd" id="3_gk8pv"]
 [ext_resource type="PackedScene" uid="uid://cwdqucy88hqqy" path="res://Game scenes/Terrain scenes/Level.tscn" id="3_ljjr8"]
 [ext_resource type="Environment" uid="uid://bflqurmk032wp" path="res://Assets/Art/environment.tres" id="3_t4wav"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_1ua0y"]
+sky_top_color = Color(0.24303111, 0.5143662, 0.861148, 1)
+sky_horizon_color = Color(0.71105695, 0.66550606, 0.9647961, 1)
+sky_curve = 0.10245305
+
+[sub_resource type="Sky" id="Sky_vqmwc"]
+sky_material = SubResource("ProceduralSkyMaterial_1ua0y")
+
+[sub_resource type="Environment" id="Environment_t4wav"]
+background_mode = 1
+background_color = Color(0.2, 0.169, 0.133, 1)
+sky = SubResource("Sky_vqmwc")
+ambient_light_source = 2
+ambient_light_color = Color(1, 0.9433333, 0.8, 1)
+ssao_enabled = true
+ssao_intensity = 10.0
+glow_enabled = true
+glow_bloom = 0.25
+fog_height_density = 0.1355
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_wltj5"]
 vertices = PackedVector3Array(-4.5, 0.4, -4.5, -4.5, 0.4, 4.5, 4.5, 0.4, 4.5, 4.5, 0.4, -4.5)
@@ -24,15 +45,20 @@ agent_radius = 2.0
 
 [node name="Node" type="Node3D" unique_id=416084368]
 script = ExtResource("1_ljjr8")
+day_environment = SubResource("Environment_t4wav")
+night_environment = ExtResource("2_m0lal")
 
-[node name="Topside_DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1646275945]
+[node name="Day_Light" type="DirectionalLight3D" parent="." unique_id=1646275945]
 transform = Transform3D(1, 0, 0, 0, 0.34202015, 0.9396926, 0, -0.9396926, 0.34202015, 0, 30, 0)
 shadow_enabled = true
 sky_mode = 1
 
-[node name="Downside_DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1049685885]
+[node name="Night_Light" type="DirectionalLight3D" parent="." unique_id=1049685885]
 transform = Transform3D(-0.33073276, 0.6066145, 0.72293484, -0.858795, 0.1241394, -0.4970523, -0.39126372, -0.7852442, 0.47990042, 42.01996, -62.795364, 73.72279)
+light_color = Color(0.27650002, 0.37920007, 0.79, 1)
+light_energy = 2.0
 shadow_enabled = true
+shadow_opacity = 0.66
 sky_mode = 1
 
 [node name="Projectiles_parent_node" type="Node3D" parent="." unique_id=1350631440 groups=["projectile_parent"]]
