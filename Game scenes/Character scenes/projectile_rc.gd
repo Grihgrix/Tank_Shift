@@ -34,7 +34,7 @@ func _physics_process(delta):
 
 		# Detecti if we hit a character
 		collider = get_collider()
-		if collider is CharacterBody3D:
+		if collider is CharacterBody3D and collider.is_alive:
 			# Implement character death
 			collider.death()
 
