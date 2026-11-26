@@ -12,9 +12,6 @@ Tuto followed for ray cast projectiles : https://www.youtube.com/watch?v=vGpFwaL
 
 
 Bugs: 
-- Shift can make an unwanted rotation on character which then shoot up in stead of flat
-    Particularly if anothere character initiated the shift nearby
-    Could have a regular rerotation on x and z axises as quick fix ?
 - Player shift is also stopped at begining of game ? Unexpected
 - NPCs keep firing after player is dead (might be ok)
 
