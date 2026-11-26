@@ -18,8 +18,6 @@ extends Node
 @onready var down_navigation_region_3d = $Down_NavigationRegion3D
 
 
-
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	for character in character_list:

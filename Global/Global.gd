@@ -7,6 +7,11 @@ extends Node
 var projectile_speed:int = 20
 const SPEED:float = 10.0
 const SHIFT_SPEED:float = PI / 0.5
+var living_npc_count:int = 7 # to be used for UI
+
+# Cooldown
+var shoot_cooldown:float = 0.5
+var shift_cooldown:float = 1
 
 # Detect tile on which the mouse is
 var current_tile_pointed_id:int # Used to detect which tile to distant shift (which tile has the mouse on it)
@@ -90,12 +95,3 @@ var characters_spawn_locations:Dictionary = {
 		, "Rz": PI
 		}
 	}
-
-# terrain_tile.position.x = terrain_dimension.x * (terrain_tile_size + space_between_tiles)
-# terrain_tile.position.y = 0
-# terrain_tile.position.z = -terrain_dimension.y * (terrain_tile_size + space_between_tiles)
-
-
-# Bonuses
-var shoot_cooldown:float = 0.5
-var shift_cooldown:float = 1
