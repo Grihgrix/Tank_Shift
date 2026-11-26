@@ -408,8 +408,8 @@ func _nearby_ennemy_shifted(shifter_id, shifter_is_up_or_down):
 
 func death():
 	is_alive = false
-	for meshs in colored_meshes:
-		meshs.set_surface_override_material(0, dead_mat)
+	for mesh in colored_meshes:
+		mesh.set_surface_override_material(0, dead_mat)
 	explosion_fx.burst()
 	for mesh in dead_meshs_position.keys():
 		mesh.position = dead_meshs_position[mesh].position
