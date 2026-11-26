@@ -1,83 +1,6 @@
 [gd_resource type="ShaderMaterial" format=3 uid="uid://8xp4j3d3bkrf"]
 
-[sub_resource type="Shader" id="Shader_xs72y"]
-code = "// NOTE: Shader automatically converted from Godot Engine 4.7.2.stable's StandardMaterial3D.
-
-shader_type spatial;
-render_mode blend_mix, depth_draw_opaque, cull_disabled, diffuse_burley, specular_schlick_ggx, depth_prepass_alpha;
-
-uniform sampler2D noise : source_color, filter_linear_mipmap, repeat_enable;
-uniform float noise_scale = 1.;
-uniform float rand_seed = 0.;
-uniform sampler2D gradient;
-uniform float noise_value = 1.;
-uniform float color_value = 1.;
-uniform float bands = 4.;
-uniform float power = 1.;
-uniform float noise_contrast : hint_range(0.0, 0.49) = 0.25;
-
-uniform vec4 albedo : source_color;
-uniform sampler2D texture_albedo : source_color, filter_linear_mipmap, repeat_enable;
-uniform ivec2 albedo_texture_size;
-uniform float point_size : hint_range(0.1, 128.0, 0.1);
-
-uniform float roughness : hint_range(0.0, 1.0);
-uniform sampler2D texture_metallic : hint_default_white, filter_linear_mipmap, repeat_enable;
-uniform vec4 metallic_texture_channel;
-uniform sampler2D texture_roughness : hint_roughness_r, filter_linear_mipmap, repeat_enable;
-
-uniform float specular : hint_range(0.0, 1.0, 0.01);
-uniform float metallic : hint_range(0.0, 1.0, 0.01);
-
-uniform vec3 uv1_scale;
-uniform vec3 uv1_offset;
-uniform vec3 uv2_scale;
-uniform vec3 uv2_offset;
-
-varying vec3 instance_pos;
-
-void vertex() {
-	instance_pos = MODEL_MATRIX[3].xyz;
-
-	UV = UV * uv1_scale.xy + uv1_offset.xy;
-
-	// Billboard Mode: Enabled
-	MODELVIEW_MATRIX = VIEW_MATRIX * mat4(
-			MAIN_CAM_INV_VIEW_MATRIX[0],
-			MAIN_CAM_INV_VIEW_MATRIX[1],
-			MAIN_CAM_INV_VIEW_MATRIX[2],
-			MODEL_MATRIX[3]);
-
-	// Billboard Keep Scale: Enabled
-	MODELVIEW_MATRIX = MODELVIEW_MATRIX * mat4(
-			vec4(length(MODEL_MATRIX[0].xyz), 0.0, 0.0, 0.0),
-			vec4(0.0, length(MODEL_MATRIX[1].xyz), 0.0, 0.0),
-			vec4(0.0, 0.0, length(MODEL_MATRIX[2].xyz), 0.0),
-			vec4(0.0, 0.0, 0.0, 1.0));
-	MODELVIEW_NORMAL_MATRIX = mat3(MODELVIEW_MATRIX);
-}
-
-void fragment() {
-	vec2 base_uv = UV;
-
-	vec4 albedo_tex = texture(texture_albedo, base_uv);
-	//ALBEDO = albedo.rgb * albedo_tex.rgb;
-	float noise_sample = texture(noise, (instance_pos.xz + vec2(rand_seed)) * noise_scale).r * noise_value;
-	float noise_contrasted = pow(smoothstep(noise_contrast, 1.0 - noise_contrast, noise_sample), power);
-	vec3 tint = texture(gradient, vec2(clamp(noise_contrasted, 0.01, 0.99), 0.5)).rgb;
-	ALBEDO = tint * color_value - (1. - albedo_tex.rgb) * albedo.rgb;
-	//ALBEDO = vec3(stepped_noise_value);
-
-	float metallic_tex = dot(texture(texture_metallic, base_uv), metallic_texture_channel);
-	METALLIC = metallic_tex * metallic;
-	SPECULAR = specular;
-
-	vec4 roughness_texture_channel = vec4(1.0, 0.0, 0.0, 0.0);
-	float roughness_tex = dot(texture(texture_roughness, base_uv), roughness_texture_channel);
-	ROUGHNESS = roughness_tex * roughness;
-	ALPHA *= albedo.a * albedo_tex.a;
-}
-"
+[ext_resource type="Shader" uid="uid://22rj1j52jg4c" path="res://Assets/Art/Grass/grass_shader.gdshader" id="1_gh3vk"]
 
 [sub_resource type="Gradient" id="Gradient_xs72y"]
 interpolation_mode = 1
@@ -95,7 +18,7 @@ load_path = "res://.godot/imported/weed-test.png-092d329d812d10d20f6e18d434ead4c
 
 [resource]
 render_priority = 0
-shader = SubResource("Shader_xs72y")
+shader = ExtResource("1_gh3vk")
 shader_parameter/noise = SubResource("CompressedTexture2D_gh3vk")
 shader_parameter/noise_scale = 0.003
 shader_parameter/rand_seed = 0.0
