@@ -111,7 +111,7 @@ NodePath("Proto_tank/Body"): NodePath("Proto_tank/Dead_Body_Pos")
 }
 
 [node name="NPC_5" parent="." unique_id=795801486 node_paths=PackedStringArray("dead_meshs_position") instance=ExtResource("2_sqh5q")]
-transform = Transform3D(-0.9943591, 0.106065325, 0, -0.106065325, -0.9943591, 0, 0, 0, 1, 2.250122, 0, -1.0195313)
+transform = Transform3D(-0.9999999, 8.742277e-08, 0, -8.742277e-08, -0.9999999, 0, 0, 0, 1, 2.250122, 0, -1.0195313)
 character_id = 5
 dead_meshs_position = {
 NodePath("Proto_tank/Tourelle/Head"): NodePath("Proto_tank/Tourelle/Dead_Head_Pos"),
