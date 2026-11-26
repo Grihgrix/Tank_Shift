@@ -437,6 +437,7 @@ func _nearby_ennemy_shifted(shifter_id, shifter_is_up_or_down):
 
 func death():
 	is_alive = false
+	hp = 0
 	for mesh in colored_meshes:
 		mesh.set_surface_override_material(0, dead_mat)
 	explosion_fx.burst()

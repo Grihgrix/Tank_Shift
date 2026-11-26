@@ -35,12 +35,16 @@ func _physics_process(delta):
 		# Detecti if we hit a character
 		collider = get_collider()
 		if collider is CharacterBody3D and collider.is_alive:
-			# Implement character death
-			collider.death()
+			# Damage the collider
+			collider.hp -= Global.projectile_damage
 			
-			# Update living NPC count
-			if not collider.is_player:
-				Global.living_npc_count -= 1
+			# Implement character death
+			if collider.hp <= 0:
+				collider.death()
+				
+				# Update living NPC count
+				if not collider.is_player:
+					Global.living_npc_count -= 1
 
 		# Depsawn projectile if we had a collision
 		despawn_projectile()
