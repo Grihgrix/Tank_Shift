@@ -1,0 +1,60 @@
+[gd_scene format=3 uid="uid://2mflj7n8qvt4"]
+
+[ext_resource type="Script" uid="uid://c3v6guya0ie8x" path="res://Menu scenes/main_menu.gd" id="1_m3byb"]
+
+[node name="Main_menu" type="Control" unique_id=149750301]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_m3byb")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=717059768]
+layout_mode = 0
+offset_left = 438.0
+offset_top = 150.0
+offset_right = 718.0
+offset_bottom = 208.0
+text = "Super Hard Intense Freaking Tank
+(working title :p)"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1367369009]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.0
+offset_top = -15.5
+offset_right = 56.0
+offset_bottom = 15.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Map_size_Label" type="Label" parent="VBoxContainer" unique_id=1461249472]
+layout_mode = 2
+text = "Current difficulty selected: PH"
+
+[node name="Difficulty_Container" type="HBoxContainer" parent="VBoxContainer" unique_id=1972817552]
+layout_mode = 2
+
+[node name="Easy_map_Button" type="Button" parent="VBoxContainer/Difficulty_Container" unique_id=1821256321]
+layout_mode = 2
+text = "Small"
+
+[node name="Medium_map_Button" type="Button" parent="VBoxContainer/Difficulty_Container" unique_id=542321099]
+layout_mode = 2
+text = "Medium"
+
+[node name="Hard_Map_Button" type="Button" parent="VBoxContainer/Difficulty_Container" unique_id=1017466321]
+layout_mode = 2
+text = "Large"
+
+[node name="Launch_Button" type="Button" parent="VBoxContainer" unique_id=498933435]
+layout_mode = 2
+text = "Launch game"
+
+[connection signal="pressed" from="VBoxContainer/Launch_Button" to="." method="_on_launch_button_pressed"]
