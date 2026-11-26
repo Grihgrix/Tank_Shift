@@ -120,7 +120,6 @@ shape = SubResource("SphereShape3D_wltj5")
 
 [node name="Label3D" type="Label3D" parent="." unique_id=1630385336]
 transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0, 4.876709, 0)
-visible = false
 billboard = 1
 text = "0"
 font_size = 200

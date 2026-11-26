@@ -83,7 +83,7 @@ func _ready():
 	rotation.z = Global.characters_spawn_locations[character_id]["Rz"]
 	rotation.y = Global.characters_spawn_locations[character_id]["Ry"]
 
-	label_3d.text = str(character_id)
+	label_3d.text = str(hp)
 
 	# Visuals
 	for mesh in colored_meshes:
@@ -96,7 +96,8 @@ func _ready():
 func _physics_process(delta):
 	# Get the current state of the state machine for this character
 	current_state = state_machine_player.get_current()
-	label_3d.text = str(character_id) + " state = " + current_state
+	#label_3d.text = str(character_id) + " state = " + current_state
+	label_3d.text = str(hp)
 
 	#if character_id == 2:
 		#print("Character : " + str(character_id) + " Current State :  " + str(current_state))
