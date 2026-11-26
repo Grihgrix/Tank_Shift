@@ -141,6 +141,9 @@ one_shot = true
 [node name="NPC_shift_Timer" type="Timer" parent="." unique_id=1344004840]
 one_shot = true
 
+[node name="NPC_navigation_Timer" type="Timer" parent="." unique_id=2062692383]
+one_shot = true
+
 [node name="FxExplosionBig" parent="." unique_id=474446918 instance=ExtResource("9_cv6ge")]
 transform = Transform3D(2.55912, 0, 0, 0, 2.55912, 0, 0, 0, 2.5591202, 0, 0.7054677, 0)
 burst_on_ready = false

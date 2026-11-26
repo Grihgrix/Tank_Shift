@@ -60,7 +60,7 @@ signal on_shift(shifter_id:int, shifter_is_up_or_down:int)
 
 # Navigation NPC
 @onready var navigation_agent_3d:NavigationAgent3D = $NavigationAgent3D
-@onready var npc_activities_timer = $NPC_Activities_Timer # Will be used to change destination, or move between shots, or delay shifts
+@onready var npc_navigation_timer:Timer = $NPC_navigation_Timer
 
 
 
@@ -208,17 +208,6 @@ func _physics_process(delta):
 		navigation_agent_3d.navigation_layers = 1
 	elif is_up_or_down == -1:
 		navigation_agent_3d.navigation_layers = 2
-
-	
-	######################################
-	# Autmatic NPC destination decission #
-	######################################
-	
-	if not is_player and is_alive and (current_state == "Exploration" or current_state == "Ennemy below"):
-		# Add here a timer mechanism that will change destination to a new random location
-		#_calculate_new_NPC_destination()
-		pass
-		
 	
 	#####################################################
 	# Define NPC movement using pre-defined Destination #
@@ -226,8 +215,19 @@ func _physics_process(delta):
 	
 	if not is_player and is_alive and (current_state == "Exploration" or current_state == "Ennemy below"):
 		# Trigger the new destination assignment (for now when pressing CTRL, but to be replaced by timer controlled or when path finished)
-		if Input.is_action_just_released("Debug Path"):
-			_debug_npc_path_assignment()
+		#if Input.is_action_just_released("Debug Path"):
+		#	#_debug_npc_path_assignment()
+		#	pass
+		
+		# Add here a timer mechanism that will change destination to a new random location
+		if npc_navigation_timer.is_stopped() or navigation_agent_3d.is_navigation_finished():
+			npc_navigation_timer.stop()
+			npc_navigation_timer.start(round(randf_range(3,15)))
+			
+			if randf() >= 0.1:
+				# NPC decides of a new random destination
+				_calculate_new_NPC_destination()
+				# In 90% of cases choose a new destination
 		
 		# Stop the NPC if he arrived at destination
 		if navigation_agent_3d.is_navigation_finished():
