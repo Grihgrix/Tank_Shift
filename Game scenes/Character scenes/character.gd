@@ -62,6 +62,9 @@ signal on_shift(shifter_id:int, shifter_is_up_or_down:int)
 @onready var navigation_agent_3d:NavigationAgent3D = $NavigationAgent3D
 @onready var npc_navigation_timer:Timer = $NPC_navigation_Timer
 
+# Rotation watchdog 
+@onready var character_orientation_check_timer:Timer = $Character_orientation_check_Timer
+
 
 
 
@@ -142,9 +145,28 @@ func _physics_process(delta):
 			# Trigger shift of current parent
 			var current_tile:Node = get_parent()
 			current_tile.self_shift_requested = true
-
-
-
+	
+	###############################################
+	# Check if character is not flat on the floor #
+	###############################################
+	
+	if is_alive and not_in_shift and character_orientation_check_timer.is_stopped():
+		#print("character : " + str(character_id) + " current rotation : " + str(global_rotation))
+		if round(global_rotation.x * 10) != 0 :
+			# If x rotation is no longer close to 0 we put it back to 0
+			global_rotation.x = 0
+			global_position.y = 0 # Ensure we remain above ground
+			print("rotation x corrected for character " + str(character_id))
+		if round(global_rotation.z * 10) != 0 and  abs(round(global_rotation.z * 100)/100) != 3.14:
+			if abs(global_rotation.z) <= 1:
+				global_rotation.z = 0
+			else:
+				global_rotation.z = PI
+			global_position.y = 0 # Ensure we remain above ground
+			print("rotation z corrected for character " + str(character_id))
+		character_orientation_check_timer.start(1)
+	
+	
 	###########################
 	# Command a distant Shift #
 	###########################
@@ -319,7 +341,9 @@ func _physics_process(delta):
 	##################
 	move_and_slide()
 
-# TODO : Decommission debug CTRL before release
+
+
+
 func _debug_npc_path_assignment():
 	print("Debug Path")
 	# This is when prtessing CTRL
@@ -330,7 +354,7 @@ func _calculate_new_NPC_destination():
 	random_position.x = randf_range(1.0, Global.board_total_length.x - 1.0)
 	random_position.z = randf_range(1.0, - (Global.board_total_length.y - 1.0))
 	random_position.y = 0
-	print(str(character_id) + str(random_position))
+	#print(str(character_id) + str(random_position))
 	navigation_agent_3d.set_target_position(random_position)
 
 
@@ -408,8 +432,8 @@ func _nearby_ennemy_shifted(shifter_id, shifter_is_up_or_down):
 
 func death():
 	is_alive = false
-	for meshs in colored_meshes:
-		meshs.set_surface_override_material(0, dead_mat)
+	for mesh in colored_meshes:
+		mesh.set_surface_override_material(0, dead_mat)
 	explosion_fx.burst()
 	for mesh in dead_meshs_position.keys():
 		mesh.position = dead_meshs_position[mesh].position
