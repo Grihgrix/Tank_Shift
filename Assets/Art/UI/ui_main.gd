@@ -9,11 +9,15 @@ extends CanvasLayer
 @onready var space_input: TextureRect = $Cooldown_Shift_Control/Space_Input
 @onready var cooldown_shift_control: Control = $Cooldown_Shift_Control
 @onready var enemy_icons_container: HBoxContainer = $PanelContainer/MarginContainer_Horizontal/HBoxContainer_EnemiesIcons
+@onready var cursor : ColorRect = $Cursor
 
 var initial_living_npc_count:int
 
 func _ready() -> void:
 	Global.on_shift_cooldown_started.connect(_on_shift_cooldown_started)
+
+	#Hide the cursor when the game starts
+	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 
 	initial_living_npc_count = Global.living_npc_count
 	for i in range(Global.living_npc_count):
@@ -22,8 +26,13 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	if Engine.is_editor_hint(): return
-#	_set_cooldown_progress(Global.player_character.shoot_timer.time_left / Global.shoot_cooldown, cooldown_shoot)
+	_set_cooldown_progress(Global.player_character.shoot_timer.time_left / Global.shoot_cooldown, cursor)
 	_set_cooldown_progress(Global.player_character.shift_timer.time_left / Global.shift_cooldown, cooldown_shift)
+
+
+	#Update the cursor to be at the mouse position
+	var mouse_position = get_viewport().get_mouse_position()
+	cursor.global_position = mouse_position
 
 	if Global.living_npc_count < initial_living_npc_count:
 		for i in range(initial_living_npc_count):
