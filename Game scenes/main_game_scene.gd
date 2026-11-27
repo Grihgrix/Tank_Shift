@@ -60,7 +60,6 @@ func _refresh_navigation_region():
 var day_amount = 1.0 # 1.0 = day, -1.0 = night
 func _update_lighting():
 	var new_day_amount = player.global_basis.y.dot(Vector3.UP)
-	print("new_day_amount: ", new_day_amount)
 
 	if new_day_amount != day_amount:
 		day_amount = new_day_amount
