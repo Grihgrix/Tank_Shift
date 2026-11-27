@@ -20,6 +20,8 @@ var move_direction:int
 @export var not_in_shift:int = 1
 @onready var shift_timer:Timer = $Shift_Timer
 
+@onready var shoot_timer:Timer = $Proto_tank/Tourelle/Head/Shooter/Shooter_Timer
+
 # characters deifferentiation variables
 @export var is_player:bool
 @export var character_id:int
@@ -75,6 +77,9 @@ signal on_shift(shifter_id:int, shifter_is_up_or_down:int)
 
 
 func _ready():
+	if is_player:
+		Global.player_character = self
+
 	# Ensires no immediate shift happens at game start
 	npc_shift_timer.start(randf_range(4,10))
 	# Intialize character spawn position
@@ -121,6 +126,7 @@ func _physics_process(delta):
 	if is_player and is_alive and Input.is_action_just_pressed("ui_accept") and shift_timer.is_stopped():
 		# Start the cooldown
 		shift_timer.start(Global.shift_cooldown)
+		Global.on_shift_cooldown_started.emit()
 		# Trigger reparenting (in the main script)
 		Global.self_shift_requested = true
 		# Trigger shift of current parent

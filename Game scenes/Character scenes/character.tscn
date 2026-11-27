@@ -90,7 +90,7 @@ transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 1.4,
 script = ExtResource("3_y3tpf")
 
 [node name="Shooter_Timer" type="Timer" parent="Proto_tank/Tourelle/Head/Shooter" unique_id=623596999]
-wait_time = 3.0
+wait_time = 0.001
 one_shot = true
 
 [node name="Dead_Head_Pos" type="Node3D" parent="Proto_tank/Tourelle" unique_id=369363596]
@@ -143,6 +143,7 @@ one_shot = true
 one_shot = true
 
 [node name="NPC_shift_Timer" type="Timer" parent="." unique_id=1344004840]
+wait_time = 0.001
 one_shot = true
 
 [node name="NPC_navigation_Timer" type="Timer" parent="." unique_id=2062692383]

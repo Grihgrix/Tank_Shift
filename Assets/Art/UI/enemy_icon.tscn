@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://b5drmpm4bb5wx"]
+
+[ext_resource type="Texture2D" uid="uid://du4obna5gfi3n" path="res://Assets/Art/UI/Icon_Ennemy_Alive.png" id="1_v4ntp"]
+
+[node name="EnemyIcon" type="TextureRect" unique_id=873765896]
+custom_minimum_size = Vector2(80, 91)
+size_flags_vertical = 4
+texture = ExtResource("1_v4ntp")
+stretch_mode = 5
