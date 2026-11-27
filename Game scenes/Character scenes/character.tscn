@@ -12,6 +12,10 @@
 [ext_resource type="Resource" uid="uid://4enqsgp2vgxl" path="res://Game scenes/Character scenes/States/Character_State_Machine.tres" id="8_ufa4k"]
 [ext_resource type="PackedScene" uid="uid://no1sss2jt3ms" path="res://Assets/Art/Tank/fx_explosion_big.tscn" id="9_cv6ge"]
 [ext_resource type="Shader" uid="uid://bfunqpa85kksr" path="res://Assets/Art/Tank/under_indicator_shader.gdshader" id="12_8x8i8"]
+[ext_resource type="Script" uid="uid://b0v7qt4hgfxll" path="res://Game scenes/Character scenes/hp_holder.gd" id="13_gra5t"]
+[ext_resource type="PackedScene" uid="uid://c7bl44frucgg" path="res://Assets/Art/UI/hp_bullet.tscn" id="14_fbnvg"]
+[ext_resource type="Material" uid="uid://b4gpviqu86xaq" path="res://Assets/Art/UI/mat_bullet_full.tres" id="15_rnbln"]
+[ext_resource type="Material" uid="uid://ch5pnmwgrfalt" path="res://Assets/Art/UI/mat_bullet_empty.tres" id="16_0cpcb"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_f7ppj"]
 size = Vector3(2.1823273, 1.212616, 2.8248138)
@@ -86,7 +90,7 @@ transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 1.4,
 script = ExtResource("3_y3tpf")
 
 [node name="Shooter_Timer" type="Timer" parent="Proto_tank/Tourelle/Head/Shooter" unique_id=623596999]
-wait_time = 3.0
+wait_time = 0.001
 one_shot = true
 
 [node name="Dead_Head_Pos" type="Node3D" parent="Proto_tank/Tourelle" unique_id=369363596]
@@ -120,6 +124,7 @@ shape = SubResource("SphereShape3D_wltj5")
 
 [node name="Label3D" type="Label3D" parent="." unique_id=1630385336]
 transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0, 4.876709, 0)
+visible = false
 billboard = 1
 text = "0"
 font_size = 200
@@ -138,6 +143,7 @@ one_shot = true
 one_shot = true
 
 [node name="NPC_shift_Timer" type="Timer" parent="." unique_id=1344004840]
+wait_time = 0.001
 one_shot = true
 
 [node name="NPC_navigation_Timer" type="Timer" parent="." unique_id=2062692383]
@@ -174,6 +180,16 @@ amount = 50
 lifetime = 0.5
 process_material = SubResource("ParticleProcessMaterial_8x8i8")
 draw_pass_1 = SubResource("SphereMesh_gra5t")
+
+[node name="HP_Holder" type="Node3D" parent="." unique_id=1688415494]
+transform = Transform3D(0.9973985, 0, 0, 0, 0.9973985, 0, 0, 0, 1, 0, 0.5390836, 0)
+script = ExtResource("13_gra5t")
+radius = 2.5
+base_angle = 100.0
+angle_offset_between_bullets = 35.0
+bullet_scene = ExtResource("14_fbnvg")
+bullet_full_material = ExtResource("15_rnbln")
+bullet_empty_material = ExtResource("16_0cpcb")
 
 [connection signal="transited" from="StateMachinePlayer" to="." method="_on_state_machine_player_transited"]
 [connection signal="body_entered" from="Enemy_Detection" to="." method="_on_enemy_detection_body_entered"]

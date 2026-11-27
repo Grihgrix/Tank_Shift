@@ -37,11 +37,12 @@ func _physics_process(delta):
 		if collider is CharacterBody3D and collider.is_alive:
 			# Damage the collider
 			collider.hp -= 1 #Global.projectile_damage
-			
+			collider.on_hp_changed.emit(collider.hp) # Emit the signal to update the UI
+
 			# Implement character death
 			if collider.hp <= 0:
 				collider.death()
-				
+
 				# Update living NPC count
 				if not collider.is_player:
 					Global.living_npc_count -= 1

@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://c7bl44frucgg"]
+
+[ext_resource type="Material" uid="uid://b4gpviqu86xaq" path="res://Assets/Art/UI/mat_bullet_full.tres" id="1_2sbj6"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_nr5eq"]
+
+[node name="Bullet" type="MeshInstance3D" unique_id=1967124372]
+transform = Transform3D(0.99999976, 0, 0, 0, -4.3711378e-08, 0.9999999, 0, -0.9999999, -4.371139e-08, 0, 0, 0)
+mesh = SubResource("QuadMesh_nr5eq")
+surface_material_override/0 = ExtResource("1_2sbj6")

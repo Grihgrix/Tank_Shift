@@ -6,6 +6,18 @@
 [ext_resource type="Script" uid="uid://cepva24pdgjxl" path="res://Game scenes/Character scenes/ath_label.gd" id="3_gk8pv"]
 [ext_resource type="PackedScene" uid="uid://cwdqucy88hqqy" path="res://Game scenes/Terrain scenes/Level.tscn" id="3_ljjr8"]
 [ext_resource type="Environment" uid="uid://bflqurmk032wp" path="res://Assets/Art/environment.tres" id="3_t4wav"]
+[ext_resource type="Script" uid="uid://dp1yfro7los1n" path="res://Assets/Art/UI/ui_main.gd" id="7_1ks6l"]
+[ext_resource type="Shader" uid="uid://o7n5swf0ydbk" path="res://Assets/Art/UI/shader_cooldown.gdshader" id="7_pt6ck"]
+[ext_resource type="Texture2D" uid="uid://cw72i5j263dy0" path="res://Assets/Art/UI/Shift_Cooldown_Sprite.png" id="9_rbw53"]
+[ext_resource type="PackedScene" uid="uid://b5drmpm4bb5wx" path="res://Assets/Art/UI/enemy_icon.tscn" id="10_dk1c1"]
+[ext_resource type="Texture2D" uid="uid://du4obna5gfi3n" path="res://Assets/Art/UI/Icon_Ennemy_Alive.png" id="10_gwlv8"]
+[ext_resource type="Texture2D" uid="uid://coiuem8s4i584" path="res://Assets/Art/UI/Icon_Ennemy_Dead.png" id="11_dk1c1"]
+[ext_resource type="Texture2D" uid="uid://baswitvw0tt4p" path="res://Assets/Art/UI/keyboard_space.png" id="11_gwlv8"]
+[ext_resource type="Shader" uid="uid://dn5umjnjr74ea" path="res://Assets/Art/UI/cursor.gdshader" id="14_0b3sp"]
+[ext_resource type="Texture2D" uid="uid://bkr1ony5qp53" path="res://Assets/Art/UI/cursor_base.png" id="15_5s6tv"]
+[ext_resource type="Texture2D" uid="uid://crikbki1060kl" path="res://Assets/Art/UI/cursor_full.png" id="16_6wwmr"]
+[ext_resource type="Texture2D" uid="uid://js7sxjt4a5kv" path="res://Assets/Art/UI/cursor_mask.png" id="17_j8d1f"]
+[ext_resource type="Texture2D" uid="uid://dyw8e00sqlxe7" path="res://Assets/Art/UI/cursor_stroke.png" id="18_pl16f"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_1ua0y"]
 sky_top_color = Color(0.24303111, 0.5143662, 0.861148, 1)
@@ -42,6 +54,35 @@ geometry_source_geometry_mode = 2
 geometry_source_group_name = &"DOWN_navigation_mesh_source_group"
 border_size = 2.0
 agent_radius = 2.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gwlv8"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.1, 0.1, 0.1, 0.7647059)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+corner_detail = 5
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1ks6l"]
+shader = ExtResource("7_pt6ck")
+shader_parameter/sprite = ExtResource("9_rbw53")
+shader_parameter/mask_opacity = 0.3
+shader_parameter/progress = 0.090000004275
+shader_parameter/smoothness = 0.0050000002375
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vqmwc"]
+shader = ExtResource("14_0b3sp")
+shader_parameter/cursor_base_texture = ExtResource("15_5s6tv")
+shader_parameter/cursor_stroke_texture = ExtResource("18_pl16f")
+shader_parameter/cursor_fill_texture = ExtResource("16_6wwmr")
+shader_parameter/cursor_mask_texture = ExtResource("17_j8d1f")
+shader_parameter/cooldown_tint = Color(0.04, 0.04, 0.04, 1)
+shader_parameter/progress = 0.0
+shader_parameter/smoothness = 0.0430000020425
 
 [node name="Node" type="Node3D" unique_id=416084368]
 script = ExtResource("1_ljjr8")
@@ -102,6 +143,7 @@ transform = Transform3D(1, 0, 0, 0, 0.34202012, 0.93969256, 0, -0.93969256, 0.34
 current = true
 
 [node name="ATH_Label" type="RichTextLabel" parent="Player/Camera3D2" unique_id=1409370478]
+visible = false
 anchors_preset = -1
 anchor_right = 0.081597224
 offset_left = 40.0
@@ -169,3 +211,100 @@ dead_meshs_position = {
 NodePath("Proto_tank/Tourelle/Head"): NodePath("Proto_tank/Tourelle/Dead_Head_Pos"),
 NodePath("Proto_tank/Body"): NodePath("Proto_tank/Dead_Body_Pos")
 }
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1553461020]
+script = ExtResource("7_1ks6l")
+enemy_alive_icon = ExtResource("10_gwlv8")
+enemy_dead_icon = ExtResource("11_dk1c1")
+enemy_icon_scene = ExtResource("10_dk1c1")
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer" unique_id=1934101204]
+self_modulate = Color(1, 1, 1, 0)
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -24.0
+offset_top = 16.0
+offset_right = 24.0
+offset_bottom = 107.0
+grow_horizontal = 2
+size_flags_horizontal = 4
+
+[node name="MarginContainer_Vertical" type="MarginContainer" parent="CanvasLayer/PanelContainer" unique_id=1951354252]
+layout_mode = 2
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="Panel" type="Panel" parent="CanvasLayer/PanelContainer/MarginContainer_Vertical" unique_id=1850354709]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_gwlv8")
+
+[node name="MarginContainer_Horizontal" type="MarginContainer" parent="CanvasLayer/PanelContainer" unique_id=563979871]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 10
+
+[node name="HBoxContainer_EnemiesIcons" type="HBoxContainer" parent="CanvasLayer/PanelContainer/MarginContainer_Horizontal" unique_id=1388139880]
+layout_mode = 2
+
+[node name="Cooldown_Shift_Control" type="Control" parent="CanvasLayer" unique_id=1972179899]
+layout_mode = 3
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_top = -88.0
+offset_bottom = -88.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Cooldown_Shift" type="ColorRect" parent="CanvasLayer/Cooldown_Shift_Control" unique_id=2032034561]
+material = SubResource("ShaderMaterial_1ks6l")
+custom_minimum_size = Vector2(370, 150)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -186.00003
+offset_top = -77.0
+offset_right = 183.99997
+offset_bottom = 73.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+
+[node name="Space_Input" type="TextureRect" parent="CanvasLayer/Cooldown_Shift_Control" unique_id=1972074404]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 57.0
+offset_top = -59.0
+offset_right = 167.0
+offset_bottom = 25.0
+grow_horizontal = 2
+texture = ExtResource("11_gwlv8")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Cursor" type="ColorRect" parent="CanvasLayer" unique_id=1184144772]
+material = SubResource("ShaderMaterial_vqmwc")
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+offset_transform_enabled = true
+offset_transform_position_ratio = Vector2(-0.5, -0.5)
