@@ -176,14 +176,14 @@ func _physics_process(delta):
 			# If x rotation is no longer close to 0 we put it back to 0
 			global_rotation.x = 0
 			global_position.y = 0 # Ensure we remain above ground
-			print("rotation x corrected for character " + str(character_id))
+			
 		if round(global_rotation.z * 10) != 0 and  abs(round(global_rotation.z * 100)/100) != 3.14:
 			if abs(global_rotation.z) <= 1:
 				global_rotation.z = 0
 			else:
 				global_rotation.z = PI
 			global_position.y = 0 # Ensure we remain above ground
-			print("rotation z corrected for character " + str(character_id))
+			
 		
 		# Tourelle orientation fix
 		group_tourelle.rotation.x = 0
