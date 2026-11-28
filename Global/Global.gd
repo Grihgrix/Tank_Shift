@@ -41,7 +41,7 @@ var board_total_length:Vector2 = Vector2(
 
 
 # NPC navigation
-var navigation_mesh_bale_requested:bool = false
+var navigation_mesh_bake_requested:bool = false
 
 # Spawn locations and conditions for each character (upt to 8)
 # location X,Y,Z, Rotation Z
@@ -103,3 +103,25 @@ var characters_spawn_locations:Dictionary = {
 		, "Rz": PI
 		}
 	}
+
+
+# Game over 
+var End_Game_Message:String
+var game_is_over:bool = false
+var player_won:bool
+
+func End_of_game(player_won:bool):
+	if player_won:
+		End_Game_Message = "You won !"
+	else:
+		End_Game_Message = "Game over. " + str(living_npc_count) + " ennemies remaining"
+	
+	# Wait a short while so player can see the game over message
+	await get_tree().create_timer(3).timeout
+	
+	# Go back to main menu so player can launch a new game
+	get_tree().change_scene_to_file("res://Menu scenes/main_menu.tscn")
+	
+	# Need to reinitialize global variables : 
+	living_npc_count = 7
+	game_is_over = false

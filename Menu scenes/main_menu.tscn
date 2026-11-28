@@ -41,9 +41,11 @@ offset_bottom = 15.5
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Map_size_Label" type="Label" parent="VBoxContainer" unique_id=1461249472]
+[node name="Mode_selected_Label" type="RichTextLabel" parent="VBoxContainer" unique_id=1077378129]
 layout_mode = 2
+bbcode_enabled = true
 text = "Current difficulty selected: PH"
+fit_content = true
 
 [node name="Difficulty_Container" type="HBoxContainer" parent="VBoxContainer" unique_id=1972817552]
 layout_mode = 2
@@ -80,6 +82,23 @@ grow_vertical = 0
 text = "Artist : Adrien Lucas
 Developer : Paul Grimaldi"
 metadata/_edit_use_anchors_ = true
+
+[node name="End_Game_Message_Label" type="RichTextLabel" parent="." unique_id=1069678973]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -154.0
+offset_top = -215.0
+offset_right = 160.0
+offset_bottom = -192.0
+grow_horizontal = 2
+grow_vertical = 0
+bbcode_enabled = true
+text = "end game"
+fit_content = true
 
 [connection signal="pressed" from="VBoxContainer/Difficulty_Container/Easy_Button" to="." method="_on_easy_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/Difficulty_Container/Medium_Button" to="." method="_on_medium_button_pressed"]

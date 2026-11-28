@@ -93,7 +93,7 @@ func _ready():
 	# Rebake the navigation mesh #
 	##############################
 	await get_tree().create_timer(1).timeout
-	Global.navigation_mesh_bale_requested = true # this triggers the rebake in the main script process
+	Global.navigation_mesh_bake_requested = true # this triggers the rebake in the main script process
 	
 
 
@@ -171,7 +171,7 @@ func tile_shift(delta):
 		_affect_obstacles_to_nav_groups()
 		
 		# Trigger the rebake in the main script process
-		Global.navigation_mesh_bale_requested = true 
+		Global.navigation_mesh_bake_requested = true 
 		
 		# Reenable character to move
 		await get_tree().create_timer(0.1).timeout
