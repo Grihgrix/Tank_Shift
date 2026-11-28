@@ -52,8 +52,8 @@ func _set_terrain_dimensions(map_shape_factor:int):
 	
 	# Terrain limits resize :
 	Global.board_total_length = Vector2(
-		(Global.terrain_dimension.x + (2 * Global.space_between_tiles)) * Global.terrain_tile_size
-		, (Global.terrain_dimension.y + (2 * Global.space_between_tiles)) * Global.terrain_tile_size
+		Global.terrain_dimension.x * (Global.terrain_tile_size + Global.space_between_tiles)
+		, Global.terrain_dimension.y * (Global.terrain_tile_size + Global.space_between_tiles)
 		)
 	
 	
@@ -66,3 +66,9 @@ func _set_terrain_dimensions(map_shape_factor:int):
 	Global.characters_spawn_locations[7]["x"] = (Global.terrain_dimension.x - 1) * (Global.terrain_tile_size + Global.space_between_tiles)
 	Global.characters_spawn_locations[7]["z"] = - (Global.terrain_dimension.y - 1) * (Global.terrain_tile_size + Global.space_between_tiles)
 	Global.characters_spawn_locations[8]["z"] = - (Global.terrain_dimension.y - 1) * (Global.terrain_tile_size + Global.space_between_tiles)
+	
+	# Update corner tiles ID
+	Global.corner_tile_id_1 = (0 * 10000) + 0
+	Global.corner_tile_id_2 = (0 * 10000) + Global.terrain_dimension.y - 1
+	Global.corner_tile_id_3 = ((Global.terrain_dimension.x - 1) * 10000) + 0
+	Global.corner_tile_id_4 = ((Global.terrain_dimension.x - 1) * 10000) + Global.terrain_dimension.y - 1

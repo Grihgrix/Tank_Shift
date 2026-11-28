@@ -105,7 +105,6 @@ sky_mode = 1
 [node name="Projectiles_parent_node" type="Node3D" parent="." unique_id=1350631440 groups=["projectile_parent"]]
 
 [node name="Level" parent="." unique_id=2021217027 instance=ExtResource("3_ljjr8")]
-Tiles_parent_group = "tile_parent"
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1282892840]
 environment = ExtResource("3_t4wav")
