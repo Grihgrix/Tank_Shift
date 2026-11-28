@@ -28,7 +28,6 @@ size = Vector3(0.2, 2, 20.2)
 
 [node name="Level" type="Node3D" unique_id=2021217027]
 script = ExtResource("1_by8i1")
-Tiles_parent_group = null
 
 [node name="Tiles_parent_group" type="Node3D" parent="." unique_id=988398369 groups=["tile_parent"]]
 
