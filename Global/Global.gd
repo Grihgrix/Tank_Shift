@@ -1,7 +1,7 @@
 extends Node
 
 
-
+var game_title = "Super Hard Intense Freaking Tank (working title :p)"
 
 # Gameplay
 var projectile_speed:int = 20
@@ -112,9 +112,9 @@ var player_won:bool
 
 func End_of_game(player_won:bool):
 	if player_won:
-		End_Game_Message = "You won !"
+		End_Game_Message = "[center][b][font_size=20][color=green]You won !"
 	else:
-		End_Game_Message = "Game over. " + str(living_npc_count) + " ennemies remaining"
+		End_Game_Message = "[center][b][font_size=20][color=red]Game over [/color]\n" + str(living_npc_count) + " ennemies remaining"
 	
 	# Wait a short while so player can see the game over message
 	await get_tree().create_timer(3).timeout
