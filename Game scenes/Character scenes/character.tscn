@@ -18,7 +18,7 @@
 [ext_resource type="Material" uid="uid://ch5pnmwgrfalt" path="res://Assets/Art/UI/mat_bullet_empty.tres" id="16_0cpcb"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_f7ppj"]
-size = Vector3(2.1823273, 1.212616, 2.8248138)
+size = Vector3(2.1823273, 1.4141159, 2.8248138)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_wltj5"]
 radius = 15.0
@@ -104,7 +104,7 @@ surface_material_override/0 = ExtResource("3_php0s")
 transform = Transform3D(-0.1190871, -0.17818087, -0.97676504, -0.12940438, 0.9781599, -0.16265836, 0.98441494, 0.10702714, -0.13954362, 0.014311792, -1.1978832, -0.0051119328)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=931742010]
-transform = Transform3D(0.9999704, 0, 0, 0, 0.9999704, 0, 0, 0, 1, 0.006202703, 1.053331, -0.0024032593)
+transform = Transform3D(0.9999679, 0, 0, 0, 0.9999679, 0, 0, 0, 1, 0.006202701, 1.1540775, -0.0024032593)
 shape = SubResource("BoxShape3D_f7ppj")
 
 [node name="Shift_Timer" type="Timer" parent="." unique_id=983244169]
