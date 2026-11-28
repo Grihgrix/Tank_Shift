@@ -28,7 +28,7 @@ script = ExtResource("1_21kgf")
 explosion_scene = ExtResource("2_rh17j")
 
 [node name="Timer" type="Timer" parent="." unique_id=5218242]
-wait_time = 10.0
+wait_time = 4.0
 one_shot = true
 autostart = true
 
