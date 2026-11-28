@@ -79,7 +79,12 @@ signal on_shift(shifter_id:int, shifter_is_up_or_down:int)
 func _ready():
 	if is_player:
 		Global.player_character = self
-
+		# Assign the right amount of HP at the begining of the game depending on dificulty selected
+		hp = Global.player_starting_hp
+	else:
+		# Assign the right amount of HP at the begining of the game depending on dificulty selected
+		hp = Global.npc_starting_hp
+	
 	# Ensires no immediate shift happens at game start
 	npc_shift_timer.start(randf_range(4,10))
 	# Intialize character spawn position
