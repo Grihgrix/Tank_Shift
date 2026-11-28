@@ -23,9 +23,15 @@ extends Node
 @onready var night_light = $Night_Light
 @onready var world_environment = $WorldEnvironment
 
+# Game over
+@onready var message_to_player_rich_text_label = $Player/Camera3D2/Message_to_player_RichTextLabel
+
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	# Hide the game over message
+	message_to_player_rich_text_label.visible = false
 	for character in character_list:
 		assign_character_to_tile(character)
 
@@ -40,10 +46,20 @@ func _process(delta):
 	#if Global.shift_requested_on_mouse or Global.self_shift_requested:
 	#	assign_character_to_tile(character)
 
-	if Global.navigation_mesh_bale_requested:
+	if Global.navigation_mesh_bake_requested:
 		_refresh_navigation_region()
-
+	
 	_update_lighting()
+	
+	if Global.game_is_over:
+		message_to_player_rich_text_label.visible = true
+		# check if it is because of the player's death
+		if not player.is_alive:
+			# Player lost the game
+			Global.End_of_game(Global.player_won)
+		else:
+			# Player won the game
+			Global.End_of_game(Global.player_won)
 
 
 func assign_character_to_tile(current_character):
@@ -51,16 +67,20 @@ func assign_character_to_tile(current_character):
 		if tile.tile_id == current_character.current_tile_id:
 			current_character.reparent(tile, true)
 
+
+
 func _refresh_navigation_region():
-	Global.navigation_mesh_bale_requested = false
+	Global.navigation_mesh_bake_requested = false
 	await get_tree().create_timer(1).timeout
 	up_navigation_region_3d.bake_navigation_mesh(false)
 	down_navigation_region_3d.bake_navigation_mesh(false)
 
+
+
 var day_amount = 1.0 # 1.0 = day, -1.0 = night
 func _update_lighting():
 	var new_day_amount = player.global_basis.y.dot(Vector3.UP)
-
+	
 	if new_day_amount != day_amount:
 		day_amount = new_day_amount
 		if day_amount > 0:
@@ -72,9 +92,13 @@ func _update_lighting():
 			day_light.visible = false
 			night_light.visible = true
 
+
+
 func _unhandled_input(event: InputEvent) -> void:
 	if Engine.is_editor_hint() and event is InputEventKey and event.pressed and event.keycode == KEY_F9:
 		snapshot(get_tree().current_scene)
+
+
 
 func snapshot(root: Node) -> void:
 	root.scene_file_path = ""
@@ -88,6 +112,8 @@ func snapshot(root: Node) -> void:
 	DirAccess.make_dir_recursive_absolute("res://snapshots")
 	ResourceSaver.save(packed, path)
 	print("Saved ", path)
+
+
 
 func _claim(node: Node, root: Node) -> void:
 	for child in node.get_children():

@@ -46,7 +46,17 @@ func _physics_process(delta):
 				# Update living NPC count
 				if not collider.is_player:
 					Global.living_npc_count -= 1
-
+		
+			# game over check
+			if collider.is_player and collider.hp <= 0:
+				# Use the global variable to trigger the end game at the main level
+				Global.player_won = false
+				Global.game_is_over = true
+			elif Global.living_npc_count == 0:
+				# Use the global variable to trigger the end game at the main level
+				Global.player_won = true
+				Global.game_is_over = true
+		
 		# Depsawn projectile if we had a collision
 		despawn_projectile()
 

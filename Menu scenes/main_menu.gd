@@ -1,17 +1,25 @@
 extends Control
 
-@onready var map_size
-@onready var map_type
+@onready var difficulty_selected:String
+@onready var end_game_message_label = $End_Game_Message_Label
+@onready var mode_selected_label = $VBoxContainer/Mode_selected_Label
+@onready var medium_button = $VBoxContainer/Difficulty_Container/Medium_Button
+
+
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	# Displays the end game message if populated
+	end_game_message_label.text = "[center]"+ Global.End_Game_Message + "[/center]"
+	
+	# Aggro focus on button
+	medium_button.grab_focus()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	pass
+	mode_selected_label.text = "[center] Current difficulty selected: " + difficulty_selected + "[/center]"
 
 
 func _on_launch_button_pressed():
@@ -19,6 +27,7 @@ func _on_launch_button_pressed():
 
 
 func _on_easy_button_pressed():
+	difficulty_selected = "Easy"
 	Global.npc_starting_hp = 1
 	Global.player_starting_hp = 3
 	Global.terrain_dim_additionned = 40
@@ -27,6 +36,7 @@ func _on_easy_button_pressed():
 
 
 func _on_medium_button_pressed():
+	difficulty_selected = "Medium"
 	Global.npc_starting_hp = 3
 	Global.player_starting_hp = 3
 	Global.terrain_dim_additionned = 30
@@ -36,6 +46,7 @@ func _on_medium_button_pressed():
 
 
 func _on_hard_button_pressed():
+	difficulty_selected = "Hard"
 	Global.npc_starting_hp = 3
 	Global.player_starting_hp = 1
 	Global.terrain_dim_additionned = 20

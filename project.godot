@@ -19,7 +19,7 @@ ImportTool/auto_generate_lods=false
 [application]
 
 config/name="TankShift"
-run/main_scene="uid://5re30mheve6q"
+run/main_scene="uid://2mflj7n8qvt4"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
 
