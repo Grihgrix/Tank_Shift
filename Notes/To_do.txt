@@ -1,8 +1,7 @@
 To Do : 
 
-- Add a tableau de chasse listing all characters destroyed by each character
-- Add some menus
 - Balance the game (faster turn, slower projectiles ?)
+- Add a game over, back to menu or restart button when player dies
 
 
 
