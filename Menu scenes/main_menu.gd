@@ -4,14 +4,18 @@ extends Control
 @onready var end_game_message_label = $End_Game_Message_Label
 @onready var mode_selected_label = $VBoxContainer/Mode_selected_Label
 @onready var medium_button = $VBoxContainer/Difficulty_Container/Medium_Button
+@onready var title_rich_text_label = $Title_RichTextLabel
 
 
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	# Displays game title
+	title_rich_text_label.text = "[center][b][font_size=40]" + Global.game_title
+	
 	# Displays the end game message if populated
-	end_game_message_label.text = "[center]"+ Global.End_Game_Message + "[/center]"
+	end_game_message_label.text = Global.End_Game_Message
 	
 	# Aggro focus on button
 	medium_button.grab_focus()
@@ -19,7 +23,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	mode_selected_label.text = "[center] Current difficulty selected: " + difficulty_selected + "[/center]"
+	mode_selected_label.text = "Current difficulty selected: [b][color=green]" + difficulty_selected
 
 
 func _on_launch_button_pressed():

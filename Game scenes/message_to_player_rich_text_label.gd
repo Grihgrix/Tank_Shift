@@ -8,4 +8,4 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	text = "[center]" + Global.End_Game_Message + "[/center]"
+	text = Global.End_Game_Message
