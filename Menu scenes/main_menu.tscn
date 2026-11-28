@@ -11,12 +11,19 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_m3byb")
 
-[node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=717059768]
-layout_mode = 0
-offset_left = 438.0
-offset_top = 150.0
-offset_right = 718.0
-offset_bottom = 208.0
+[node name="Title_RichTextLabel" type="RichTextLabel" parent="." unique_id=717059768]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -133.0
+offset_top = -166.0
+offset_right = 147.0
+offset_bottom = -108.0
+grow_horizontal = 2
+grow_vertical = 2
 text = "Super Hard Intense Freaking Tank
 (working title :p)"
 
@@ -56,6 +63,23 @@ text = "Hard"
 [node name="Launch_Button" type="Button" parent="VBoxContainer" unique_id=498933435]
 layout_mode = 2
 text = "Launch game"
+
+[node name="Credits_Label" type="Label" parent="." unique_id=1108408276]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -233.0
+offset_top = -84.0
+offset_right = -36.0
+offset_bottom = -35.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Artist : Adrien Lucas
+Developer : Paul Grimaldi"
+metadata/_edit_use_anchors_ = true
 
 [connection signal="pressed" from="VBoxContainer/Difficulty_Container/Easy_Button" to="." method="_on_easy_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/Difficulty_Container/Medium_Button" to="." method="_on_medium_button_pressed"]
