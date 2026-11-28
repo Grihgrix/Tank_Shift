@@ -41,15 +41,15 @@ text = "Current difficulty selected: PH"
 [node name="Difficulty_Container" type="HBoxContainer" parent="VBoxContainer" unique_id=1972817552]
 layout_mode = 2
 
-[node name="Easy_map_Button" type="Button" parent="VBoxContainer/Difficulty_Container" unique_id=1821256321]
+[node name="Easy_Button" type="Button" parent="VBoxContainer/Difficulty_Container" unique_id=1821256321]
 layout_mode = 2
 text = "Easy"
 
-[node name="Medium_map_Button" type="Button" parent="VBoxContainer/Difficulty_Container" unique_id=542321099]
+[node name="Medium_Button" type="Button" parent="VBoxContainer/Difficulty_Container" unique_id=542321099]
 layout_mode = 2
 text = "Medium"
 
-[node name="Hard_Map_Button" type="Button" parent="VBoxContainer/Difficulty_Container" unique_id=1017466321]
+[node name="Hard_Button" type="Button" parent="VBoxContainer/Difficulty_Container" unique_id=1017466321]
 layout_mode = 2
 text = "Hard"
 
@@ -57,4 +57,7 @@ text = "Hard"
 layout_mode = 2
 text = "Launch game"
 
+[connection signal="pressed" from="VBoxContainer/Difficulty_Container/Easy_Button" to="." method="_on_easy_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/Difficulty_Container/Medium_Button" to="." method="_on_medium_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/Difficulty_Container/Hard_Button" to="." method="_on_hard_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/Launch_Button" to="." method="_on_launch_button_pressed"]
