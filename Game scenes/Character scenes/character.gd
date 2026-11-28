@@ -72,6 +72,8 @@ signal on_shift(shifter_id:int, shifter_is_up_or_down:int)
 
 # Rotation watchdog
 @onready var character_orientation_check_timer:Timer = $Character_orientation_check_Timer
+@onready var group_tourelle = $Proto_tank/Tourelle
+
 
 
 
@@ -182,6 +184,12 @@ func _physics_process(delta):
 				global_rotation.z = PI
 			global_position.y = 0 # Ensure we remain above ground
 			print("rotation z corrected for character " + str(character_id))
+		
+		# Tourelle orientation fix
+		group_tourelle.rotation.x = 0
+		group_tourelle.rotation.z = 0
+		
+		# Restart timer
 		character_orientation_check_timer.start(1)
 
 

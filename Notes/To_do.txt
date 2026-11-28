@@ -11,8 +11,6 @@ Tuto followed for ray cast projectiles : https://www.youtube.com/watch?v=vGpFwaL
 
 Bugs: 
 - NPCs keep firing after player is dead (might be ok)
-- Sometimes the projectile seem to go through (or above the ennemy)
-    It seems to be always in the same direction once it starts, so it is liekly a rotation issue of the tourelle
 
 
 End concept :

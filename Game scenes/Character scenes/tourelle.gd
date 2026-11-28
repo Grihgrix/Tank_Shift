@@ -32,6 +32,7 @@ func _process(delta):
 		var target_rotation = - atan2(target_vector.z, target_vector.x)  + PI / 2
 		# Slowly turn the tourelle towards target
 		global_rotation.y = lerp_angle(global_rotation.y, target_rotation, delta * 2)
+	
 
 
 
