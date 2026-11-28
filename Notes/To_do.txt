@@ -1,8 +1,8 @@
 To Do : 
 
 - Balance the game (faster turn, slower projectiles ?)
-- Add a game over, back to menu or restart button when player dies
-
+- Add sounds
+- Make the menu pretty
 
 
 ray cast https://www.gdquest.com/library/raycast_introduction/
